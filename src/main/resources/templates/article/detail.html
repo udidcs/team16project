@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+aaa
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Doumi</title>-->
+<!--    <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.0.2/toastui-editor.min.css">-->
+<!--    <link href="../../static/css/article/detail.css" th:href="@{/css/article/detail.css}" rel="stylesheet" type="text/css"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header></header>-->
+<!--<main class="cont-main">-->
+<!--    <input class="cote-id hidden" th:value="${cote.id}"/>-->
+<!--    <section class="content-header">-->
+<!--        <div class="button-container">-->
+<!--            <a class="back-button" href="/coteboard">목록으로</a>-->
+<!--        </div>-->
+<!--        <h1 class="title" th:text="${cote.title}"></h1>-->
+<!--        <div class="content-info">-->
+<!--            <p class="board-writer-name" th:value="${cote.writer}" th:text="${cote.writer}"></p>-->
+<!--            <p class="content-createdAt" th:text="${#dates.format(cote.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
+<!--            <p class="viewcount" th:text="'조회 ' + ${cote.viewCount}"></p>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    <section class="content-main">-->
+<!--        <h2 class="a11y">퀴즈 게시판 본문 내용</h2>-->
+<!--        <div class="content-detail" th:text="${cote.contents}">-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    <section class="comment-container">-->
+<!--        <div class="comment-header">-->
+<!--            <div class="comment-editor">-->
+<!--                <input type="hidden" id="postId" name="postId" th:value="${postId}"/>-->
+<!--                <textarea class="comment-input" placeholder="댓글을 달아보세요"-->
+<!--                          name="contents" onchange="commentCreateWordCount(this);"-->
+<!--                          oninput="commentCreateWordCount(this);"></textarea>-->
+<!--                <div class="comment-text-create-count">0/1500</div>-->
+<!--                <div class="comment-editor-bottom">-->
+<!--                    <button class="submit-button" type="button" onclick="clickCommentSubmitButton(this)">등록</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="comment-editor-line">-->
+
+<!--        </div>-->
+<!--        <div class="comment-main">-->
+<!--            <div class="comment-item-container" th:each="comment: ${comments}">-->
+<!--                <input type="hidden" class="comment-id" th:value="${comment.id}"/>-->
+<!--                <div class="comment-item-header">-->
+<!--                    <div class="comment-info">-->
+<!--                        <p class="comment-writer-name" th:text="${comment.writer}"></p>-->
+<!--                        <p class="comment-createdAt" th:text="${#dates.format(comment.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
+<!--                    </div>-->
+<!--                    <div class="comment-edit-container">-->
+<!--                        <button onclick="clickCommentEditButton(this)">수정</button>-->
+<!--                        <button onclick="clickCommentDeleteButton(this)">삭제</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="comment-item-body">-->
+<!--                    <div style="word-break:break-all" class="comment-contents" th:text="${comment.contents}"></div>-->
+<!--                    <div class="comment-text-edit-count hidden">0/1500</div>-->
+<!--                    <div class="comment-editor-bottom hidden">-->
+<!--                        <button class="comment-submit-button" type="button"-->
+<!--                                onclick="clickCommentEditCompleteButton(this)">수정 완료-->
+<!--                        </button>-->
+<!--                        <button class="comment-cancel-button" type="button" onclick="clickCommentEditCancelButton(this)">-->
+<!--                            취소-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="comment-item-bottom">-->
+<!--                    <div class="etc-button-container">-->
+<!--                        <button class="comment-button re-comment-editor-opener"-->
+<!--                                onclick="clickReCommentEditorOpener(this)">-->
+<!--                            <img th:src="@{/images/icon_recomment.png}" alt="답글달기 버튼">답글 달기-->
+<!--                        </button>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--                <div class="re-comment-editor hidden">-->
+<!--                    <input type="hidden" class="parentCommentId" th:value="${comment.id}"/>-->
+<!--                    <textarea class="re-comment-input" placeholder="댓글을 작성해보세요"-->
+<!--                              name="contents"-->
+<!--                              onchange="reCommentCreateWordCount(this)"-->
+<!--                              oninput="reCommentCreateWordCount(this)"></textarea>-->
+<!--                    <div class="re-comment-text-create-count">0/1500</div>-->
+<!--                    <div class="re-comment-editor-bottom">-->
+<!--                        <button class="re-comment-submit-button" type="button"-->
+<!--                                onclick="clickReCommentSubmitButton(this)">등록-->
+<!--                        </button>-->
+<!--                        <button class="re-comment-cancel-button" type="button" onclick="clickReCommentCancelButton(this)">-->
+<!--                            취소-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="re-comment-items-container">-->
+<!--                    <div class="re-comment-item-container" th:each="reComment:${comment.reComments}">-->
+<!--                        <input type="hidden" class="re-comment-id" th:value="${reComment.id}"/>-->
+<!--                        <div class="re-comment-item-header">-->
+<!--                            <div class="re-comment-info">-->
+<!--                                <p class="re-comment-writer-name" th:text="${reComment.writer}"></p>-->
+<!--                                <p class="re-comment-createdAt"-->
+<!--                                   th:text="${#dates.format(reComment.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
+<!--                            </div>-->
+<!--                            <div class="re-comment-edit-container">-->
+<!--                                <button onclick="clickReCommentEditButton(this)">수정</button>-->
+<!--                                <button onclick="clickReCommentDeleteButton(this)">삭제</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="re-comment-item-body">-->
+<!--                            <div style="word-break:break-all" class="re-comment-contents" th:text="${reComment.contents}"-->
+<!--                                      onchange="reCommentEditWordCount(this)"-->
+<!--                                      oninput="reCommentEditWordCount(this)"></div>-->
+<!--                            <div class="re-comment-text-edit-count hidden">0/1500</div>-->
+<!--                            <div class="re-comment-editor-bottom hidden">-->
+<!--                                <button class="re-comment-submit-button" type="button"-->
+<!--                                        onclick="clickReCommentEditCompleteButton(this)">수정 완료-->
+<!--                                </button>-->
+<!--                                <button class="re-comment-cancel-button" type="button" onclick="clickReCommentEditCancelButton(this)">-->
+<!--                                    취소-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--</main>-->
+<!--<div class="modal_comment_create">-->
+<!--    <div class="writer-container">-->
+<!--        <input class="writer" placeholder="작성자 (11자 이내)" maxlength="11" type="text" size="21px"/>-->
+<!--    </div>-->
+<!--    <div class="boardPassword-container">-->
+<!--        <input class="commentPassword" placeholder="댓글 비밀번호 (11자 이내)" maxlength="11"-->
+<!--               type="text" size="21px"/>-->
+<!--    </div>-->
+<!--    <div class="comment-editor-bottom">-->
+<!--        <button class="comment-submit-button" type="button"-->
+<!--                onclick="clickCommentSubmitCompleteButton(this)">등록 완료-->
+<!--        </button>-->
+<!--        <button class="comment-cancel-button" type="button"-->
+<!--                onclick="clickCommentSubmitCancelButton(this)">취소-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal_comment_edit">-->
+<!--    <div class="boardPassword-container">-->
+<!--        <input class="boardPassword" maxlength="11" placeholder="댓글 비밀번호 (11자 이내)"-->
+<!--               type="text" size="19px"/>-->
+<!--    </div>-->
+<!--    <div class="comment-editor-bottom">-->
+<!--        <button class="comment-submit-button" type="button"-->
+<!--                onclick="clickCommentEditLoginButton(this)">입력 완료-->
+<!--        </button>-->
+<!--        <button class="comment-cancel-button" type="button" onclick="clickCommentEditLoginCancelButton(this)">-->
+<!--            취소-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal_comment_delete">-->
+<!--    <div class="boardPassword-container">-->
+<!--        <input class="boardPassword" placeholder="댓글 비밀번호 (11자 이내)"-->
+<!--               type="text" size="19px"/>-->
+<!--    </div>-->
+<!--    <div class="comment-editor-bottom">-->
+<!--        <button class="comment-submit-button" type="button"-->
+<!--                onclick="clickCommentDeleteLoginButton(this)">삭제 완료-->
+<!--        </button>-->
+<!--        <button class="comment-cancel-button" type="button" onclick="clickCommentDeleteCancelButton(this)">-->
+<!--            취소-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal_recomment_create">-->
+<!--    <div class="writer-container">-->
+<!--        <input class="writer" placeholder="작성자 (11자 이내)" maxlength="11" type="text" size="19px"/>-->
+<!--    </div>-->
+<!--    <div class="boardPassword-container">-->
+<!--        <input class="recommentPassword" placeholder="댓글 비밀번호 (11자 이내)"-->
+<!--               type="text" size="19px"/>-->
+<!--    </div>-->
+<!--    <div class="re-comment-editor-bottom">-->
+<!--        <button class="re-comment-submit-button" type="button"-->
+<!--                onclick="clickReCommentSubmitCompleteButton(this)">등록 완료-->
+<!--        </button>-->
+<!--        <button class="re-comment-cancel-button" type="button"-->
+<!--                onclick="clickReCommentSubmitCancelButton(this)">취소-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal_recomment_edit">-->
+<!--    <div class="boardPassword-container">-->
+<!--        <input class="boardPassword" placeholder="댓글 비밀번호 (11자 이내)"-->
+<!--               type="text" size="19px"/>-->
+<!--    </div>-->
+<!--    <div class="re-comment-editor-bottom">-->
+<!--        <button class="re-comment-submit-button" type="button"-->
+<!--                onclick="clickReCommentEditLoginButton(this)">입력 완료-->
+<!--        </button>-->
+<!--        <button class="re-comment-cancel-button" type="button"-->
+<!--                onclick="clickReCommentEditLoginCancelButton(this)">-->
+<!--            취소-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal_recomment_delete">-->
+<!--    <div class="boardPassword-container">-->
+<!--        <input class="boardPassword" placeholder="댓글 비밀번호 (11자 이내)"-->
+<!--               type="text" size="19px"/>-->
+<!--    </div>-->
+<!--    <div class="re-comment-editor-bottom">-->
+<!--        <button class="re-comment-submit-button" type="button"-->
+<!--                onclick="clickReCommentDeleteLoginButton(this)">입력 완료-->
+<!--        </button>-->
+<!--        <button class="re-comment-cancel-button" type="button" onclick="clickReCommentDeleteLoginCancelButton(this)">-->
+<!--            취소-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>-->
+<!--<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
