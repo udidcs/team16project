@@ -1,0 +1,565 @@
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    line-height:1.4;
+}
+a{
+    display: inline-block;
+    text-decoration:none;
+    color: inherit;
+}
+ul, ol{
+    list-style: none;
+}
+button{
+    cursor:pointer;
+    padding: 7px 10px;
+    background-color: white;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+}
+img{
+    vertical-align: top;
+}
+p{
+    font-size: 16px;
+    line-height: 200%;
+}
+input:focus{
+    outline: none;
+}
+textarea{
+    height: 300px;
+    font-size: 16px;
+    line-height: 200%;
+    resize: none;
+    border: none;
+}
+button:hover {
+    filter: brightness(90%); // 10% 어둡게
+}
+
+.hide-text{
+    visibility: hidden;
+}
+.hide-place{
+    background-color: #F2F2F2;
+}
+
+
+.a11y{
+    display: inline-block;
+    position:absolute;
+    overflow:hidden;
+    width:1px;
+    height:1px;
+    border:none;
+    clip-path:inset(50%);
+}
+.comment-editor-line{
+    margin-top: 40px;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.board-writer-name, .comment-writer-name, .re-comment-writer-name{
+    font-size: 15px;
+    color: #868e96;
+    font-weight: bold;
+}
+
+.content-createdAt, .comment-createdAt, .re-comment-createdAt{
+    font-size: 15px;
+    color: #868e96;
+}
+
+.viewcount{
+    font-size: 15px;
+    color: #868e96;
+}
+
+/*main 게시글 정보 파트*/
+.cont-main{
+    max-width: 1100px;
+    margin:0 auto;
+    border-left: 1px solid #C4C4C4;
+    border-right: 1px solid #C4C4C4;
+    padding: 40px 40px;
+}
+
+.content-header{
+    padding: 20px 0 0 0;
+    border-bottom: 1px solid #C4C4C4;
+}
+.back-button{
+    padding: 15px 20px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    background-color: #04B45F;
+    font-size: 18px;
+    font-weight: 700;
+}
+.content-header h1{
+    margin: 50px 0 25px 0;
+    font-size:25px;
+    font-weight: 700;
+}
+
+/*main 게시글 파트*/
+.content-main{
+    padding:20px 10px;
+    border-bottom: 1px solid #C4C4C4;
+}
+.content-detail{
+    min-height: 350px;
+}
+.content-main > h3{
+    font-size: 20px;
+    margin: 50px 0 20px 0;
+}
+.content-answer-container{
+    padding: 8px 8px;
+    border-radius: 7px;
+    min-height: 150px;
+}
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 50px;
+}
+
+.likes-number{
+    font-size: 13px;
+}
+.content-tags-container{
+    display: flex;
+    gap:10px;
+}
+.content-detail-tag{
+    padding: 7px 15px;
+    background-color: #F2F2F2;
+    border-radius: 5px;
+}
+.content-likes{
+    display: block;
+    margin: 100px auto;
+    border: none;
+}
+.content-likes>img{
+    width: 55px;
+    height: 55px;
+}
+/*input 창*/
+.comment-editor{
+    margin-top: 30px;
+}
+.display-check{
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.comment-main-input{
+    width: 100%;
+    height: 250px;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid #C4C4C4;
+    border-radius: 4px;
+    resize: none;
+}
+
+.comment-input{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid #C4C4C4;
+    border-radius: 4px;
+    resize: none;
+}
+
+.comment-main-editor-bottom{
+    display: flex;
+    justify-content: flex-end;
+    gap:12px;
+    padding-bottom: 55px; border-bottom: 1px solid #C4C4C4;
+}
+
+.comment-editor-bottom{
+    display: flex;
+    justify-content: flex-end;
+    gap:12px;
+}
+.submit-button, .edit-button, .cancel-button,
+.comment-submit-button, .comment-edit-button, .comment-cancel-button,
+.re-comment-submit-button, .re-comment-edit-button, .re-comment-cancel-button{
+    padding: 10px 20px;
+    font-size: 16px;
+}
+.submit-button, .comment-submit-button, .re-comment-submit-button{
+    background-color: #04B45F;
+    color: white;
+    border: none;
+}
+
+/*main 댓글 입력창 파트*/
+.comment-header{
+
+}
+.comment-header h2{
+    font-size: 23px;
+}
+.comment-info{
+    display: flex;
+    justify-content: space-between;
+}
+.comment-number{
+    color: #04B45F;
+}
+.comment-sort-selector{
+    display: flex;
+    gap:10px;
+}
+.recommend, .recent{
+    font-size: 14px;
+    font-weight: 700;
+    color: #C4C4C4;
+    cursor: pointer;
+}
+
+.comment-editor-opener{
+    margin-top:25px;
+    padding: 12px 16px;
+    border-radius: 5px;
+    border: 1px solid #C4C4C4;
+    cursor: pointer;
+    color:#C4C4C4;
+}
+
+/*main 댓글 파트*/
+/*답글 파트*/
+.comment-text-create-count {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.comment-text-edit-count{
+    text-align: right;
+    margin-bottom: 10px;
+}
+.comment-item{
+    width: 100%;
+    height: 250px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid #C4C4C4;
+    border-radius: 4px;
+    resize: none;
+}
+.comment-item-container{
+    padding: 30px 0px 0px 0px;
+    border-bottom: 1px solid #C4C4C4;
+}
+.comment-item-header{
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-info{
+    display: flex;
+    gap: 10px;
+}
+.comment-edit-container{
+    display: flex;
+    gap: 10px;
+}
+.comment-item-body, .hidden-comment-item-body{
+    border-radius: 7px;
+    margin-bottom: 15px;
+}
+.comment-item-bottom{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.etc-button-container{
+    display: flex;
+    gap:10px;
+}
+.comment-button{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+.comment-button> img{
+    width: 15px;
+    height: 15px;
+    margin-right: 8px;
+}
+.comment-likes{
+    margin-right: 10px;
+}
+
+.sorted{
+    color: black;
+}
+/*답글 파트*/
+.re-comment-text-edit-count{
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.re-comment-text-create-count {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.re-comment-editor-bottom {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+.re-comment-item{
+    width: 100%;
+    height: 250px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid #C4C4C4;
+    border-radius: 4px;
+    resize: none;
+}
+.re-comment-input{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid #C4C4C4;
+    border-radius: 4px;
+    resize: none;
+}
+.re-comment-items-container{
+    margin: 40px 10px 40px 10px;
+    padding-left: 10px;
+    border-left: 4px solid #C4C4C4;
+}
+.re-comment-item-container{
+    padding-left: 5px;
+    padding-bottom: 80px;
+}
+
+.re-comment-item-header{
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+
+}
+
+.re-comment-info{
+    display: flex;
+    gap: 10px;
+}
+.re-comment-edit-container{
+    display: flex;
+    gap: 10px;
+}
+.re-comment-item-body, .hidden-re-comment-item-body{
+    border-radius: 7px;
+}
+.re-comment-item-bottom{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.etc-button-container{
+    display: flex;
+    gap:10px;
+}
+.re-comment-button{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+.re-comment-button> img{
+    width: 15px;
+    height: 15px;
+    margin-right: 8px;
+}
+.re-comment-likes{
+    margin-right: 10px;
+}
+
+
+
+
+
+
+.modal_comment_create {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 30px;
+    width: 450px;
+    height: 330px;
+    border: 2px solid #04B45F;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.modal_comment_edit {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 30px;
+    width: 450px;
+    height: 310px;
+    border: 2px solid #04B45F;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.modal_comment_delete {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 30px;
+    width: 450px;
+    height: 310px;
+    border: 2px solid #04B45F;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.modal_recomment_create {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 30px;
+    width: 450px;
+    height: 330px;
+    border: 2px solid #04B45F;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.modal_recomment_edit {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 30px;
+    width: 450px;
+    height: 310px;
+    border: 2px solid #04B45F;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.modal_recomment_delete {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 30px;
+    width: 450px;
+    height: 310px;
+    border: 2px solid #04B45F;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+
+.writer-container{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #C4C4C4;
+}
+.writer{
+    border: none;
+    font-size: 20px;
+    font-weight: 900;
+    padding: 10px 7px;
+    font-family: 'Wemakeprice-Bold';
+}
+.writer::placeholder{
+    color: #C4C4C4;
+}
+.boardPassword-container{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #C4C4C4;
+}
+.boardPassword{
+    border: none;
+    font-size: 20px;
+    font-weight: 900;
+    padding: 10px 7px;
+    font-family: 'Wemakeprice-Bold';
+}
+.boardPassword::placeholder{
+    color: #C4C4C4;
+}
+.commentPassword-container{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #C4C4C4;
+}
+.commentPassword{
+    border: none;
+    font-size: 20px;
+    font-weight: 900;
+    padding: 10px 7px;
+    font-family: 'Wemakeprice-Bold';
+}
+.commentPassword::placeholder{
+    color: #C4C4C4;
+}
+.recommentPassword-container{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #C4C4C4;
+}
+.recommentPassword{
+    border: none;
+    font-size: 20px;
+    font-weight: 900;
+    padding: 10px 7px;
+    font-family: 'Wemakeprice-Bold';
+}
+.recommentPassword::placeholder{
+    color: #C4C4C4;
+}
+
+.hidden{
+    display: none;
+}

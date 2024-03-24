@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Doumi</title>
+    <link href="../../static/css/article/articles.css" th:href = "@{/css/article/articles.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header class="header">
+    <div class="box-header">
+        <h1><a href="/">Bend Doumi</a></h1>
+        <div class="navbar-menu">
+            <div class="navbar-left">
+                <div><a href="#" class="move_to_menu">메뉴1</a></div>
+                <div><a href="#" class="move_to_menu">메뉴2</a></div>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <br><br>
+    <form class="form" action="/article/search">
+        <div class="search_form">
+                <span class="search_image">
+                    <img src="/images/article/search.png" width="17px">
+                </span>
+            <label for="search"></label>
+            <input class="input" type="text" required="" placeholder="제목,내용 검색하기" id="search" name="keyword">
+        </div>
+    </form>
+
+    <div class="table_container" >
+        <li class="article_container" th:each="article, iterStat:${articles}">
+                <div class="titlecontent">
+                    <a th:href="@{'/article/detail?id='+${article.articleId}}" th:text="${article.title}">게시글 제목</a>
+                </div>
+                <div class="author" th:text="${article.user}">작성자</div>
+                <div class="createdat" th:text="${#dates.format(article.createdAt, 'yy.MM.dd')}"></div>
+                <div class="viewcount" th:text="${article.viewCount}">조회</div>
+        </li>
+    </div>
+    <nav class="page">
+        <ul class="page_list" th:unless="${articles.isEmpty()}">
+            <li class="page_link" th:unless="${startIdx == 1}">
+                <a th:href="@{/article/articles?page=1}">처음</a>
+            </li>
+            <li class="page_link" th:unless="${startIdx == 1}">
+                <a th:href="@{/article/articles(page = ${startIdx - 1})}"><<</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(startIdx, endIdx)}"
+                th:class="${page == currentPage} ? 'page_current' : 'page_link'">
+                <a th:href="@{/article/articles(page = ${page})}" th:text="${page}"></a>
+            </li>
+            <li class="page_link" th:unless="${endIdx == totalPages}">
+                <a th:href="@{/article/articles(page = ${endIdx + 1})}">>></a>
+            </li>
+            <li class="page_link" th:unless="${endIdx == totalPages}">
+                <a th:href="@{/article/articles(page = ${totalPages})}">마지막</a>
+            </li>
+        </ul>
+    </nav>
+</main>
+<footer>
+
+</footer>
+</body>
+</html>
