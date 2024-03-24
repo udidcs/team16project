@@ -2,12 +2,15 @@ package com.example.team16project.article;
 
 import com.example.team16project.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
+@Builder
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
 
     @Id

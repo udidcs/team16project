@@ -31,8 +31,8 @@
             <input class="input" type="text" required="" placeholder="제목,내용 검색하기" id="search" name="keyword">
         </div>
     </form>
-
-    <div class="table_container" >
+    <button><a href="/article/form">글쓰기</a></button>
+    <div class="table_container">
         <li class="article_container" th:each="article, iterStat:${articles}">
                 <div class="titlecontent">
                     <a th:href="@{'/article/detail?id='+${article.articleId}}" th:text="${article.title}">게시글 제목</a>
