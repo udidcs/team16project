@@ -12,7 +12,7 @@ const contentEditor = new toastui.Editor({
                 const formData = new FormData();
                 formData.append('file', blob);
 
-                const response = await fetch('/board/file', {
+                const response = await fetch('/article/image', {
                     method : 'POST',
                     body : formData,
                 });

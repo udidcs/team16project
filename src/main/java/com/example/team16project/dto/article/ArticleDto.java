@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class ArticleDto {
-    Integer articleId;
+    Long articleId;
     User user;
     String title;
     String contents;

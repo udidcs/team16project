@@ -1,9 +1,11 @@
 package com.example.team16project.controller.article;
 
 import com.example.team16project.dto.article.ArticleDto;
+import com.example.team16project.dto.article.ImageDto;
 import com.example.team16project.service.article.ArticleService;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.reply.Reply;
+import com.example.team16project.service.article.ImageService;
 import com.example.team16project.util.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,8 +17,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +34,7 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final ImageService imageService;
 
     @Operation(summary = "게시글 전체 보기", description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다.")
     @Parameter(name = "page", description = "페이지 번호", example = "2")
@@ -63,7 +70,7 @@ public class ArticleController {
     public String detail(@RequestParam("id") int articleId, Model model){
 
         //저장한 댓글 가져오기
-        model.addAttribute("article", Article.builder().articleId(1).title("111")
+        model.addAttribute("article", Article.builder().articleId(1L).title("111")
                 .contents("123123").viewCount(4).createdAt(LocalDateTime.now()).updatedAt(null).likeCount(5).build());
         model.addAttribute("replys", new ArrayList<Reply>());
 
@@ -74,6 +81,12 @@ public class ArticleController {
     public String form(Model model){
 
         return "article/form";
+    }
+
+    @PostMapping("/article/image")
+    public String fileWrite(@RequestBody MultipartFile file) throws IOException {
+        ImageDto fileDto = imageService.fileWrite(file);
+        return fileDto.getFileName();
     }
 
 
