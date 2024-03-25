@@ -14,22 +14,11 @@
             <textarea class="title" placeholder="제목을 적어 주세요." rows="1" onkeyup="autoResize(this)"
                       onkeydown="autoResize(this)"></textarea>
         </div>
-        <div class="writer-container">
-            <input class="writer" placeholder="작성자 (11자 이내)" maxlength="11" type="text" size="19px"/>
-        </div>
-        <div class="boardPassword-container">
-            <input class="boardPassword" placeholder="게시글 비밀번호 (11자 이내)" maxlength="11"
-                      type="password" size="19px"/>
-        </div>
-        <div class="userPassword-container">
-            <input class="userPassword" placeholder="" type="password" size="19px"/>
-        </div>
-        <br>
         <div class="input-container">
-            <div class="cote-container">
+            <div class="article-container">
                 <h1>게시글</h1>
-                <div class="cote-text-count">0/5000</div>
-                <div class="cote-content"></div>
+                <div class="article-text-count">0/5000</div>
+                <div class="article-content"></div>
             </div>
         </div>
         </div>
@@ -40,9 +29,6 @@
     </form>
 </main>
 <footer></footer>
-<script>
-    let coteContent="";
-</script>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="/js/article/form.js"></script>
 </body>

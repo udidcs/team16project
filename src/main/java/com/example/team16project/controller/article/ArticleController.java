@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class ArticleController {
 
         //저장한 댓글 가져오기
         model.addAttribute("article", Article.builder().articleId(1).title("111")
-                .contents("123123").viewCount(4).createdAt(Timestamp.valueOf("2024-04-23 23:11:22")).updatedAt(null).likeCount(5).build());
+                .contents("123123").viewCount(4).createdAt(LocalDateTime.now()).updatedAt(null).likeCount(5).build());
         model.addAttribute("replys", new ArrayList<Reply>());
 
         return "article/detail";

@@ -11,17 +11,17 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer replyId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
+    @JoinColumn(name = "articleId")
     Article article;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     User user;
 
     String comments;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "parentId")
     private Reply reply;
 
 }
