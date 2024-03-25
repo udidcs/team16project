@@ -1,6 +1,7 @@
-package com.example.team16project.article;
+package com.example.team16project.dto.article;
 
-import com.example.team16project.user.User;
+import com.example.team16project.domain.article.Article;
+import com.example.team16project.domain.user.User;
 import lombok.Builder;
 import lombok.Data;
 

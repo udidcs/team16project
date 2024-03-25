@@ -1,6 +1,6 @@
-package com.example.team16project.article;
+package com.example.team16project.domain.article;
 
-import com.example.team16project.user.User;
+import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

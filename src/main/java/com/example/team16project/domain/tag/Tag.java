@@ -1,6 +1,6 @@
-package com.example.team16project.tag;
+package com.example.team16project.domain.tag;
 
-import com.example.team16project.user.User;
+import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
 
 @Entity

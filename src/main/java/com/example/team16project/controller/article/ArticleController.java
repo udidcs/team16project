@@ -1,6 +1,9 @@
-package com.example.team16project.article;
+package com.example.team16project.controller.article;
 
-import com.example.team16project.reply.Reply;
+import com.example.team16project.dto.article.ArticleDto;
+import com.example.team16project.service.article.ArticleService;
+import com.example.team16project.domain.article.Article;
+import com.example.team16project.domain.reply.Reply;
 import com.example.team16project.util.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

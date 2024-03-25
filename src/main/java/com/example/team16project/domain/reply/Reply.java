@@ -1,7 +1,7 @@
-package com.example.team16project.reply;
+package com.example.team16project.domain.reply;
 
-import com.example.team16project.article.Article;
-import com.example.team16project.user.User;
+import com.example.team16project.domain.article.Article;
+import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
 
 @Entity

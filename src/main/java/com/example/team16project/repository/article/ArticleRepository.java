@@ -1,5 +1,6 @@
-package com.example.team16project.article;
+package com.example.team16project.repository.article;
 
+import com.example.team16project.domain.article.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.example.team16project.user;
+package com.example.team16project.domain.user;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;

@@ -1,6 +1,6 @@
 package com.example.team16project.controller;
 
-import com.example.team16project.article.ArticleRepository;
+import com.example.team16project.repository.article.ArticleRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,8 @@
-package com.example.team16project.article;
+package com.example.team16project.service.article;
 
+import com.example.team16project.dto.article.ArticleDto;
+import com.example.team16project.repository.article.ArticleRepository;
+import com.example.team16project.domain.article.Article;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

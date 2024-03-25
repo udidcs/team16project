@@ -1,7 +1,7 @@
-package com.example.team16project.article;
+package com.example.team16project.service.article;
 
 
-import com.example.team16project.article.ArticleDto;
+import com.example.team16project.dto.article.ArticleDto;
 
 import java.util.List;
 
