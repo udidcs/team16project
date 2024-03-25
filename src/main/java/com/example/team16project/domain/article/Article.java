@@ -2,9 +2,12 @@ package com.example.team16project.domain.article;
 
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
@@ -21,8 +24,8 @@ public class Article {
     User user;
     String title;
     String contents;
-    Timestamp createdAt;
+    LocalDateTime createdAt;
     Integer likeCount;
     Integer viewCount;
-    Timestamp updatedAt;
+    LocalDateTime updatedAt;
 }
