@@ -3,26 +3,53 @@ package com.example.team16project.domain.article;
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "article")
+@DynamicInsert
 public class Article {
 
     @Id
+    @Column(name = "article_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer articleId;
+    private Long articleId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    User user;
-    String title;
-    String contents;
-    Timestamp createdAt;
-    Integer likeCount;
-    Integer viewCount;
-    Timestamp updatedAt;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @Column(name = "contents", nullable = false)
+    private String contents;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    @Column(name = "like_count")
+    @ColumnDefault(value = "0")
+    private Integer likeCount;
+
+    @Column(name = "view_count")
+    @ColumnDefault(value = "0")
+    private Integer viewCount;
 }

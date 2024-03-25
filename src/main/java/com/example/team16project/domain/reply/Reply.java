@@ -3,25 +3,32 @@ package com.example.team16project.domain.reply;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
+@Table(name = "reply")
+@DynamicInsert
 public class Reply {
 
     @Id
+    @Column(name = "reply_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer replyId;
+    private Long replyId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    Article article;
+    @JoinColumn(name = "article_id", nullable = false)
+    private Article article;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    String comments;
+    @Column(name = "comments", nullable = false)
+    private String comments;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "parent_id", nullable = false)
+    @ColumnDefault(value = "0")
     private Reply reply;
 
 }

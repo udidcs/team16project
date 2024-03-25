@@ -6,18 +6,19 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class ArticleDto {
-    Integer articleId;
+    Long articleId;
     User user;
     String title;
     String contents;
-    Timestamp createdAt;
+    LocalDateTime createdAt;
     Integer likeCount;
     Integer viewCount;
-    Timestamp updatedAt;
+    LocalDateTime updatedAt;
 
     public static ArticleDto toDto(Article article) {
         return ArticleDto.builder()
