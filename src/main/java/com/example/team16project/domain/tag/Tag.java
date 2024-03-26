@@ -6,12 +6,13 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Table(name = "tag")
 public class Tag {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "articleId")
-    Article article;
+    @JoinColumn(name = "article_id")
+    private Article article;
 
-    @Column(length = 20, nullable = false)
-    String name;
+    @Column(name = "name", length = 20, nullable = false)
+    private String name;
 }
