@@ -3,6 +3,7 @@ package com.example.team16project.domain.tag;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "tag")
@@ -12,6 +13,6 @@ public class Tag {
     @JoinColumn(name = "article_id")
     private Article article;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 20, nullable = false)
     private String name;
 }

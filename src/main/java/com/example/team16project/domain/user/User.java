@@ -1,6 +1,7 @@
 package com.example.team16project.domain.user;
 
 import jakarta.persistence.*;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

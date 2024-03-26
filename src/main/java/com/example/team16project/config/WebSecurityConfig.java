@@ -31,6 +31,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests(a -> a.requestMatchers(
+
                 "/login", "/signup", "/user").permitAll().anyRequest().authenticated())
             .formLogin(a -> a.loginPage("/login")
                     .defaultSuccessUrl("/article/articles"))
@@ -39,6 +40,7 @@ public class WebSecurityConfig {
                         .clearAuthentication(true))
                 .csrf(a -> a.disable())
                 .build();
+
     }
 
     // 패스워드 인코더로 사용할 빈 등록

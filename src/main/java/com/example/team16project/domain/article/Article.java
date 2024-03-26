@@ -8,8 +8,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Builder
@@ -31,10 +29,10 @@ public class Article {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", length = 40, nullable = false)
     private String title;
 
-    @Column(name = "contents", nullable = false)
+    @Column(name = "contents", length = 3000, nullable = false)
     private String contents;
 
     @CreatedDate
@@ -52,4 +50,5 @@ public class Article {
     @Column(name = "view_count")
     @ColumnDefault(value = "0")
     private Integer viewCount;
+
 }

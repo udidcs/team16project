@@ -16,7 +16,7 @@
         <h1 class="title" th:text="${article.title}"></h1>
         <div class="content-info">
             <p class="board-writer-name" th:value="${article.user}" th:text="${article.user}"></p>
-            <p class="content-createdAt" th:text="${#dates.format(article.createdAt,'yyyy-MM-dd HH:mm')}"></p>
+            <p class="content-createdAt" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
             <p class="viewcount" th:text="'조회 ' + ${article.viewCount}"></p>
         </div>
     </section>

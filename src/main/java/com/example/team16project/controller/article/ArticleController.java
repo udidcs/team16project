@@ -1,9 +1,11 @@
 package com.example.team16project.controller.article;
 
 import com.example.team16project.dto.article.ArticleDto;
+import com.example.team16project.dto.article.ImageDto;
 import com.example.team16project.service.article.ArticleService;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.reply.Reply;
+import com.example.team16project.service.article.ImageService;
 import com.example.team16project.util.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,26 +16,28 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Tag(name = "게시글 CRUD", description = "Response Estimate API")
+@Tag(name = "Article", description = "게시글 API")
 @Controller
 @RequiredArgsConstructor
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final ImageService imageService;
 
-    @Operation(summary = "게시글 전체 보기", description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다.")
+    @Operation(summary = "게시글 전체 보기", description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
     @Parameter(name = "page", description = "페이지 번호", example = "2")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "요청에 성공했습니다.", content = @Content(mediaType = "text/html"))
-    })
+    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/html"))
     @GetMapping("/article/articles")
     public String articles(@RequestParam(defaultValue = "1") int page, Model model) {
 
@@ -64,16 +68,43 @@ public class ArticleController {
 
         //저장한 댓글 가져오기
         model.addAttribute("article", Article.builder().articleId(1L).title("111")
-                .contents("123123").viewCount(4).updatedAt(null).likeCount(5).build());
+                .contents("123123").viewCount(4).createdAt(LocalDateTime.now()).updatedAt(null).likeCount(5).build());
         model.addAttribute("replys", new ArrayList<Reply>());
-
         return "article/detail";
     }
 
+
+    @Operation(summary = "게시글 작성하는 폼", description = "게시글을 작성할 수 있는 폼을 불러옵니다")
+    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/html"))
     @GetMapping("/article/form")
     public String form(Model model){
-
         return "article/form";
+    }
+
+    @ResponseBody
+    @PostMapping("/article/image/save")
+    public String fileWrite(@RequestBody MultipartFile file) throws IOException {
+        ImageDto imageDto = imageService.fileWrite(file);
+        return imageDto.getFileName();
+    }
+
+    @ResponseBody
+    @GetMapping("/article/image")
+    public byte[] printEditorImage(@RequestParam(name = "filename") String fileName) {
+
+        String path = System.getProperty("user.dir") + "/src/main/resources/static/images/article/image";
+        File uploadedFile = new File(path+'/'+fileName);
+
+        if (uploadedFile.exists() == false) {
+            throw new RuntimeException();
+        }
+        try {
+            byte[] imageBytes = Files.readAllBytes(uploadedFile.toPath());
+            return imageBytes;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

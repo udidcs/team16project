@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+
 @Entity
 @Table(name = "reply")
 @DynamicInsert
@@ -14,6 +15,7 @@ public class Reply {
     @Id
     @Column(name = "reply_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long replyId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", nullable = false)
