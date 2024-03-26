@@ -3,7 +3,7 @@ html{
 }
 
 .gradient-custom {
-    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    background: linear-gradient(to right, rgba(242, 239, 255, 1), rgba(195, 196, 216, 1))
 }
 
 .card{
@@ -29,20 +29,8 @@ html{
     display: flex;
 }
 
-/*.btn-container{*/
-/*    display: flex;*/
-/*    margin: auto;*/
-/*}*/
-
-/*.btn-primary{*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    margin: auto;*/
-/*}*/
-
-/*.btn-secondary{*/
+/*.btn-third{*/
 /*    display: flex;*/
 /*    justify-content: center;*/
-/*    align-items: center;*/
-/*    margin: auto;*/
+/*    align-items: end;*/
 /*}*/
