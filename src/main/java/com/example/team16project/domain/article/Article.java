@@ -2,13 +2,12 @@ package com.example.team16project.domain.article;
 
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Builder
@@ -16,34 +15,40 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "article")
+@DynamicInsert
 public class Article {
 
     @Id
+    @Column(name = "article_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long articleId;
+    private Long articleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", nullable = false)
-    User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(length = 40, nullable = false)
-    String title;
+    @Column(name = "title", length = 40, nullable = false)
+    private String title;
 
-    @Column(length = 3000, nullable = false)
-    String contents;
+    @Column(name = "contents", length = 3000, nullable = false)
+    private String contents;
 
-    @Column(nullable = false)
-    LocalDateTime createdAt;
+    @CreatedDate
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    @ColumnDefault(value = "null")
-    LocalDateTime updatedAt;
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
+    @Column(name = "like_count")
     @ColumnDefault(value = "0")
-    Integer viewCount;
+    private Integer likeCount;
 
-    @Column(nullable = false)
+    @Column(name = "view_count")
     @ColumnDefault(value = "0")
-    Integer likeCount;
+    private Integer viewCount;
 
 }

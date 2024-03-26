@@ -70,7 +70,6 @@ public class ArticleController {
         model.addAttribute("article", Article.builder().articleId(1L).title("111")
                 .contents("123123").viewCount(4).createdAt(LocalDateTime.now()).updatedAt(null).likeCount(5).build());
         model.addAttribute("replys", new ArrayList<Reply>());
-
         return "article/detail";
     }
 

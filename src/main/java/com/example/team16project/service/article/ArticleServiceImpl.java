@@ -16,7 +16,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Transactional(readOnly = true)
     @Override
-    public ArticleDto getArticle(int articleId) {
+    public ArticleDto getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + articleId));
         return ArticleDto.toDto(article);
