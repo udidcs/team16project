@@ -74,6 +74,8 @@ public class ArticleController {
                 .contents("123123").viewCount(4).createdAt(LocalDateTime.now()).updatedAt(null).likeCount(5).build());
         model.addAttribute("replys", new ArrayList<Reply>());
 
+        // to-do : 대댓글
+
         return "article/detail";
     }
 
