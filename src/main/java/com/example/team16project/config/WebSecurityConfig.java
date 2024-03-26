@@ -19,7 +19,7 @@ public class WebSecurityConfig {
         return httpSecurity.authorizeHttpRequests(a -> a.requestMatchers(
                 "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/article/**",
                         "/css/**", "/images/**", "/**").permitAll().anyRequest().authenticated())
-            .formLogin(a -> {}).build();
+            .formLogin(a -> {}).csrf((a)->{a.disable();}).build();
 
     }
 

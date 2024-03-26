@@ -17,7 +17,7 @@ public class ImageServiceLocalImpl implements ImageService {
     private ImageDto imageDto;
     @Override
     public ImageDto fileWrite(MultipartFile file) throws IOException {
-        String path = System.getProperty("user.dir") + "/images";
+        String path = System.getProperty("user.dir") + "/src/main/resources/static/images/article/image";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
         File savefile = new File(path, fileName);

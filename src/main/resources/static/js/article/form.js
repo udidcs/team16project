@@ -12,13 +12,13 @@ const contentEditor = new toastui.Editor({
                 const formData = new FormData();
                 formData.append('file', blob);
 
-                const response = await fetch('/article/image', {
+                const response = await fetch('/article/image/save', {
                     method : 'POST',
                     body : formData,
                 });
 
                 const fileName = await response.text();
-                const imageUrl = `/image-print?fileName=${fileName}`;
+                const imageUrl = `/article/image?filename=${fileName}`;
 
                 callback(imageUrl, 'image alt attribute');
 
