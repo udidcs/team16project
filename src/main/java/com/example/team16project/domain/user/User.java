@@ -35,7 +35,6 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @ColumnDefault("noname")
     @Column(name = "name")
     private String name;
 
@@ -52,7 +51,6 @@ public class User implements UserDetails {
     @Column(name = "profile_image")
     private String profileImage;
 
-    @ColumnDefault("user")
     @Column(name = "role")
     private String role;
 
