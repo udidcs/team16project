@@ -10,7 +10,7 @@ html{
     border-radius: 1rem;
     align-items: center;
     justify-content: center;
-    margin: 1% 0% 1% 0%;
+    margin: 1% 0% 1% 1%;
     left: 25%;
     top: 0%;
     bottom: 1%;
@@ -28,3 +28,21 @@ html{
     align-items: center;
     display: flex;
 }
+
+/*.btn-container{*/
+/*    display: flex;*/
+/*    margin: auto;*/
+/*}*/
+
+/*.btn-primary{*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin: auto;*/
+/*}*/
+
+/*.btn-secondary{*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin: auto;*/
+/*}*/
