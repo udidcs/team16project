@@ -21,6 +21,7 @@ public class UserService {
                 User.builder()
                         .email(request.getEmail())
                         .password(encoder.encode(request.getPassword()))
+                        .nickname(request.getNickname())
                         .build()
         );
     }
