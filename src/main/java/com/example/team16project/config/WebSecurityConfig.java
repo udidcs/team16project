@@ -32,12 +32,12 @@ public class WebSecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests(auth ->
                         auth
-                        .requestMatchers("/login", "/signup","/user").permitAll()
-                                .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/user/login", "/user/signup","/user", "/admin/**").permitAll()
+                                .requestMatchers("/a").hasRole("ADMIN")
                         .anyRequest().authenticated())
-            .formLogin(auth -> auth.loginPage("/login")
+            .formLogin(auth -> auth.loginPage("/user/login")
                     .defaultSuccessUrl("/article/articles"))
-                .logout(auth -> auth.logoutSuccessUrl("/login")
+                .logout(auth -> auth.logoutSuccessUrl("/user/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true))
                 .csrf(auth -> auth.disable())
