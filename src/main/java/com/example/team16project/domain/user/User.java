@@ -2,10 +2,7 @@ package com.example.team16project.domain.user;
 
 import jakarta.persistence.*;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Fetch;
@@ -19,11 +16,13 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+@Builder
 @Entity
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
@@ -54,12 +53,12 @@ public class User implements UserDetails {
     @Column(name = "role")
     private String role;
 
-    @Builder
     public User(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

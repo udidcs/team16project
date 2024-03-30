@@ -186,3 +186,14 @@ VALUES
     (70, FLOOR(RAND() * 20) + 1, 80, '2024-03-24 10:00:00', '2024-03-24 10:00:00', 'Contents of Article 13', 'Title of Article 13'),
     (75, FLOOR(RAND() * 20) + 1, 85, '2024-03-24 10:00:00', '2024-03-24 10:00:00', 'Contents of Article 14', 'Title of Article 14'),
     (80, FLOOR(RAND() * 20) + 1, 90, '2024-03-24 10:00:00', '2024-03-24 10:00:00', 'Contents of Article 15', 'Title of Article 15');
+
+INSERT INTO reply (article_id, user_id, comments, parent_id)
+VALUES
+(160, 1, '더미 댓글 1', null),
+(160, 2, '더미 댓글 2', null),
+(160, 3, '더미 댓글 3', null),
+(160, 4, '더미 댓글 4', null),
+(160, 5, '더미 댓글 5', null),
+(160, 6, '더미 댓글 6', null),
+(160, 7, '더미 댓글 7', null),
+(160, 8, '더미 댓글 8', null);

@@ -11,11 +11,15 @@
 <main class="cont-main">
     <section class="content-header">
         <div class="button-container">
-            <a class="back-button" href="/article/articles">목록으로</a>
+            <a class="back-button" href="/articles">목록으로</a>
+            <div>
+                <a class="edit-button" href="/articles">수정</a>
+                <a class="delete-button" href="/articles">삭제</a>
+            </div>
         </div>
         <h1 class="title" th:text="${article.title}"></h1>
         <div class="content-info">
-            <p class="board-writer-name" th:value="${article.user}" th:text="${article.user}"></p>
+            <p class="board-writer-name" th:value="${article.email}" th:text="${article.email}"></p>
             <p class="content-createdAt" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
             <p class="viewcount" th:text="'조회 ' + ${article.viewCount}"></p>
         </div>
@@ -47,7 +51,7 @@
                 <div class="comment-item-header">
                     <div class="comment-info">
                         <p class="comment-writer-name" th:text="${reply.user}"></p>
-                        <p class="comment-createdAt" th:text="${#dates.format(reply.createdAt,'yyyy-MM-dd HH:mm')}"></p>
+<!--                        <p class="comment-createdAt" th:text="${#dates.format(reply.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
                     </div>
                     <div class="comment-edit-container">
                         <button onclick="clickCommentEditButton(this)">수정</button>
@@ -55,8 +59,7 @@
                     </div>
                 </div>
                 <div class="comment-item-body">
-                    <div style="word-break:break-all" class="comment-contents" th:text="${reply.contents}"></div>
-                    <div class="comment-text-edit-count hidden">0/1500</div>
+                    <div style="word-break:break-all" class="comment-contents" th:text="${reply.comments}"></div>
                     <div class="comment-editor-bottom hidden">
                         <button class="comment-submit-button" type="button"
                                 onclick="clickCommentEditCompleteButton(this)">수정 완료
@@ -127,5 +130,15 @@
 </main>
 <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+let str = document.querySelector('.content-detail').innerHTML;
+console.log(str);
+const content = toastui.Editor.factory({
+    el: document.querySelector('.content-detail'),
+    viewer: true,
+    useScript: true,
+    initialValue: str
+});
+</script>
 </body>
 </html>

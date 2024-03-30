@@ -25,7 +25,7 @@ class ArticleControllerTest {
     @Test
     public void articles() throws Exception {
         // given
-        String url = "/article/articles";
+        String url = "/articles";
 
         // when
         ResultActions perform = mockMvc.perform(get(url));
@@ -39,7 +39,7 @@ class ArticleControllerTest {
     @Test
     public void detail() throws Exception {
         // given
-        String url = "/article/detail?id=150";
+        String url = "/article?id=150";
 
         // when
         ResultActions perform = mockMvc.perform(get(url));

@@ -29,7 +29,6 @@ button:hover{
 }
 
 img{
-    width: 100%;
     vertical-align: top;
 }
 p{
@@ -62,6 +61,7 @@ textarea{
     font-size: 27px;
     font-weight: 900;
     padding: 15px 7px;
+    width: 100%;
     font-family: 'Wemakeprice-Bold';
 }
 .title::placeholder{
@@ -195,14 +195,18 @@ textarea{
 }
 .submit-button, .edit-button{
     color: white;
-    background-color: #04B45F;
+    background-color: #3977fe;
     border: none;
 }
-
 
 .hidden{
     display: none;
 }
 .selected{
     background-color: #F2F2F2;
+}
+
+/*error*/
+.error {
+    color: red;
 }
