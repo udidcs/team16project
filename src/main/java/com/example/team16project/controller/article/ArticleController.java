@@ -64,10 +64,10 @@ public class ArticleController {
     }
 
     @GetMapping("/article/detail")
-    public String detail(@RequestParam("id") int articleId, Model model){
+    public String detail(@RequestParam("id") Long articleId, Model model){
 
         //저장한 댓글 가져오기
-        model.addAttribute("article", Article.builder().articleId(1L).title("111")
+        model.addAttribute("article", Article.builder().articleId(2L).title("111")
                 .contents("123123").viewCount(4).createdAt(LocalDateTime.now()).updatedAt(null).likeCount(5).build());
         model.addAttribute("replys", new ArrayList<Reply>());
         // to-do : 대댓글
