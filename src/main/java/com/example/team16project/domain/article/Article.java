@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 
 @Builder
 @Entity
+@Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

@@ -26,8 +26,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests(a -> a.requestMatchers(
-
-                "/login", "/signup", "/user", "/article/**").permitAll().anyRequest().authenticated())
+                "/login", "/signup", "/user", "/**").permitAll().anyRequest().authenticated())
             .formLogin(a -> a.loginPage("/login")
                     .defaultSuccessUrl("/article/articles"))
                 .logout(a -> a.logoutSuccessUrl("/login")

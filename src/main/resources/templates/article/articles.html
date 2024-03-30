@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Doumi</title>
     <link href="../../static/css/article/articles.css" th:href = "@{/css/article/articles.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 <header class="header">
     <div class="box-header">
-        <h1><a href="/">Bend Doumi</a></h1>
+        <h1><a href="/">ASK HUB</a></h1>
         <div class="navbar-menu">
             <div class="navbar-left">
                 <div><a href="#" class="move_to_menu">메뉴1</a></div>
@@ -31,34 +32,49 @@
             <input class="input" type="text" required="" placeholder="제목,내용 검색하기" id="search" name="keyword">
         </div>
     </form>
-    <button><a href="/article/form">글쓰기</a></button>
     <div class="table_container">
-        <li class="article_container" th:each="article, iterStat:${articles}">
-                <div class="titlecontent">
-                    <a th:href="@{'/article/detail?id='+${article.articleId}}" th:text="${article.title}">게시글 제목</a>
+        <li class="article_container" th:each="article:${articles}">
+            <a th:href="@{'/article?id='+${article.articleId}}">
+                <div class="titlecontent" th:text="${article.title}">
+                      게시글 제목
                 </div>
-                <div class="author" th:text="${article.user}">작성자</div>
-                <div class="createdat" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
-                <div class="viewcount" th:text="${article.viewCount}">조회</div>
+                <div style="display: flex; flex-direction: row; gap: 10px; margin-top:10px;">
+                    <img src="/images/article/tmpprofile.png" style="display: inline-block; width: 60px; height: 60px">
+                    <div class="author_createdat_container" style="display: flex; flex-direction: column;">
+                        <div class="author" th:text="${article.email}">작성자</div>
+                        <div class="createdat" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
+                        <div>
+                            <i class="fa-regular fa-eye"></i>
+                            <span class="viewcount" th:text="${article.viewCount}">조회</span>&nbsp;
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            <span class="likecount" th:text="${article.likeCount}">좋아요</span>&nbsp;
+                            <i class="fa-regular fa-comment-dots"></i>
+                            <span class="replycount">댓글수</span>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
         </li>
     </div>
+    <div class="button-container"><a class="write-button" href="/article/form">글쓰기</a></div>
     <nav class="page">
         <ul class="page_list" th:unless="${articles.isEmpty()}">
             <li class="page_link" th:unless="${startIdx == 1}">
-                <a th:href="@{/article/articles?page=1}">처음</a>
+                <a th:href="@{/articles?page=1}">처음</a>
             </li>
             <li class="page_link" th:unless="${startIdx == 1}">
-                <a th:href="@{/article/articles(page = ${startIdx - 1})}"><<</a>
+                <a th:href="@{/articles(page = ${startIdx - 1})}"><<</a>
             </li>
             <li th:each="page : ${#numbers.sequence(startIdx, endIdx)}"
                 th:class="${page == currentPage} ? 'page_current' : 'page_link'">
-                <a th:href="@{/article/articles(page = ${page})}" th:text="${page}"></a>
+                <a th:href="@{/articles(page = ${page})}" th:text="${page}"></a>
             </li>
             <li class="page_link" th:unless="${endIdx == totalPages}">
-                <a th:href="@{/article/articles(page = ${endIdx + 1})}">>></a>
+                <a th:href="@{/articles(page = ${endIdx + 1})}">>></a>
             </li>
             <li class="page_link" th:unless="${endIdx == totalPages}">
-                <a th:href="@{/article/articles(page = ${totalPages})}">마지막</a>
+                <a th:href="@{/articles(page = ${totalPages})}">마지막</a>
             </li>
         </ul>
     </nav>

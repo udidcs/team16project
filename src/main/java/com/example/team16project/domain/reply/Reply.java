@@ -3,15 +3,17 @@ package com.example.team16project.domain.reply;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 
+@Builder
 @Entity
 @Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "reply")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
@@ -37,12 +39,9 @@ public class Reply {
     @JoinColumn(name = "parent_id")
     private Reply reply;
 
-
     public Reply(Article article, User user, String comments) {
         this.article = article;
         this.user = user;
         this.comments = comments;
     }
-
-
 }

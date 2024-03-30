@@ -9,23 +9,20 @@
 <body>
 <header></header>
 <main class="cont-main">
-    <form action="/coteboard/form" method="post" class="coteForm" onsubmit="return false;">
-        <div class="title-container">
-            <textarea class="title" placeholder="제목을 적어 주세요." rows="1"></textarea>
+    <div class="title-container">
+        <input type="text" maxlength="60" class="title" placeholder="제목을 적어 주세요." name="title" oninput="checkLengthTitle(this)"></input>
+    </div>
+    <div class="input-container">
+        <div class="article-container">
+            <h1>게시글</h1>
+            <div class="article-content"></div>
         </div>
-        <div class="input-container">
-            <div class="article-container">
-                <h1>게시글</h1>
-                <div class="article-text-count">0/5000</div>
-                <div class="article-content"></div>
-            </div>
-        </div>
-        </div>
-        <div class="button-container">
-            <button class="cancel-button">취소</button>
-            <button class="submit-button">등록</button>
-        </div>
-    </form>
+    </div>
+    </div>
+    <div class="button-container">
+        <button class="submit-button">등록</button>
+        <button class="cancel-button">취소</button>
+    </div>
 </main>
 <footer></footer>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
