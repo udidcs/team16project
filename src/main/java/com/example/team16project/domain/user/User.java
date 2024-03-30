@@ -1,11 +1,7 @@
 package com.example.team16project.domain.user;
 
 import jakarta.persistence.*;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,18 +9,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+@Builder
 @Entity
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
@@ -60,12 +57,14 @@ public class User implements UserDetails {
     @Transient
     private List<String> auths = new ArrayList<>(Arrays.asList("JUNIOR", "SENIOR", "ADMIN"));
 
+
     @Builder
     public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -106,15 +105,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    // 유저 등급 올리기, 최고등급일 때 쓰면 예외처리를 해서 알려줘야 할까?
-    public String upgrade() {
-        int userLevel = auths.indexOf(role);
-        if (userLevel < auths.indexOf("SENIOR")) {
-            userLevel++;
-            this.role = auths.get(userLevel);
-            return nickname+" 회원의 등급이"+ role + " 으(로) 변경되었습니다.";
-        } else return nickname + " 회원은 이미 최고 등급 회원입니다.";
-    }
-
 }

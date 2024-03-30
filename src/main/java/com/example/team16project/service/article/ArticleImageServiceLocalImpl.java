@@ -1,8 +1,7 @@
 package com.example.team16project.service.article;
 
-import com.example.team16project.dto.article.ImageDto;
+import com.example.team16project.dto.article.ArticleImageDto;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,21 +9,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-@Profile(value = "prod")
 @Service
 @NoArgsConstructor
-public class ImageServiceProdImpl implements ImageService {
+public class ArticleImageServiceLocalImpl implements ArticleImageService {
 
-    private ImageDto imageDto;
+    private ArticleImageDto imageDto;
     @Override
-    public ImageDto fileWrite(MultipartFile file) throws IOException {
-//        String path = "C:\\Users\\Administrator\\Desktop\\tmp";
-        String path = System.getProperty("user.dir") + "/images";
+    public ArticleImageDto fileWrite(MultipartFile file) throws IOException {
+        String path = System.getProperty("user.dir") + "/src/main/resources/static/images/article/image";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
         File savefile = new File(path, fileName);
         file.transferTo(savefile);
-        imageDto = new ImageDto("id", fileName, "");
+        imageDto = new ArticleImageDto("id", fileName, "");
 
         return imageDto;
     }

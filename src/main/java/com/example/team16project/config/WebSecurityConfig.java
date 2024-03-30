@@ -1,6 +1,7 @@
 package com.example.team16project.config;
 
-import com.example.team16project.service.user.UserDetailsServiceImpl;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,18 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig {
-    private UserDetailsServiceImpl userDetailsServiceImpl;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
-    }
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Bean
-    public WebSecurityCustomizer configure() { // 1) 스프링 시큐리티 기능 비활성화
+    public WebSecurityCustomizer configure() {
         return web ->
                 web
                 .ignoring()
@@ -43,7 +41,7 @@ public class WebSecurityConfig {
                 .csrf(auth -> auth.disable())
                 .build();
     }
-    // 패스워드 인코더로 사용할 빈 등록
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

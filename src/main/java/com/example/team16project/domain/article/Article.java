@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 
 @Builder
 @Entity
+@Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -29,7 +31,7 @@ public class Article {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "title", length = 40, nullable = false)
+    @Column(name = "title", length = 50, nullable = false)
     private String title;
 
     @Column(name = "contents", length = 3000, nullable = false)

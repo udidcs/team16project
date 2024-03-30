@@ -1,0 +1,36 @@
+html{
+    scroll-behavior: smooth;
+}
+
+.gradient-custom {
+    background: linear-gradient(to right, rgba(242, 239, 255, 1), rgba(195, 196, 216, 1))
+}
+
+.card{
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin: 1% 0% 1% 1%;
+    left: 25%;
+    top: 0%;
+    bottom: 1%;
+}
+
+.profile-image{
+    width: 200px;
+    height: 200px;
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+.profile{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/*.btn-third{*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: end;*/
+/*}*/

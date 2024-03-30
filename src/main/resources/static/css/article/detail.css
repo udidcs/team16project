@@ -96,7 +96,7 @@ button:hover {
     border: none;
     border-radius: 7px;
     color: white;
-    background-color: #04B45F;
+    background-color: #3977fe;
     font-size: 18px;
     font-weight: 700;
 }
@@ -104,6 +104,14 @@ button:hover {
     margin: 50px 0 25px 0;
     font-size:25px;
     font-weight: 700;
+}
+
+.delete-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3977fe;
+    color: white;
+    border: none;
 }
 
 /*main 게시글 파트*/
@@ -125,7 +133,7 @@ button:hover {
 }
 .button-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 20px;
     padding: 50px;
 }
@@ -199,7 +207,7 @@ button:hover {
     font-size: 16px;
 }
 .submit-button, .comment-submit-button, .re-comment-submit-button{
-    background-color: #04B45F;
+    background-color: #3977fe;
     color: white;
     border: none;
 }
