@@ -1,3 +1,4 @@
+
 use team16project
 
 INSERT INTO user (created_at, email, name, password, profile_image, role)
@@ -197,3 +198,4 @@ VALUES
 (160, 6, '더미 댓글 6', null),
 (160, 7, '더미 댓글 7', null),
 (160, 8, '더미 댓글 8', null);
+

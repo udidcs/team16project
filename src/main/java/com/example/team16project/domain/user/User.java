@@ -1,18 +1,17 @@
 package com.example.team16project.domain.user;
 
 import jakarta.persistence.*;
-
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Fetch;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,11 +30,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 320)
     private String email;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nickname", length = 10)
+    private String nickname;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -47,22 +46,34 @@ public class User implements UserDetails {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @ColumnDefault("'no_image'")
     @Column(name = "profile_image")
     private String profileImage;
 
-    @Column(name = "role")
-    private String role;
+    // JUNIOR: 기본, SENIOR: 등업, ADMIN: 관리자
+    @Column(name = "role", length = 10)
+    private String role = "JUNIOR";
 
-    public User(String email, String password, String name) {
+    @Transient
+    private List<String> auths = new ArrayList<>(Arrays.asList("JUNIOR", "SENIOR", "ADMIN"));
+
+
+    @Builder
+    public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.nickname = nickname;
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("user"));
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        int userLevel = auths.indexOf(role);
+        for (int i = 0; i <= userLevel; i++) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+auths.get(i)));
+        }
+        return authorities;
     }
 
     @Override
@@ -94,5 +105,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

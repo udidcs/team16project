@@ -20,4 +20,17 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/user/checkEmail")
+    public void checkEmail(@RequestParam String email) {
+        if (userService.checkEmailDuplicate(email)) {
+            // 이거 중복임
+        }
+    }
+
+    @GetMapping("/user/checkNickname")
+    public void checkNickname(@RequestParam String nickname) {
+        if (userService.checkNicknameDuplicate(nickname)) {
+            // 이것도 중복임
+        }
+    }
 }

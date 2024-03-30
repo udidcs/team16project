@@ -1,0 +1,36 @@
+package com.example.team16project.service.user;
+
+import com.example.team16project.domain.user.User;
+import com.example.team16project.dto.user.AdminUserRequest;
+import com.example.team16project.dto.user.AdminUserResponse;
+import com.example.team16project.repository.user.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
+
+@Service
+public class AdminService {
+    private UserRepository userRepository;
+
+    public AdminService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<AdminUserResponse> findAllUsers() {
+        List<User> userList = userRepository.findAll();
+        return userList.stream().map(user -> new AdminUserResponse(user)).toList();
+    }
+
+    public AdminUserResponse findOneUser(Long id) throws EntityNotFoundException{
+        return new AdminUserResponse(userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id.toString())));
+    }
+
+    // ToDo: 예외처리
+    @Transactional
+    public void updateUserInfo(Long id, AdminUserRequest request) throws EntityNotFoundException {
+        userRepository.updateNicknameByAdmin(id, request.getNickname());
+        userRepository.updateRoleByAdmin(id, request.getRole());
+    }
+}

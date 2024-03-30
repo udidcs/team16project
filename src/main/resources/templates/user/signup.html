@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+    <div>
+        <h2>회원가입</h2>
+        <form action="/user" method="POST">
+            <!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+            <div>
+                <label>이메일</label>
+                <input type="email" name="email" id="email" required pattern="^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$" placeholder="이메일">
+                <button type="button" class="email-duplicate">중복확인</button>
+            </div>
+            <div>
+                <!-- 8자리 이상 / 숫자, 영어소문자 1개이상 포함 / 영어 대소문자, 숫자 입력가능-->
+                <label>비밀번호</label>
+                <input type="password" name="password" pattern="^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$" required placeholder="알파벳, 숫자 포함 8자 이상">
+            </div>
+            <div>
+                <label>닉네임</label>
+                <input type="text" name="nickname" pattern="[^\s]+" maxlength="10" required placeholder="특수문자제외 10글자이내">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        let inputEmail = document.querySelector('#email').value();
+        const emailDuplicate = document.querySelector('.email-duplicate');
+
+        // emailDuplicate.addEventListener('click', () => {
+        //
+        // })
+    </script>
+</body>
+</html>
