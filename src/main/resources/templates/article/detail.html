@@ -32,13 +32,14 @@
     <section class="comment-container">
         <div class="comment-header">
             <div class="comment-editor">
-                <input type="hidden" name="articleId" th:value="${articleId}"/>
-                <textarea class="comment-input" placeholder="댓글을 달아보세요"
+                <input type="hidden" id = "articleId" name="articleId" th:value="${article.articleId}"/>
+                <textarea id = "comment-input" class="comment-input" placeholder="댓글을 달아보세요"
                           name="contents" onchange="commentCreateWordCount(this);"
                           oninput="commentCreateWordCount(this);"></textarea>
                 <div class="comment-text-create-count">0/1500</div>
                 <div class="comment-editor-bottom">
-                    <button class="submit-button" type="button" onclick="clickCommentSubmitButton(this)">등록</button>
+<!--                   <button class="submit-button" type="button" onclick="clickCommentSubmitButton(this)">등록</button>-->
+                    <button id = "submit-button" class="submit-button" onclick="submitReply(this)" type="button">등록</button>
                 </div>
             </div>
         </div>
@@ -130,8 +131,10 @@
 </main>
 <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-let str = document.querySelector('.content-detail').innerHTML;
+
+  <script src="/js/reply/reply.js"></script>
+  <script>
+    let str = document.querySelector('.content-detail').innerHTML;
 console.log(str);
 const content = toastui.Editor.factory({
     el: document.querySelector('.content-detail'),
@@ -139,6 +142,6 @@ const content = toastui.Editor.factory({
     useScript: true,
     initialValue: str
 });
-</script>
+ </script>
 </body>
 </html>

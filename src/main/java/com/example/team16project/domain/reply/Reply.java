@@ -10,12 +10,12 @@ import org.hibernate.annotations.DynamicInsert;
 
 @Builder
 @Entity
-@Setter
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "reply")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
 public class Reply {
 
@@ -32,11 +32,16 @@ public class Reply {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "comments", length = 1500, nullable = false)
+    @Column(name = "comments", nullable = false, length = 1000)
     private String comments;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Reply reply;
 
+    public Reply(Article article, User user, String comments) {
+        this.article = article;
+        this.user = user;
+        this.comments = comments;
+    }
 }

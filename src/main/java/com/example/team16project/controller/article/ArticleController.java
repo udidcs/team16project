@@ -59,14 +59,12 @@ public class ArticleController {
     }
 
     @GetMapping("/article")
-    public String detail(@RequestParam(value = "id", required = true) long articleId, Model model){
-
+    public String detail(@RequestParam(value = "id", required = true) Long articleId, Model model){
         ArticleDto article = articleService.getArticle(articleId);
         model.addAttribute("article", article);
         model.addAttribute("replys", article.getReplys());
         return "article/detail";
     }
-
 
     @Operation(summary = "게시글 작성하는 폼", description = "게시글을 작성할 수 있는 폼을 불러옵니다")
     @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/html"))
@@ -89,7 +87,4 @@ public class ArticleController {
         Article article = articleService.saveArticle(articleForm, user);
         return "/article?id=" + article.getArticleId();
     }
-
-
-
 }
