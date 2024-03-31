@@ -17,7 +17,7 @@ public class UserInfoService {
         return userRepository.save(
                 User.builder()
                         .email(request.getEmail())
-                        .name(request.getNickname())
+                        .nickname(request.getNickname())
                         .build()
         );
     }
