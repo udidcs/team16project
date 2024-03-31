@@ -1,11 +1,8 @@
-package com.example.team16project.dto.article;
+package com.example.team16project.dto.article.request;
 
 import com.example.team16project.domain.article.Article;
-import com.example.team16project.domain.user.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-
-import java.security.Principal;
 
 @Data
 public class ArticleForm {
