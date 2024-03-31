@@ -1,6 +1,7 @@
 package com.example.team16project.config;
 
 
+import com.example.team16project.service.user.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
