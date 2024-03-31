@@ -12,7 +12,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @Getter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "reply")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

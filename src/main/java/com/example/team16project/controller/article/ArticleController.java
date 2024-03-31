@@ -1,8 +1,9 @@
 package com.example.team16project.controller.article;
 
 import com.example.team16project.domain.user.User;
-import com.example.team16project.dto.article.ArticleDto;
-import com.example.team16project.dto.article.ArticleForm;
+import com.example.team16project.dto.article.request.ArticleWithIdForm;
+import com.example.team16project.dto.article.response.ArticleDto;
+import com.example.team16project.dto.article.request.ArticleForm;
 import com.example.team16project.repository.user.UserRepository;
 import com.example.team16project.service.article.ArticleService;
 import com.example.team16project.domain.article.Article;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +32,8 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserRepository userRepository;
 
-    @Operation(summary = "게시글 전체 보기", description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
+    @Operation(summary = "게시글 전체 보기",
+            description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
     @Parameter(name = "page", description = "페이지 번호", example = "2")
     @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/html"))
     @GetMapping("/articles")
@@ -58,11 +61,21 @@ public class ArticleController {
         model.addAttribute("totalPages", totalPages);
     }
 
+    @Operation(summary = "게시글 상세 보기",
+            description = "게시글을 클릭하면 상세 페이지를 볼 수 있습니다")
+    @Parameter(name = "articleId", description = "페이지 번호", example = "1")
+    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/html"))
     @GetMapping("/article")
-    public String detail(@RequestParam(value = "id", required = true) Long articleId, Model model){
+    public String detail(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model){
+
         ArticleDto article = articleService.getArticle(articleId);
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+
+        if (article.getUserId() == user.getUserId())
+            model.addAttribute("identified", true);
         model.addAttribute("article", article);
         model.addAttribute("replys", article.getReplys());
+
         return "article/detail";
     }
 
@@ -74,8 +87,7 @@ public class ArticleController {
     }
 
     @Operation(summary = "게시글 작성하는 폼", description = "게시글을 작성할 수 있는 폼을 불러옵니다")
-    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/html"))
-
+    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content = @Content(mediaType = "text/plain;charset=UTF-8"))
     @ResponseBody
     @PostMapping("/article")
     public String saveForm(@Valid @RequestBody ArticleForm articleForm, Principal principal, Model model) throws AuthenticationException {
@@ -87,4 +99,58 @@ public class ArticleController {
         Article article = articleService.saveArticle(articleForm, user);
         return "/article?id=" + article.getArticleId();
     }
+
+    @GetMapping("/article/edit")
+    public String edit(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model){
+
+        if(principal == null) {
+            return "/user/login";
+        }
+
+        ArticleDto article = articleService.getArticle(articleId);
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+
+        if (!article.getUserId().equals(user.getUserId())) {
+            return "/articles";
+        }
+
+        model.addAttribute("article", article);
+        model.addAttribute("initialValue", article.getContents());
+
+        return "article/edit";
+    }
+
+    @ResponseBody
+    @PutMapping("/article")
+    public String update(@Valid @RequestBody ArticleWithIdForm articleWithIdForm, Principal principal, Model model){
+
+        if(principal == null) {
+            return "redirect:/user/login";
+        }
+
+//        ArticleDto article = articleService.getArticle();
+//        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+
+        articleService.editArticle(articleWithIdForm);
+
+        return "/article?id=" + articleWithIdForm.getArticleId();
+    }
+
+    @ResponseBody
+    @DeleteMapping("/article")
+    public String delete(@RequestParam(value = "id") Long articleId, Principal principal, Model model){
+
+        if(principal == null) {
+            return "redirect:/user/login";
+        }
+
+//        ArticleDto article = articleService.getArticle();
+//        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+
+        articleService.deleteArticle(articleId);
+
+        return "/articles";
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.team16project.config;
 
 
+import com.example.team16project.service.user.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/a").hasRole("ADMIN")
                         .anyRequest().authenticated())
             .formLogin(auth -> auth.loginPage("/user/login")
-                    .defaultSuccessUrl("/article/articles"))
+                    .defaultSuccessUrl("/articles"))
                 .logout(auth -> auth.logoutSuccessUrl("/user/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true))

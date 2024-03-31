@@ -1,6 +1,6 @@
 package com.example.team16project.controller.article;
 
-import com.example.team16project.dto.article.ArticleImageDto;
+import com.example.team16project.dto.article.response.ArticleImageDto;
 import com.example.team16project.service.article.ArticleImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
