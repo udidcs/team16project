@@ -1,7 +1,6 @@
 package com.example.team16project.controller.user;
 
 import com.example.team16project.domain.user.User;
-
 import com.example.team16project.dto.user.UserInfo;
 import com.example.team16project.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import java.security.Principal;
 
 @Controller
 public class UserInfoController {
-
     @Autowired
     UserRepository userRepository;
 
@@ -21,11 +19,19 @@ public class UserInfoController {
     public String myPage(Principal principal, Model model){
         String username = principal.getName();
         User user = userRepository.findByEmail(username).get();
-        UserInfo userInfo = new UserInfo(user.getEmail(), user.getNickname(), user.getProfileImage());
+        UserInfo userInfo = new UserInfo(user.getEmail(), user.getUsername(), user.getNickname());
         model.addAttribute("userInfo", userInfo);
-
         return "user/mypage";
     }
+
+//        @RequestMapping("/mypage")
+//    public String myPage(Model model){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//        Optional<UserInfo> userInfo = userInfoRepository.findByEmail(username);
+//        model.addAttribute("userInfo", userInfo);
+//        return "/user/mypage";
+//    }
 
     @GetMapping("/user/myprofile")
     public String myProfile(){

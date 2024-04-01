@@ -4,9 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserInfo {
+    private String username;
     private Long id;
     private String email;
     private String nickname;
@@ -14,7 +14,9 @@ public class UserInfo {
     public UserInfo(UserInfo userInfo) {
     }
 
-    public UserInfo(String email, String name, String profileImage) {
-
+    public UserInfo(String email, String username, String nickname) {
+        this.email = email;
+        this.nickname = nickname;
+        this.username = username;
     }
 }
