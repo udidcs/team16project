@@ -34,7 +34,7 @@ public class WebSecurityConfig {
                         auth
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/articles", "/article").permitAll()
-                                .requestMatchers("/use/login", "/user/signup", "/user").anonymous()
+                                .requestMatchers("/user/login", "/user/signup", "/user").anonymous()
                                 .requestMatchers("/article", "/reply").hasRole("JUNIOR")
                                 .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
