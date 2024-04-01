@@ -8,6 +8,7 @@ public class UserViewController {
 
     @GetMapping("/user/login")
     public String login() {
+
         return "user/login";
     }
 

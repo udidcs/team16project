@@ -2,35 +2,36 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/user/login.css">
 </head>
 <body>
-<h1>관리자페이지 입니다.</h1>
-
-<table>
-    <caption>유저 조회</caption>
-    <thead>
-        <tr>
-            <td>UID</td>
-            <td>이메일</td>
-            <td>닉네임</td>
-            <td>가입일</td>
-            <td>탈퇴일</td>
-            <td>회원등급</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="user:${users}">
-            <td th:text="${user.userId}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.nickname}"></td>
-            <td th:text="${user.createdAt}"></td>
-            <td th:text="${user.deletedAt}"></td>
-            <td th:text="${user.role}"></td>
-            <td><button th:id="${user.userId}" onclick="details(id)">수정하기</button></td>
-        </tr>
-    </tbody>
-</table>
+    <h1>관리자페이지 입니다.</h1>
+    <table>
+        <caption>유저 조회</caption>
+        <thead>
+            <tr>
+                <td>UID</td>
+                <td>이메일</td>
+                <td>닉네임</td>
+                <td>가입일</td>
+                <td>탈퇴일</td>
+                <td>회원등급</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user:${users}">
+                <td th:text="${user.userId}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.nickname}"></td>
+                <td th:text="${user.createdAt}"></td>
+                <td th:text="${user.deletedAt}"></td>
+                <td th:text="${user.role}"></td>
+                <td><button th:id="${user.userId}" onclick="details(id)">수정하기</button></td>
+            </tr>
+        </tbody>
+    </table>
 
 <script>
     function details(id) {
