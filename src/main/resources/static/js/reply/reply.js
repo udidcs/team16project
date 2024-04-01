@@ -66,7 +66,10 @@ function submitReply(button) {
 }
 
 // 댓글 수정 기능
+function updateReply(button){
 
+
+}
 
 // 댓글 삭제 기능
 function deleteReply(button) {

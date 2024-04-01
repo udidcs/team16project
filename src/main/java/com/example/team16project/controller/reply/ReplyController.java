@@ -21,21 +21,18 @@ public class ReplyController {
 
     @ResponseBody
     @PostMapping("/reply") // url 생각 // reply 등록 //ResponseBody 사용 여부
-    public String createReply(@Valid @RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
-
-        // To - do : RequestParam 대신 body로 받아주는 방식으로 Post는 body 방식으로 넘겨주는게 좋으니까
-        // form에 articleId를 넣어야 함
-
-//        // comment (댓글 내용이 등록되어있지 않다면 에러 발생
-//        if(form.getComments() == null){
-//            throw new IllegalArgumentException("댓글을 입력해주세요");
-//        }
-
+    public void createReply(@RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
 
         replyService.saveReply(form, principal);
-        return "/article"; // 저장 -> 댓글 작성 화면 // 이 부분은 없어도 될 듯 ??  // return "/article?id=" + article.getArticleId();
-
     }
+
+    @ResponseBody
+    @PutMapping("/reply/{replyId}")
+    public void updateReply(@PathVariable("replyId") Long replyId, Principal principal) throws AuthenticationException{
+
+        replyService.updateReply(replyId, principal);
+    }
+
 
     @ResponseBody
     @DeleteMapping("/reply/{replyId}")
