@@ -1,4 +1,4 @@
-package com.example.team16project.dto.article;
+package com.example.team16project.dto.article.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

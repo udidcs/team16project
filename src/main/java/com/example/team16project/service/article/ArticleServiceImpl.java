@@ -2,23 +2,19 @@ package com.example.team16project.service.article;
 
 import com.example.team16project.domain.reply.Reply;
 import com.example.team16project.domain.user.User;
-import com.example.team16project.dto.article.ArticleDto;
-import com.example.team16project.dto.article.ArticleForm;
+import com.example.team16project.dto.article.request.ArticleWithIdForm;
+import com.example.team16project.dto.article.response.ArticleDto;
+import com.example.team16project.dto.article.request.ArticleForm;
 import com.example.team16project.repository.article.ArticleRepository;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.repository.reply.ReplyRepository;
-import com.example.team16project.repository.user.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,6 +58,21 @@ public class ArticleServiceImpl implements ArticleService {
 
         Article save = articleRepository.save(entity);
         return save;
+    }
+
+    @Transactional
+    @Override
+    public void editArticle(ArticleWithIdForm articleWithIdForm) {
+        Optional<Article> byId = articleRepository.findById(articleWithIdForm.getArticleId());
+        Article article = byId.orElseThrow();
+        article.setTitle(articleWithIdForm.getTitle());
+        article.setContents(articleWithIdForm.getContents());
+    }
+
+    @Transactional
+    @Override
+    public void deleteArticle(Long articleId) {
+        articleRepository.deleteById(articleId);
     }
 
 

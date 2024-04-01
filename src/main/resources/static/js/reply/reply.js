@@ -21,3 +21,12 @@ function submitReply(button) {
     });
 }
 
+let str = document.querySelector('.content-detail').innerHTML;
+console.log(str);
+const content = toastui.Editor.factory({
+    el: document.querySelector('.content-detail'),
+    viewer: true,
+    useScript: true,
+    initialValue: str
+});
+
