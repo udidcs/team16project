@@ -38,8 +38,9 @@ public class WebSecurityConfig {
                                 .requestMatchers("/article", "/reply").hasRole("JUNIOR")
                                 .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
-            .formLogin(auth -> auth.loginPage("/user/login").permitAll()
-                    .defaultSuccessUrl("/articles", true))
+            .formLogin(auth -> auth.loginPage("/user/login")
+                    .defaultSuccessUrl("/articles"))
+
                 .logout(auth -> auth.logoutSuccessUrl("/user/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true))

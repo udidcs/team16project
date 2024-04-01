@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 작성</title>
+    <link href="../../static/css/article/edit.css" th:href="@{/css/article/edit.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+</head>
+<body>
+<header></header>
+<main class="cont-main">
+    <div class="title-container">
+        <input type="text" maxlength="60" class="title" placeholder="제목을 적어 주세요." name="title" th:value=${article.title} oninput="checkLengthTitle(this)"></input>
+    </div>
+    <div class="input-container">
+        <div class="article-container">
+            <h1>게시글</h1>
+            <input type="hidden" class="articleId" th:value="${article.articleId}">
+            <div class="article-content"></div>
+        </div>
+    </div>
+    </div>
+    <div class="button-container">
+        <button class="edit-button">수정</button>
+        <button class="cancel-button">취소</button>
+    </div>
+</main>
+<footer></footer>
+<script th:inline="javascript">
+    let initialContents = [[${article.contents}]]
+</script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="/js/article/edit.js"></script>
+</body>
+</html>

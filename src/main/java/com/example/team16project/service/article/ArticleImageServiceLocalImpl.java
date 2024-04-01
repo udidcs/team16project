@@ -1,6 +1,6 @@
 package com.example.team16project.service.article;
 
-import com.example.team16project.dto.article.ArticleImageDto;
+import com.example.team16project.dto.article.response.ArticleImageDto;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
