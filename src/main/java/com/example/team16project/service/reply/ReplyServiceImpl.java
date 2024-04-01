@@ -13,8 +13,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
 import java.security.Principal;
 
 @Service
@@ -27,22 +30,51 @@ public class ReplyServiceImpl implements ReplyService{
 
 
 
+    // 댓글 생성 로직
+
     @Transactional
-    public void saveReply(ReplyCreateForm form, Principal principal) {
+    @Override
+    public void saveReply(ReplyCreateForm form, Principal principal) throws AuthenticationException {
 
         // principal.getName(); // id(Email)를 가져옴
 
-        // To-do : ReplyCreateForm 수정
-        // article 은 html 쪽에서 받아오는걸로 (fetch 활용 / form을 활용하지 않을시에는)
-        // form에서 data를 받아오는 것도 가능 (html코드에서 form을 활용한다면)
-
+        // principal 검증 로직 추가 -> 로그인이 되었는지
+        if(principal == null){
+            throw new AuthenticationException("로그인을 해야 댓글을 작성할 수 있습니다."); // 500 Error
+        }
         User user = userRepository.findByEmail(principal.getName())  //principal.getName()을 통해 user의 email을 가져옴
                 .orElseThrow(IllegalArgumentException::new);
 
         Article article = articleRepository.findByArticleId(form.getArticleId())
-                .orElseThrow(IllegalArgumentException::new); // article에 계속 null 값이 들어감 ArticleId가 안맞음
+                .orElseThrow(IllegalArgumentException::new);
 
         replyRepository.save(new Reply(article, user, form.getComments()));
+    }
+
+
+    // 댓글 수정 로직
+
+
+    // 댓글 삭제 로직
+    @Transactional
+    @Override
+    public void deleteReply(Long replyId, Principal principal) throws AuthenticationException {
+
+        // principal 검증 로직 추가 -> 로그인이 되었는지
+        if(principal == null){
+            throw new AuthenticationException("댓글을 작성한 작성자만 삭제할 수 있습니다."); // 500 Error
+        }
+
+        Reply reply = replyRepository.findByReplyId(replyId)
+                .orElseThrow(IllegalArgumentException::new);
+
+        // 댓글을 쓴 사람만이 글을 지울 수 있게 하는 로직 추가
+        if(!principal.getName().equals(reply.getUser().getEmail())){
+            throw new AccessDeniedException("댓글을 작성한 작성자만 삭제할 수 있습니다."); // 403 Error
+        }
+
+        replyRepository.delete(reply);
+
     }
 
 

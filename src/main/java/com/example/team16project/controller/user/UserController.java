@@ -17,7 +17,7 @@ public class UserController {
     @PostMapping("/user")
     public String signup(AddUserRequest request) {
         userService.save(request);
-        return "redirect:/login";
+        return "/user/login";
     }
 
     @GetMapping("/user/checkEmail")
