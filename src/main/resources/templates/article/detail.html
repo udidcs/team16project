@@ -13,8 +13,8 @@
         <div class="button-container">
             <a class="back-button" href="/articles">목록으로</a>
             <div>
-                <a class="edit-button" href="/articles">수정</a>
-                <a class="delete-button" href="/articles">삭제</a>
+                <a class="edit-button" th:href="@{/article/edit(id=${article.articleId})}" th:if="${identified}">수정</a>
+                <a class="delete-button" th:href="@{#}" th:if="${identified}">삭제</a>
             </div>
         </div>
         <h1 class="title" th:text="${article.title}"></h1>
@@ -36,11 +36,11 @@
                 <textarea id = "comment-input" class="comment-input" placeholder="댓글을 달아보세요"
                           name="contents" onchange="commentCreateWordCount(this);"
                           oninput="commentCreateWordCount(this);"></textarea>
-                <div class="comment-text-create-count">0/1500</div>
                 <div class="comment-editor-bottom">
 <!--                   <button class="submit-button" type="button" onclick="clickCommentSubmitButton(this)">등록</button>-->
                     <button id = "submit-button" class="submit-button" onclick="submitReply(this)" type="button">등록</button>
                 </div>
+            </div>
             </div>
         </div>
         <div class="comment-editor-line">
@@ -77,15 +77,11 @@
                             <img th:src="@{/images/icon_recomment.png}" alt="답글달기 버튼">답글 달기
                         </button>
                     </div>
-
                 </div>
                 <div class="re-comment-editor hidden">
                     <input type="hidden" class="parentCommentId" th:value="${reply.replyId}"/>
                     <textarea class="re-comment-input" placeholder="댓글을 작성해보세요"
-                              name="contents"
-                              onchange="reCommentCreateWordCount(this)"
-                              oninput="reCommentCreateWordCount(this)"></textarea>
-                    <div class="re-comment-text-create-count">0/1500</div>
+                              name="contents"></textarea>
                     <div class="re-comment-editor-bottom">
                         <button class="re-comment-submit-button" type="button"
                                 onclick="clickReCommentSubmitButton(this)">등록
@@ -130,18 +126,38 @@
     </section>
 </main>
 <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-  <script src="/js/reply/reply.js"></script>
-  <script>
-    let str = document.querySelector('.content-detail').innerHTML;
-console.log(str);
-const content = toastui.Editor.factory({
-    el: document.querySelector('.content-detail'),
-    viewer: true,
-    useScript: true,
-    initialValue: str
-});
- </script>
+<script>
+    document.querySelector('.delete-button').addEventListener('click', ()=>{
+        let articleId = document.getElementById('articleId').value;
+        let check = confirm("정말로 삭제하시겠습니까?");
+        if (check == false)
+            return;
+        fetch("/article?id=" + articleId, {
+        method: "delete"})
+        .then((response)=>{
+            if(response.status == 200) { //성공
+                let str = response.text().then((res)=>{
+                    alert("글을 삭제하였습니다");
+                    location.href = res;
+                })
+            }
+            else if(response.status == 500) { //로그인 안했을 경우
+                alert("로그인이 필요합니다");
+            }
+            else if(response.status == 400) { // 유효성 미통과
+                response.text().then((res)=>{
+                    let list = JSON.parse(res);
+                    console.log(list);
+                    let error = '';
+                    list['arrayList'].forEach((e)=>{
+                        error += e['message'] + '\n';
+                    });
+                    alert(error);
+                });
+            }
+        })
+    })
+</script>
+<script src="/js/reply/reply.js"></script>
 </body>
 </html>

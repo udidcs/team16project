@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true, length = 320)
     private String email;
 
-    @Column(name = "nickname", length = 10)
+    @Column(name = "nickname", unique = true,length = 10)
     private String nickname;
 
     @Column(name = "password", nullable = false)
@@ -52,11 +52,10 @@ public class User implements UserDetails {
 
     // JUNIOR: 기본, SENIOR: 등업, ADMIN: 관리자
     @Column(name = "role", length = 10)
-    private String role = "JUNIOR";
+    private String role;
 
     @Transient
     private List<String> auths = new ArrayList<>(Arrays.asList("JUNIOR", "SENIOR", "ADMIN"));
-
 
     @Builder
     public User(String email, String password, String nickname) {
@@ -64,7 +63,6 @@ public class User implements UserDetails {
         this.password = password;
         this.nickname = nickname;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
