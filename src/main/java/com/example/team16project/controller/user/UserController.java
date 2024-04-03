@@ -14,9 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,19 +31,21 @@ public class UserController {
 
     @PostMapping("/user/signup")
     @ResponseBody
-    public ResponseEntity<String> signup(AddUserRequest request) {
+    public ResponseEntity<String> signup(@Valid AddUserRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            StringBuilder errorMsg = new StringBuilder();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMsg.append(error.getDefaultMessage()).append(",");
+            });
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg.toString());
+        }
         try {
             userService.checkEmailDuplicate(request.getEmail());
             userService.checkNicknameDuplicate(request.getNickname());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
-        try {
-            userService.save(request);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-        return ResponseEntity.ok("회원가입이 완료되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
     @GetMapping("/user/mypage")
@@ -55,7 +57,14 @@ public class UserController {
 
     @PatchMapping("/user/update")
     @ResponseBody
-    public String changePassword(@Valid UpdateUserPasswordRequest request, Authentication authentication) {
+    public String changePassword(@Valid UpdateUserPasswordRequest request, BindingResult bindingResult, Authentication authentication) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMsg = new StringBuilder();
+            bindingResult.getFieldErrors().forEach(fieldError -> {
+                errorMsg.append(fieldError.getDefaultMessage()).append(", ");
+            });
+            return errorMsg.toString();
+        }
         return userService.updatePassword(request, authentication);
     }
 

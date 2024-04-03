@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 public class UpdateUserPasswordRequest {
     @NotBlank
+    @Pattern(message = "현재 비밀번호의 형식이 잘못되었습니다.", regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$")
     private String currentPassword;
 
     @NotBlank
-    @Pattern(message = "잘못된 비밀번호 형식입니다.", regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$")
+    @Pattern(message = "새로운 비밀번호의 형식이 잘못되었습니다.", regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$")
     private String newPassword;
 }

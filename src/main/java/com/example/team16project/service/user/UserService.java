@@ -25,7 +25,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     @Transactional
-    public void save(AddUserRequest request) throws IllegalArgumentException{
+    public void save(AddUserRequest request){
         User user =  userRepository.save(
                 User.builder()
                         .email(request.getEmail())
@@ -34,9 +34,6 @@ public class UserService {
                         .role("JUNIOR")
                         .build()
         );
-        if (user==null) {
-            throw new IllegalArgumentException("다시 시도해 주십시오");
-        }
     }
 
     public void checkEmailDuplicate(String email) throws DataIntegrityViolationException {
@@ -61,7 +58,7 @@ public class UserService {
     @Transactional
     public String updatePassword(UpdateUserPasswordRequest request, Authentication authentication) {
         User loginUser = (User)authentication.getPrincipal();
-        User registeredUser = userRepository.findById(loginUser.getUserId()).orElseThrow(() -> new NoSuchElementException("로그인 정보가 유효하지 않습니다. 다시 로그인해주세요."));
+        User registeredUser = userRepository.findById(loginUser.getUserId()).get();
         if (!encoder.matches(request.getCurrentPassword(), registeredUser.getPassword())) {
             return "현재 비밀번호가 일치하지 않습니다.";
         }
