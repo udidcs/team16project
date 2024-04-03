@@ -64,10 +64,7 @@ document.querySelector('.submit-button').addEventListener('click', ()=>{
                 location.href = res;
             })
         }
-        else if(response.status == 500) { //로그인 안했을 경우
-            alert("로그인이 필요합니다");
-        }
-        else if(response.status == 400) { // 유효성 미통과
+        else if(response.status == 450) { // 유효성 미통과
             response.text().then((res)=>{
                 let list = JSON.parse(res);
                 console.log(list);
@@ -76,6 +73,11 @@ document.querySelector('.submit-button').addEventListener('click', ()=>{
                     error += e['message'] + '\n';
                 });
                 alert(error);
+            });
+        }
+        else if(response.status == 451) { //로그인 안했을 경우
+                    response.text().then((res)=>{
+                        alert(res);
             });
         }
     })

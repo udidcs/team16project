@@ -1,7 +1,6 @@
-
 use team16project
 
-INSERT INTO user (created_at, email, name, password, profile_image, role)
+INSERT INTO user (created_at, email, nickname, password, profile_image, role)
 VALUES
     ('2024-03-24 10:00:00', 'user1@example.com', 'User 1', 'password1', 'image1.jpg', 'ROLE_USER'),
     ('2024-03-24 10:00:00', 'user2@example.com', 'User 2', 'password2', 'image2.jpg', 'ROLE_USER'),
@@ -190,12 +189,23 @@ VALUES
 
 INSERT INTO reply (article_id, user_id, comments, parent_id)
 VALUES
-(160, 1, '더미 댓글 1', null),
-(160, 2, '더미 댓글 2', null),
-(160, 3, '더미 댓글 3', null),
-(160, 4, '더미 댓글 4', null),
-(160, 5, '더미 댓글 5', null),
-(160, 6, '더미 댓글 6', null),
-(160, 7, '더미 댓글 7', null),
-(160, 8, '더미 댓글 8', null);
+(423, 1, '더미 댓글 1', null),
+(423, 2, '더미 댓글 2', null),
+(423, 3, '더미 댓글 3', null),
+(423, 4, '더미 댓글 4', null),
+(423, 5, '더미 댓글 5', null),
+(423, 6, '더미 댓글 6', null),
+(423, 7, '더미 댓글 7', null),
+(423, 8, '더미 댓글 8', null);
+
+INSERT INTO reply (article_id, user_id, comments, parent_id)
+VALUES
+(423, 1, '더미 댓글 9', 20),
+(423, 2, '더미 댓글 10', 20),
+(423, 3, '더미 댓글 11', 20),
+(423, 4, '더미 댓글 12', 20),
+(423, 5, '더미 댓글 13', 21),
+(423, 6, '더미 댓글 14', 21),
+(423, 7, '더미 댓글 15', 21),
+(423, 8, '더미 댓글 16', 21);
 

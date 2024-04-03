@@ -6,6 +6,7 @@ import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.reply.request.ReplyCreateForm;
 import com.example.team16project.dto.reply.request.ReplyDeleteRequest;
 import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
+import com.example.team16project.dto.reply.response.ReplyDto;
 import com.example.team16project.repository.article.ArticleRepository;
 import com.example.team16project.repository.reply.ReplyRepository;
 import com.example.team16project.repository.user.UserRepository;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class ReplyServiceImpl implements ReplyService{
 
 
     @Transactional
+    @Override
     public void saveReply(ReplyCreateForm form, Principal principal) {
 
         // principal.getName(); // id(Email)를 가져옴
@@ -45,7 +49,13 @@ public class ReplyServiceImpl implements ReplyService{
         replyRepository.save(new Reply(article, user, form.getComments()));
     }
 
-
-
-
+    @Transactional
+    @Override
+    public List<ReplyDto> getAllReplysOnArticle(Long articleId) {
+        List<Reply> byArticleArticleIdAndReplyReplyId = replyRepository.findByArticleArticleIdAndReplyReplyId(articleId, null);
+        List<ReplyDto> collect = byArticleArticleIdAndReplyReplyId.stream().map(reply -> ReplyDto.toDto(reply,
+                replyRepository.findByReplyReplyId(reply.getReplyId()).stream().map(reply1 -> new ReplyDto(reply1.getReplyId(), reply1.getUser().getNickname(), reply1.getComments(), null))
+                        .collect(Collectors.toList()))).collect(Collectors.toList());
+        return collect;
+    }
 }
