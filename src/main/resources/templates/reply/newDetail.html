@@ -51,11 +51,11 @@
                 <input type="hidden" class="comment-id" th:value="${reply.replyId}"/>
                 <div class="comment-item-header">
                     <div class="comment-info">
-                        <p class="comment-writer-name" th:text="${reply.nickname}"></p>
+                        <p class="comment-writer-name" th:text="${reply.user}"></p>
 <!--                        <p class="comment-createdAt" th:text="${#dates.format(reply.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
                     </div>
                     <div class="comment-edit-container">
-                        <button onclick="moveToEditPage(this)">수정</button>
+                        <button onclick="updateReply(this)">수정</button>
                         <button onclick="deleteReply(this)">삭제</button>
                     </div>
                 </div>
@@ -91,42 +91,41 @@
                         </button>
                     </div>
                 </div>
-                <div class="re-comment-items-container">
-                    <div class="re-comment-item-container" th:each="rereply:${reply.replys}">
-                        <input type="hidden" class="re-comment-id" th:value="${rereply.replyId}"/>
-                        <div class="re-comment-item-header">
-                            <div class="re-comment-info">
-                                <p class="re-comment-writer-name" th:text="${rereply.nickname}"></p>
+<!--                <div class="re-comment-items-container">-->
+<!--                    <div class="re-comment-item-container" th:each="reComment:${reply.reComments}">-->
+<!--                        <input type="hidden" class="re-comment-id" th:value="${reComment.id}"/>-->
+<!--                        <div class="re-comment-item-header">-->
+<!--                            <div class="re-comment-info">-->
+<!--                                <p class="re-comment-writer-name" th:text="${reComment.writer}"></p>-->
 <!--                                <p class="re-comment-createdAt"-->
 <!--                                   th:text="${#dates.format(reComment.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
-                            </div>
-                            <div class="re-comment-edit-container">
-                                <button onclick="clickReCommentEditButton(this)">수정</button>
-                                <button onclick="clickReCommentDeleteButton(this)">삭제</button>
-                            </div>
-                        </div>
-                        <div class="re-comment-item-body">
-                            <div style="word-break:break-all" class="re-comment-contents" th:text="${rereply.comments}"
-                                      onchange="reCommentEditWordCount(this)"
-                                      oninput="reCommentEditWordCount(this)"></div>
-                            <div class="re-comment-text-edit-count hidden">0/1500</div>
-                            <div class="re-comment-editor-bottom hidden">
-                                <button class="re-comment-submit-button" type="button"
-                                        onclick="clickReCommentEditCompleteButton(this)">수정 완료
-                                </button>
-                                <button class="re-comment-cancel-button" type="button" onclick="clickReCommentEditCancelButton(this)">
-                                    취소
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!--                            </div>-->
+<!--                            <div class="re-comment-edit-container">-->
+<!--                                <button onclick="clickReCommentEditButton(this)">수정</button>-->
+<!--                                <button onclick="clickReCommentDeleteButton(this)">삭제</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="re-comment-item-body">-->
+<!--                            <div style="word-break:break-all" class="re-comment-contents" th:text="${reComment.contents}"-->
+<!--                                      onchange="reCommentEditWordCount(this)"-->
+<!--                                      oninput="reCommentEditWordCount(this)"></div>-->
+<!--                            <div class="re-comment-text-edit-count hidden">0/1500</div>-->
+<!--                            <div class="re-comment-editor-bottom hidden">-->
+<!--                                <button class="re-comment-submit-button" type="button"-->
+<!--                                        onclick="clickReCommentEditCompleteButton(this)">수정 완료-->
+<!--                                </button>-->
+<!--                                <button class="re-comment-cancel-button" type="button" onclick="clickReCommentEditCancelButton(this)">-->
+<!--                                    취소-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </section>
 </main>
 <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
 <script src="/js/reply/reply.js"></script>
-<script src="/js/article/detail.js"></script>
 </body>
 </html>
