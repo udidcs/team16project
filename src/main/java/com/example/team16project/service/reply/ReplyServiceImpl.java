@@ -99,10 +99,10 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Transactional
     @Override
-    public void updateReply(ReplyUpdateRequest request, Principal principal) throws AuthenticationException{
+    public void updateReply(ReplyUpdateRequest request, Principal principal) throws AuthenticationException {
 
         // principal 검증 로직 추가 -> 로그인이 되었는지
-        if(principal == null){
+        if (principal == null) {
             throw new AuthenticationException("댓글을 작성한 작성자만 수정할 수 있습니다."); // 500 Error
         }
 
@@ -110,12 +110,13 @@ public class ReplyServiceImpl implements ReplyService{
                 .orElseThrow(IllegalArgumentException::new);
 
         // 댓글을 쓴 사람만이 글을 지울 수 있게 하는 로직 추가
-        if(!principal.getName().equals(reply.getUser().getEmail())){
+        if (!principal.getName().equals(reply.getUser().getEmail())) {
             throw new AccessDeniedException("댓글을 작성한 작성자만 삭제할 수 있습니다."); // 403 Error
         }
 
         reply.updateComments(request.getComments());
         // 변경감지(dirty check) 작동하여 comments field 변경 후 따로 저장해 줄 필요 업음
+    }
 
     @Transactional
     @Override

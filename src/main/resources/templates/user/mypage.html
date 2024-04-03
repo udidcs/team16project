@@ -37,7 +37,7 @@
             <form class="mt-4 form-control" action="/mypage" style="width:700px" enctype="multipart/form-data">
             <p class="mt-4">내 정보</p>
 <!--               <img class="img-fluid" id="imgId" th:src="${data.imgUrl}" alt="profile-header" th:if="${data.imgUrl != null}">-->
-            <p cllass="mt-4" th:text="${userInfo.userId}">UID is empty!</p>
+<!--            <p cllass="mt-4" th:text="${userInfo.userId}">UID is empty!</p>-->
             <p class="mt-4" th:text="${userInfo.nickname}">name is empty!</p>
             <p class="mt-4" th:text="${userInfo.email}">email is empty!</p>
             <p class="mt-4" th:text="${#temporals.format(userInfo.createdAt, 'yyyy-MM-dd HH:mm:ss')}">created date is empty!</p>

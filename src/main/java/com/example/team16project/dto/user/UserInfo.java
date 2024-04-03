@@ -1,5 +1,6 @@
 package com.example.team16project.dto.user;
 
+import com.example.team16project.domain.user.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
