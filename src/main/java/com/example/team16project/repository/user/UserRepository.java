@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+
     Optional<User> findByEmail(String email);
 
     Optional<User> findByNickname(String nickname);
@@ -19,4 +20,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User set role = :role where userId = :id")
     void updateRoleByAdmin(Long id, String role);
+
 }

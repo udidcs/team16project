@@ -1,12 +1,14 @@
 package com.example.team16project.controller.user;
 
-import com.example.team16project.domain.user.User;
+
 import com.example.team16project.dto.user.AddUserRequest;
 import com.example.team16project.service.user.UserService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+
+@RestController
 public class UserController {
     private UserService userService;
 
@@ -15,22 +17,18 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public String signup(AddUserRequest request) {
-        userService.save(request);
-        return "/user/login";
-    }
-
-    @GetMapping("/user/checkEmail")
-    public void checkEmail(@RequestParam String email) {
-        if (userService.checkEmailDuplicate(email)) {
-            // 이거 중복임
+    public ResponseEntity<String> signup(AddUserRequest request) {
+        try {
+            userService.checkEmailDuplicate(request.getEmail());
+            userService.checkNicknameDuplicate(request.getNickname());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
-    }
-
-    @GetMapping("/user/checkNickname")
-    public void checkNickname(@RequestParam String nickname) {
-        if (userService.checkNicknameDuplicate(nickname)) {
-            // 이것도 중복임
+        try {
+            userService.save(request);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+        return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
 }

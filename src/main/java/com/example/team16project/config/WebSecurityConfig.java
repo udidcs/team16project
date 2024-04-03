@@ -2,6 +2,7 @@ package com.example.team16project.config;
 
 
 import com.example.team16project.service.user.UserDetailsServiceImpl;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,7 @@ public class WebSecurityConfig {
         return web ->
                 web
                 .ignoring()
-                .requestMatchers("/static/**");
+                .requestMatchers("/js/**", "/css/**", "/images/**");
     }
 
     @Bean
@@ -31,11 +32,15 @@ public class WebSecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests(auth ->
                         auth
-                        .requestMatchers("/user/login", "/user/signup","/user", "/admin/**").permitAll()
-                                .requestMatchers("/a").hasRole("ADMIN")
+                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers("/articles", "/article").permitAll()
+                                .requestMatchers("/user/login", "/user/signup", "/user").anonymous()
+                                .requestMatchers("/article", "/reply").hasRole("JUNIOR")
+                                .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
             .formLogin(auth -> auth.loginPage("/user/login")
                     .defaultSuccessUrl("/articles"))
+
                 .logout(auth -> auth.logoutSuccessUrl("/user/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true))

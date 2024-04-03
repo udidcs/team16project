@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
-
     Optional<Reply> findByReplyId(Long id);
     List<Reply> findByArticleArticleId(Long articleId);
     Optional<Reply> findByReplyIdAndUserUserId(Long replyId, Long userId);
-
+    List<Reply> findByReplyReplyId(Long replyId);
+    List<Reply> findByArticleArticleIdAndReplyReplyId(Long articleArticleId, Long replyReplyId);
 }

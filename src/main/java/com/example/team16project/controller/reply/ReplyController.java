@@ -26,7 +26,6 @@ public class ReplyController {
     @ResponseBody
     @PostMapping("/reply")
     public void createReply(@RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
-
         replyService.saveReply(form, principal);
     }
 

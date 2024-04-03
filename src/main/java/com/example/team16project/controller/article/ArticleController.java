@@ -4,9 +4,12 @@ import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.article.request.ArticleWithIdForm;
 import com.example.team16project.dto.article.response.ArticleDto;
 import com.example.team16project.dto.article.request.ArticleForm;
+import com.example.team16project.dto.reply.response.ReplyDto;
+import com.example.team16project.exception.LoginRequiredException;
 import com.example.team16project.repository.user.UserRepository;
 import com.example.team16project.service.article.ArticleService;
 import com.example.team16project.domain.article.Article;
+import com.example.team16project.service.reply.ReplyService;
 import com.example.team16project.util.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-
 @Tag(name = "Article", description = "게시글 API")
 @RequiredArgsConstructor
 @Controller
@@ -31,6 +33,7 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final UserRepository userRepository;
+    private final ReplyService replyService;
 
     @Operation(summary = "게시글 전체 보기",
             description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
@@ -69,12 +72,14 @@ public class ArticleController {
     public String detail(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model){
 
         ArticleDto article = articleService.getArticle(articleId);
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
-
-        if (article.getUserId() == user.getUserId())
-            model.addAttribute("identified", true);
+        if (principal != null) {
+            User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+            if (article.getUserId().equals(user.getUserId()))
+                model.addAttribute("identified", true);
+        }
         model.addAttribute("article", article);
-        model.addAttribute("replys", article.getReplys());
+        List<ReplyDto> allReplysOnArticle = replyService.getAllReplysOnArticle(articleId);
+        model.addAttribute("replys", allReplysOnArticle);
 
         return "article/detail";
     }
@@ -101,17 +106,17 @@ public class ArticleController {
     }
 
     @GetMapping("/article/edit")
-    public String edit(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model){
+    public String edit(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model) throws LoginRequiredException, IllegalAccessException {
 
         if(principal == null) {
-            return "/user/login";
+            throw new LoginRequiredException("로그인 해야합니다");
         }
 
         ArticleDto article = articleService.getArticle(articleId);
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
 
         if (!article.getUserId().equals(user.getUserId())) {
-            return "/articles";
+            throw new IllegalAccessException("권한이 없습니다");
         }
 
         model.addAttribute("article", article);
@@ -122,15 +127,18 @@ public class ArticleController {
 
     @ResponseBody
     @PutMapping("/article")
-    public String update(@Valid @RequestBody ArticleWithIdForm articleWithIdForm, Principal principal, Model model){
+    public String update(@Valid @RequestBody ArticleWithIdForm articleWithIdForm, Principal principal, Model model) throws IllegalAccessException, LoginRequiredException {
 
         if(principal == null) {
-            return "redirect:/user/login";
+            throw new LoginRequiredException("로그인 해야합니다");
         }
 
-//        ArticleDto article = articleService.getArticle();
-//        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        ArticleDto article = articleService.getArticle(articleWithIdForm.getArticleId());
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
 
+        if (!article.getUserId().equals(user.getUserId())) {
+            throw new IllegalAccessException("잘못된 접근입니다");
+        }
         articleService.editArticle(articleWithIdForm);
 
         return "/article?id=" + articleWithIdForm.getArticleId();
@@ -138,19 +146,22 @@ public class ArticleController {
 
     @ResponseBody
     @DeleteMapping("/article")
-    public String delete(@RequestParam(value = "id") Long articleId, Principal principal, Model model){
+    public String delete(@RequestParam(value = "id") Long articleId, Principal principal, Model model) throws LoginRequiredException, IllegalAccessException {
 
         if(principal == null) {
-            return "redirect:/user/login";
+            throw new LoginRequiredException("로그인 해야합니다");
         }
 
-//        ArticleDto article = articleService.getArticle();
-//        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        ArticleDto article = articleService.getArticle(articleId);
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+
+        if (!article.getUserId().equals(user.getUserId())) {
+            throw new IllegalAccessException("권한이 없습니다");
+        }
 
         articleService.deleteArticle(articleId);
 
         return "/articles";
     }
-
 
 }
