@@ -98,11 +98,20 @@ function updateReplyComplete(button){
             alert('수정 완료되었습니다');
             location.href = '/article?id='+articleId
         }
-
-
+        else if(response.status === 500) { //로그인 안했을 경우
+            alert("로그인이 필요합니다");
+        }
+        else if(response.status === 403){
+            alert("댓글을 작성한 작성자만 수정할 수 있습니다.")
+        }
     });
 }
 
+// 댓글 수정 기능 (댓글 수정 취소)
+function updateReplyCancel(button){
+    const articleId = document.getElementById('articleId').value;
+    location.href = '/article?id='+articleId
+}
 
 
 

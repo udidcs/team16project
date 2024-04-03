@@ -1,15 +1,11 @@
 package com.example.team16project.controller.reply;
 
-import com.example.team16project.domain.user.User;
-import com.example.team16project.dto.article.response.ArticleDto;
 import com.example.team16project.dto.reply.request.ReplyCreateForm;
 import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
 import com.example.team16project.service.article.ArticleServiceImpl;
 import com.example.team16project.service.reply.ReplyServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
