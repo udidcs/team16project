@@ -2,13 +2,19 @@ package com.example.team16project.service.user;
 
 import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.user.AddUserRequest;
+import com.example.team16project.dto.user.UpdateUserPasswordRequest;
+import com.example.team16project.dto.user.UserInfo;
 import com.example.team16project.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -44,5 +50,34 @@ public class UserService {
         if (optionalUser.isPresent()) {
             throw new DataIntegrityViolationException("이미 사용중인 닉네임입니다.");
         }
+    }
+
+    public UserInfo findUserInfo(Authentication authentication) {
+        User user = (User)authentication.getPrincipal();
+        return new UserInfo(user);
+    }
+
+    @Transactional
+    public String updatePassword(UpdateUserPasswordRequest request, Authentication authentication) {
+        User loginUser = (User)authentication.getPrincipal();
+        User registeredUser = userRepository.findById(loginUser.getUserId()).orElseThrow(() -> new NoSuchElementException("로그인 정보가 유효하지 않습니다. 다시 로그인해주세요."));
+        if (!encoder.matches(request.getCurrentPassword(), registeredUser.getPassword())) {
+            return "현재 비밀번호가 일치하지 않습니다.";
+        }
+
+        registeredUser.updatePassword(encoder.encode(request.getNewPassword()));
+        return "비밀번호 변경이 완료되었습니다.";
+    }
+
+    public boolean isDeleted(Authentication authentication) {
+        User loginUser = (User)authentication.getPrincipal();
+        return userRepository.findByEmail(loginUser.getEmail()).get().getDeletedAt() != null;
+    }
+
+    @Transactional
+    public void recoveryUser(Authentication authentication) {
+        User deletedUser = (User)authentication.getPrincipal();
+        User registeredUser = userRepository.findByEmail(deletedUser.getEmail()).get();
+        registeredUser.recovery();
     }
 }
