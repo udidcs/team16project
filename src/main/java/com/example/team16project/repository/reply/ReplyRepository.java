@@ -10,4 +10,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     Optional<Reply> findByReplyId(Long id);
   
     List<Reply> findByArticleArticleId(Long articleId);
+    List<Reply> findByReplyReplyId(Long replyId);
+    List<Reply> findByArticleArticleIdAndReplyReplyId(Long articleArticleId, Long replyReplyId);
+
 }
