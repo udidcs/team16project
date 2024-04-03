@@ -8,22 +8,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class UserInfo {
-    private String username;
-    private Long userId;
     private String email;
     private String nickname;
     private LocalDateTime createdAt;
 
-    public UserInfo(String email, String nickname, Long userId, LocalDateTime createdAt) {
-        this.email = email;
-        this.nickname = nickname;
-        this.userId = userId;
-        this.createdAt = createdAt;
-    }
-
-    public UserInfo(String nickname) {
-    }
-
-    public UserInfo(String nickname, String email) {
+    public UserInfo(User user) {
+        this.email = user.getEmail();
+        this.nickname = user.getNickname();
+        this.createdAt = user.getCreatedAt();
     }
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계정복구</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <h2>계정 복구 페이지</h2>
+    <p>
+        현재 계정이 삭제 대기상태입니다.<br>
+        계정 삭제를 취소하시겠습니까?
+    </p>
+    <button type="button" id="btn-cancle">예</button>
+    <button type="button" id="btn-check">아니오</button>
+    <span>삭제 요청 후 30일동안은 삭제 대기 상태입니다. <br>
+    삭제 대기 기간에는 요청을 취소할 수 있으며, 그 이후에는 복구가 불가능합니다.</span>
+
+    <script>
+        let btnCancle = document.querySelector('#btn-cancle');
+        let btnCheck = document.querySelector('#btn-check');
+
+        btnCancle.addEventListener('click', () => {
+            fetch('/user/cancle', {
+                method: 'GET'
+            }).then(location.href="/articles")
+        })
+
+        btnCheck.addEventListener('click', () => {
+            fetch('/logout', {
+                method: 'POST'
+            }).then(location.href="/articles")
+        })
+    </script>
+</body>
+</html>

@@ -22,7 +22,7 @@
             </div>
             <div class="div-signup">
                 <label>닉네임</label>
-                <input type="text" name="nickname" id="nickname" pattern="[^\s]+" maxlength="10" required placeholder="10글자이내">
+                <input type="text" name="nickname" id="nickname" pattern="^\S{1,10}$" maxlength="10" required placeholder="10글자이내">
             </div>
             <button type="submit">회원가입</button>
             <p>이미 회원이신가요? <a href="/user/login">로그인</a></p>
@@ -35,7 +35,7 @@
             event.preventDefault();
 
             const formData = new FormData(form);
-            const url = '/user';
+            const url = '/user/signup';
 
             fetch(url, {
                 method: 'POST',
