@@ -19,6 +19,8 @@
         </div>
         <h1 class="title" th:text="${article.title}"></h1>
         <div class="content-info">
+            <img class="profileImage" th:src="'/images/'+${article.profileImage}" th:if="${article.profileImage != null}">
+            <img class="profileImage" src="/images/user/default-profile.png" th:if="${article.profileImage == null}">
             <p class="board-writer-name" th:value="${article.email}" th:text="${article.email}"></p>
             <p class="content-createdAt" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
             <p class="viewcount" th:text="'조회 ' + ${article.viewCount}"></p>
@@ -28,6 +30,7 @@
         <h2 class="a11y">퀴즈 게시판 본문 내용</h2>
         <div class="content-detail" th:text="${article.contents}">
         </div>
+        <div class="like-thumb-container"><img class="like-thumb" src="/images/article/like-default.png"></div>
     </section>
     <section class="comment-container">
         <div class="comment-header">

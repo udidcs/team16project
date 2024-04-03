@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 public class ArticleDto {
     private List<Reply> replys;
+    private String profileImage;
     private Long userId;
     private Long articleId;
     private String email;
@@ -24,6 +25,7 @@ public class ArticleDto {
     public static ArticleDto toDto(Article article, List<Reply> replys) {
         return ArticleDto.builder()
                 .replys(replys)
+                .profileImage(article.getUser().getProfileImage())
                 .userId(article.getUser().getUserId())
                 .articleId(article.getArticleId())
                 .email(article.getUser().getEmail())

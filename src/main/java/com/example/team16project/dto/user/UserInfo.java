@@ -10,13 +10,14 @@ public class UserInfo {
     private Long id;
     private String email;
     private String nickname;
-
+    private String profileImage;
     public UserInfo(UserInfo userInfo) {
     }
 
-    public UserInfo(String email, String username, String nickname) {
+    public UserInfo(String email, String username, String nickname, String profileImage) {
         this.email = email;
         this.nickname = nickname;
         this.username = username;
+        this.profileImage = profileImage;
     }
 }

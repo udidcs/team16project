@@ -61,6 +61,11 @@ button:hover {
     margin-top: 40px;
     border-bottom: 1px solid #C4C4C4;
 }
+.profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 70%;
+}
 
 .board-writer-name, .comment-writer-name, .re-comment-writer-name{
     font-size: 15px;
@@ -137,7 +142,13 @@ button:hover {
     gap: 20px;
     padding: 50px;
 }
-
+.like-thumb {
+    width: 50px;
+    height: 50px;
+}
+.like-thumb-container {
+    text-align: center;
+}
 .likes-number{
     font-size: 13px;
 }
