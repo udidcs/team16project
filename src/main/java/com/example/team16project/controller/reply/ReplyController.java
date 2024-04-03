@@ -1,13 +1,15 @@
 package com.example.team16project.controller.reply;
 
+import com.example.team16project.domain.user.User;
+import com.example.team16project.dto.article.response.ArticleDto;
 import com.example.team16project.dto.reply.request.ReplyCreateForm;
-import com.example.team16project.dto.reply.request.ReplyDeleteRequest;
 import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
+import com.example.team16project.service.article.ArticleServiceImpl;
 import com.example.team16project.service.reply.ReplyServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
@@ -17,20 +19,36 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class ReplyController {
 
+    private final ArticleServiceImpl articleService;
+
     private final ReplyServiceImpl replyService;
 
     @ResponseBody
-    @PostMapping("/reply") // url 생각 // reply 등록 //ResponseBody 사용 여부
+    @PostMapping("/reply")
     public void createReply(@RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
 
         replyService.saveReply(form, principal);
     }
 
-    @ResponseBody
-    @PutMapping("/reply/{replyId}")
-    public void updateReply(@PathVariable("replyId") Long replyId, Principal principal) throws AuthenticationException{
+    @GetMapping("/reply")
+    public String moveToEditReplyPage(@RequestParam(value ="articleId") Long articleId, @RequestParam(value = "replyId") Long replyId, Principal principal, Model model) throws AuthenticationException {
 
-        replyService.updateReply(replyId, principal);
+        replyService.checkConditionToMoveToEditReplyPage(replyId, principal);
+
+        ArticleDto article = articleService.getArticle(articleId);
+
+        model.addAttribute("article", article);
+        model.addAttribute("replys", article.getReplys());
+
+        return "reply/newDetail";
+
+    }
+
+    @ResponseBody
+    @PutMapping("/reply")
+    public void updateReply(@RequestBody ReplyUpdateRequest request, Principal principal) throws AuthenticationException{
+
+        replyService.updateReply(request, principal);
     }
 
 
