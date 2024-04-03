@@ -30,20 +30,6 @@ public class ReplyController {
         replyService.saveReply(form, principal);
     }
 
-    @GetMapping("/reply")
-    public String moveToEditReplyPage(@RequestParam(value ="articleId") Long articleId, @RequestParam(value = "replyId") Long replyId, Principal principal, Model model) throws AuthenticationException {
-
-        replyService.checkConditionToMoveToEditReplyPage(replyId, principal);
-
-        ArticleDto article = articleService.getArticle(articleId);
-
-        model.addAttribute("article", article);
-        model.addAttribute("replys", article.getReplys());
-
-        return "reply/newDetail";
-
-    }
-
     @ResponseBody
     @PutMapping("/reply")
     public void updateReply(@RequestBody ReplyUpdateRequest request, Principal principal) throws AuthenticationException{

@@ -34,8 +34,7 @@
             <div class="comment-editor">
                 <input type="hidden" id = "articleId" name="articleId" th:value="${article.articleId}"/>
                 <textarea id = "comment-input" class="comment-input" placeholder="댓글을 달아보세요"
-                          name="contents" onchange="commentCreateWordCount(this);"
-                          oninput="commentCreateWordCount(this);"></textarea>
+                          name="contents" ></textarea>
                 <div class="comment-editor-bottom">
 <!--                   <button class="submit-button" type="button" onclick="clickCommentSubmitButton(this)">등록</button>-->
                     <button id = "submit-button" class="submit-button" onclick="submitReply(this)" type="button">등록</button>
@@ -55,7 +54,7 @@
 <!--                        <p class="comment-createdAt" th:text="${#dates.format(reply.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
                     </div>
                     <div class="comment-edit-container">
-                        <button onclick="moveToEditPage(this)">수정</button>
+                        <button onclick="updateReply(this)">수정</button>
                         <button onclick="deleteReply(this)">삭제</button>
                     </div>
                 </div>
@@ -63,9 +62,9 @@
                     <div style="word-break:break-all" class="comment-contents" th:text="${reply.comments}"></div>
                     <div class="comment-editor-bottom hidden">
                         <button class="comment-submit-button" type="button"
-                                onclick="clickCommentEditCompleteButton(this)">수정 완료
+                                onclick="updateReplyComplete(this)">수정 완료
                         </button>
-                        <button class="comment-cancel-button" type="button" onclick="clickCommentEditCancelButton(this)">
+                        <button class="comment-cancel-button" type="button" onclick="updateReplyCancel(this)">
                             취소
                         </button>
                     </div>

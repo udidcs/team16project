@@ -2,7 +2,6 @@ package com.example.team16project.service.reply;
 
 import com.example.team16project.dto.reply.request.ReplyCreateForm;
 import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
-import com.example.team16project.dto.reply.response.EditReplyViewResponse;
 
 import javax.naming.AuthenticationException;
 import java.security.Principal;
@@ -18,9 +17,7 @@ public interface ReplyService {
     // 댓글 삭제 로직
     void deleteReply(Long replyId, Principal principal) throws AuthenticationException;
 
-    void checkConditionToMoveToEditReplyPage(Long replyId, Principal principal) throws AuthenticationException;
 
-    EditReplyViewResponse makeReplyViewResponse(Long replyId);
 
 
 
