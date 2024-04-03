@@ -100,9 +100,11 @@ function updateReplyComplete(button){
         }
         else if(response.status === 500) { //로그인 안했을 경우
             alert("로그인이 필요합니다");
+            location.href = '/user/login'
         }
         else if(response.status === 403){
             alert("댓글을 작성한 작성자만 수정할 수 있습니다.")
+            location.href = '/article?id='+articleId
         }
     });
 }

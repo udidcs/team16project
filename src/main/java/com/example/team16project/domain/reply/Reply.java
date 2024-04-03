@@ -4,7 +4,6 @@ import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 
