@@ -29,7 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleDto getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + articleId));
-        List<Reply> replys = replyRepository.findByArticleArticleId(articleId);
+        List<Reply> replys = replyRepository.findByArticleArticleIdAndReplyReplyId(articleId, null);
         return ArticleDto.toDto(article, replys);
     }
 

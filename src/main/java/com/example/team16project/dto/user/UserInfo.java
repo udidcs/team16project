@@ -1,7 +1,8 @@
 package com.example.team16project.dto.user;
 
-import com.example.team16project.domain.user.User;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -9,11 +10,11 @@ import lombok.*;
 public class UserInfo {
     private String email;
     private String nickname;
-    private String profileImage;
+    private LocalDateTime createdAt;
 
     public UserInfo(User user) {
         this.email = user.getEmail();
         this.nickname = user.getNickname();
-        this.profileImage = user.getProfileImage();
+        this.createdAt = user.getCreatedAt();
     }
 }

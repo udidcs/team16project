@@ -7,6 +7,9 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Builder
 @Entity
@@ -34,13 +37,20 @@ public class Reply {
     @Column(name = "comments", nullable = false, length = 1000)
     private String comments;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Reply reply;
 
     public Reply(Article article, User user, String comments) {
+        if(comments==null||comments.isBlank()){
+            throw new IllegalArgumentException("댓글 내용을 입력해주세요"); //500 Error
+        } // 댓글에 아무것도 작성 안하면 Error 발생
         this.article = article;
         this.user = user;
+        this.comments = comments;
+    }
+
+    public void updateComments(String comments) {
         this.comments = comments;
     }
 }
