@@ -1,3 +1,21 @@
+var imageClicked = true;
+let a = 0;
+function changeImageAndCount() {
+    var img = document.querySelector('.like-thumb');
+    if (imageClicked) {
+        console.log('????');
+        img.src = '/images/recommend/like-true.jpg';
+        fetch('/recommend', {
+         method: 'GET'
+
+        }).then((response) => {
+        });
+    } else {
+        img.src = '/images/recommend/like-default.jpg';
+    }
+    imageClicked = !imageClicked;
+}
+
 document.querySelector('.delete-button').addEventListener('click', ()=>{
     let articleId = document.getElementById('articleId').value;
     let check = confirm("정말로 삭제하시겠습니까?");

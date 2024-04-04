@@ -28,8 +28,6 @@ public class ReplyServiceImpl implements ReplyService{
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
 
-
-
     @Transactional
     @Override
     public void saveReply(ReplyCreateForm form, Principal principal) {

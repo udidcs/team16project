@@ -19,12 +19,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "Article", description = "게시글 API")
 @RequiredArgsConstructor
@@ -165,5 +167,6 @@ public class ArticleController {
 
         return "/articles";
     }
+
 
 }

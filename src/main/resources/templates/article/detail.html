@@ -30,7 +30,8 @@
         <h2 class="a11y">퀴즈 게시판 본문 내용</h2>
         <div class="content-detail" th:text="${article.contents}">
         </div>
-        <div class="like-thumb-container"><img class="like-thumb" src="/images/article/like-default.png"></div>
+        <div class="like-thumb-container"><img class="like-thumb" src="/images/recommend/like-default.jpg" onclick="changeImageAndCount()"></div>
+        <div class="like-thumb-container-count">32</div>
     </section>
     <section class="comment-container">
         <div class="comment-header">
