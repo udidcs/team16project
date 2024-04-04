@@ -34,13 +34,13 @@
         <!-- Page content-->
         <div class="container-fluid">
             <h1 class="mt-4">내 정보</h1>
-            <form class="mt-4" action="/user/myinfo" method="POST">
-            <label for="nickname" class="form-control">닉네임</label>
-            <input type="text" id="nickname" class="mt-4 border-primary" th:value="${userInfo.nickname()}">
+            <form class="mt-4" th:action="@{/user/myinfo/updatenickname}" method="PATCH" th:object="${user}">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" class="mt-4 border-primary form-control w-50" th:value="*{nickname}">
             <button type="submit" class="mt-4 btn btn-primary">변경</button>
-            <br>
-            <label>이메일</label>
-            <input type="email" class="mt-4 border-primary" th:value="${userInfo.email}" disabled="disabled">
+<!--            <br>-->
+<!--            <label for="email" class="form-control">이메일</label>-->
+<!--            <input type="email" id="email" class="mt-4 border-primary" th:value="${userInfo.email}" disabled="disabled">-->
             </form>
         </div>
     </div>

@@ -1,12 +1,17 @@
 package com.example.team16project.controller.user;
 
 
+import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.user.AddUserRequest;
+import com.example.team16project.dto.user.UpdateUserInfoRequest;
 import com.example.team16project.dto.user.UpdateUserPasswordRequest;
 import com.example.team16project.dto.user.UserInfo;
+import com.example.team16project.repository.user.UserRepository;
+import com.example.team16project.service.user.UserInfoService;
 import com.example.team16project.service.user.UserProfileImageService;
 import com.example.team16project.service.user.UserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -20,13 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.UUID;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -124,6 +129,5 @@ public class UserController {
         userProfileImageService.saveImageToDB(imageFileName, principal);
         return "redirect:/user/mypage";
     }
-
 
 }

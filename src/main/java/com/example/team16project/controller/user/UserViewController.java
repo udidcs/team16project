@@ -25,7 +25,7 @@ public class UserViewController {
     }
 
     @GetMapping("/user/myinfo")
-    public String myInfo(){
+    public String myInfo() {
         return "user/myinfo";
     }
 

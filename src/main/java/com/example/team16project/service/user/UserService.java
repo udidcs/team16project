@@ -27,12 +27,12 @@ public class UserService {
     @Transactional
     public void save(AddUserRequest request){
         User user =  userRepository.save(
-                User.builder()
-                        .email(request.getEmail())
-                        .password(encoder.encode(request.getPassword()))
-                        .nickname(request.getNickname())
-                        .role("JUNIOR")
-                        .build()
+        User.builder()
+                .email(request.getEmail())
+                .password(encoder.encode(request.getPassword()))
+                .nickname(request.getNickname())
+                .role("JUNIOR")
+                .build()
         );
     }
 
@@ -43,7 +43,7 @@ public class UserService {
         }
     }
 
-    public void checkNicknameDuplicate(String nickname) throws DataIntegrityViolationException{
+    public void checkNicknameDuplicate(String nickname) throws DataIntegrityViolationException {
         Optional<User> optionalUser = userRepository.findByNickname(nickname);
         if (optionalUser.isPresent()) {
             throw new DataIntegrityViolationException("이미 사용중인 닉네임입니다.");
@@ -51,12 +51,13 @@ public class UserService {
     }
 
     public UserInfo findUserInfo(Authentication authentication) {
-        User user = (User)authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         return new UserInfo(user);
     }
 
     @Transactional
     public String updatePassword(UpdateUserPasswordRequest request, Authentication authentication) {
+      
         User loginUser = (User)authentication.getPrincipal();
         User registeredUser = userRepository.findById(loginUser.getUserId()).get();
         if (!encoder.matches(request.getCurrentPassword(), registeredUser.getPassword())) {
@@ -68,14 +69,20 @@ public class UserService {
     }
 
     public boolean isDeleted(Authentication authentication) {
-        User loginUser = (User)authentication.getPrincipal();
+        User loginUser = (User) authentication.getPrincipal();
         return userRepository.findByEmail(loginUser.getEmail()).get().getDeletedAt() != null;
     }
 
     @Transactional
     public void recoveryUser(Authentication authentication) {
-        User deletedUser = (User)authentication.getPrincipal();
+        User deletedUser = (User) authentication.getPrincipal();
         User registeredUser = userRepository.findByEmail(deletedUser.getEmail()).get();
         registeredUser.recovery();
     }
+
+    public void updateNickname(String nickname, Authentication authentication) {
+        User CurrentUser = (User) authentication.getPrincipal();
+        User registeredUser = userRepository.findByNickname(CurrentUser.getNickname()).get();
+    }
 }
+
