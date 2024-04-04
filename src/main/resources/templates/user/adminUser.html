@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/user/adminuser.css" th:href="@{css/user/adminuser.css}">
 </head>
 <body>
-<h1>상세정보 조회</h1>
+<h1>회원정보 수정</h1>
 
 
     <form th:action="@{'/admin/' + ${user.userId}}" method="POST" th:object="${user}">
@@ -19,15 +20,15 @@
         </div>
         <div>
             <label>닉네임</label>
-            <input type="text" name="nickname" class="input-field" pattern="^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{,10}$" required maxlength="10" th:value="*{nickname}">
+            <input type="text" name="nickname" class="input-field" pattern="^\S{1,10}$" required maxlength="10" th:value="*{nickname}">
         </div>
         <div>
             <label>가입일</label>
-            <input type="text" name="createdAt" disabled th:value="*{createdAt}">
+            <input type="text" name="createdAt" disabled th:value="*{#temporals.format(createdAt, 'yyyy_MM-dd  HH:mm:ss')}">
         </div>
         <div>
             <label>탈퇴일</label>
-            <input type="text" name="deletedAt" disabled th:value="*{deletedAt}">
+            <input type="text" name="deletedAt" disabled th:value="*{#temporals.format(deletedAt, 'yyyy-MM-dd  HH:mm:ss')}">
         </div>
         <div>
             <label for="role">회원등급</label>
@@ -45,6 +46,7 @@
         const updateBtn = document.querySelector('.btn-update')
         const inputField = document.querySelector('.input-field')
         const selectRole = document.querySelector('select')
+        const regex = /^\S{1,10}$/;
 
         function update() {
             userForm.submit();
@@ -55,7 +57,9 @@
         }
 
         inputField.addEventListener('input', () => {
-            updateBtn.removeAttribute('disabled');
+            if (regex.test(inputField.value)) {
+                updateBtn.removeAttribute('disabled');
+            } else{updateBtn.disabled = true}
         })
 
         selectRole.addEventListener('change', () => {

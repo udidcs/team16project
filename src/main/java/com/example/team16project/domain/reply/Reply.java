@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Builder
 @Entity
@@ -33,7 +36,7 @@ public class Reply {
     @Column(name = "comments", nullable = false, length = 1000)
     private String comments;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Reply reply;
 

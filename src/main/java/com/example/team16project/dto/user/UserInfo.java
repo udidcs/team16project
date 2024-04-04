@@ -1,20 +1,21 @@
 package com.example.team16project.dto.user;
 
+import com.example.team16project.domain.user.User;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserInfo {
-    private Long id;
     private String email;
     private String nickname;
+    private LocalDateTime createdAt;
 
-    public UserInfo(UserInfo userInfo) {
-    }
-
-    public UserInfo(String email, String name, String profileImage) {
-
+    public UserInfo(User user) {
+        this.email = user.getEmail();
+        this.nickname = user.getNickname();
+        this.createdAt = user.getCreatedAt();
     }
 }

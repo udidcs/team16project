@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,6 @@ import java.util.List;
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true, length = 320)
     private String email;
 
-    @Column(name = "nickname", length = 10)
+    @Column(name = "nickname", unique = true,length = 10)
     private String nickname;
 
     @Column(name = "password", nullable = false)
@@ -41,6 +41,7 @@ public class User implements UserDetails {
 
     @CreatedDate
     @Column(name = "created_at")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "deleted_at")
@@ -52,11 +53,10 @@ public class User implements UserDetails {
 
     // JUNIOR: 기본, SENIOR: 등업, ADMIN: 관리자
     @Column(name = "role", length = 10)
-    private String role = "JUNIOR";
+    private String role;
 
     @Transient
     private List<String> auths = new ArrayList<>(Arrays.asList("JUNIOR", "SENIOR", "ADMIN"));
-
 
     @Builder
     public User(String email, String password, String nickname) {
@@ -64,7 +64,6 @@ public class User implements UserDetails {
         this.password = password;
         this.nickname = nickname;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,6 +73,10 @@ public class User implements UserDetails {
             authorities.add(new SimpleGrantedAuthority("ROLE_"+auths.get(i)));
         }
         return authorities;
+    }
+
+    public void update(String nickname){
+        this.nickname = nickname;
     }
 
     @Override
@@ -104,5 +107,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void recovery() {
+        this.deletedAt = null;
     }
 }
