@@ -1,5 +1,6 @@
-// 게시글 삭제 기능
 
+
+// 게시글 삭제 기능
 document.querySelector('.delete-button').addEventListener('click', ()=>{
     let articleId = document.getElementById('articleId').value;
     let check = confirm("정말로 삭제하시겠습니까?");
@@ -64,34 +65,24 @@ function submitReply(button) {
     });
 }
 
-// 댓글 수정 기능
-function moveToEditPage(button) {
-    const articleId = document.getElementById('articleId').value;
-    const replyId = button.closest('.comment-item-container').querySelector('.comment-id').value;
-    fetch('/reply?articleId='+articleId+'&replyId='+replyId, {
-        method: 'GET'
-    }).then((response) => {
-        if(response.status===200){
-            location.href = '/reply?articleId='+articleId+'&replyId='+replyId
-            // '/article?id='+articleId 로 변경해야함
-            // window.location.reload();
-        }
-        else if(response.status===500){
-            alert("로그인이 필요합니다.")
-            location.href = "/user/login"
-            // 로그인을 안했을 경우
-        }
-        else if(response.status===403){
-            alert("본인이 작성한 댓글에 대해서만 수정할 수 있습니다.")
-            location.href = '/article?id='+articleId
-        }
-    })
+
+
+// 댓글 수정 기능 (댓글 디자인 변경)
+function updateReply(button){
+
+    button.closest('.comment-item-container').querySelector('.comment-edit-container').classList.toggle('hidden');
+    let content = button.closest('.comment-item-container').querySelector('.comment-contents').innerHTML;
+    button.closest('.comment-item-container').querySelector('.comment-item-body').firstElementChild.outerHTML
+        = '<textarea class="comment-input" placeholder="댓글을 달아보세요" name="contents">'+content+'</textarea>';
+    button.closest('.comment-item-container').querySelector('.comment-editor-bottom').classList.toggle('hidden');
+
 }
 
-function updateReply(button){
+// 댓글 수정 기능 (댓글 수정 완료시)
+function updateReplyComplete(button){
+    let comments = button.closest('.comment-item-container').querySelector('.comment-input').value;
     const articleId = document.getElementById('articleId').value;
     const replyId = button.closest('.comment-item-container').querySelector('.comment-id').value;
-    const comment = document.getElementById('comment-input').value;
     fetch(`/reply`, {
         method: 'PUT',
         headers: {
@@ -99,18 +90,30 @@ function updateReply(button){
         },
         body: JSON.stringify({
             replyId: replyId,
-            comments: comment
+            comments: comments
         }),
     }).then((response) => {
         // 유효성 검증 로직
         if(response.status===200){
             alert('수정 완료되었습니다');
             location.href = '/article?id='+articleId
-            }
+        }
+        else if(response.status === 500) { //로그인 안했을 경우
+            alert("로그인이 필요합니다");
+            location.href = '/user/login'
+        }
+        else if(response.status === 403){
+            alert("댓글을 작성한 작성자만 수정할 수 있습니다.")
+            location.href = '/article?id='+articleId
+        }
     });
 }
 
-
+// 댓글 수정 기능 (댓글 수정 취소)
+function updateReplyCancel(button){
+    const articleId = document.getElementById('articleId').value;
+    location.href = '/article?id='+articleId
+}
 
 
 
