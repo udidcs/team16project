@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 public class UserInfo {
     private String email;
     private String nickname;
+    private String profileImage;
     private LocalDateTime createdAt;
 
     public UserInfo(User user) {
         this.email = user.getEmail();
         this.nickname = user.getNickname();
         this.createdAt = user.getCreatedAt();
+        this.profileImage = user.getProfileImage();
     }
 }

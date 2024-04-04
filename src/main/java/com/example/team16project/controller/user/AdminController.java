@@ -3,6 +3,7 @@ package com.example.team16project.controller.user;
 import com.example.team16project.dto.user.AdminUserRequest;
 import com.example.team16project.dto.user.AdminUserResponse;
 import com.example.team16project.service.user.AdminService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
-    private AdminService adminService;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
+    private final AdminService adminService;
 
     @GetMapping("/admin")
     public String findAllUsers(Model model) {

@@ -15,7 +15,6 @@ public interface ArticleService {
     int getTotalPages(int pageSize);
     Article saveArticle(ArticleForm articleForm, User user);
     void editArticle(ArticleWithIdForm articleWithIdForm);
-
     void deleteArticle(Long articleId);
 }
 

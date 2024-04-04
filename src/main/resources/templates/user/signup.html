@@ -41,16 +41,23 @@
                 method: 'POST',
                 body: formData
             }).then((response)=>{
-                if(response.status != 200) {
+                if(response.status == 201) {
                     response.text()
                             .then((res) => {
                         alert(res);
+                        location.href='/user/login'
                     })
                 } else {
                     response.text()
                             .then((res) => {
-                                alert(res);
-                                location.href='/user/login'
+                                if (res.includes(",")) {
+                                    let texts = res.split(",");
+                                    let msg = texts.join("\n");
+                                    alert(msg);
+                                }
+                                else {
+                                    alert(res);
+                                }
                             })
                 }
             })

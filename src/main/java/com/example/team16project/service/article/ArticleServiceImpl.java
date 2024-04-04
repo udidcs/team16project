@@ -9,12 +9,16 @@ import com.example.team16project.repository.article.ArticleRepository;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.repository.reply.ReplyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,6 +78,12 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticle(Long articleId) {
         articleRepository.deleteById(articleId);
     }
+
+//    @Scheduled(fixedRate = 3000) // 3초마다 실행
+//    public void printHello() {
+//        System.out.println("hello");
+//
+//    }
 
 
 }

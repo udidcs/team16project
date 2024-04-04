@@ -50,7 +50,8 @@
                       게시글 제목
                 </div>
                 <div style="display: flex; flex-direction: row; gap: 10px; margin-top:10px;">
-                    <img src="/images/article/tmpprofile.png" style="display: inline-block; width: 60px; height: 60px">
+                    <img class="profile-image" th:src="'/images/'+${article.profileImage}" th:if="${article.profileImage != null}" style="display: inline-block; width: 60px; height: 60px">
+                    <img class="profile-image" src="/images/user/default-profile.png" th:if="${article.profileImage == null}" style="display: inline-block; width: 60px; height: 60px">
                     <div class="author_createdat_container" style="display: flex; flex-direction: column;">
                         <div class="author" th:text="${article.email}">작성자</div>
                         <div class="createdat" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></div>

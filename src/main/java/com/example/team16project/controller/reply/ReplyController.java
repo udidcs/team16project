@@ -1,15 +1,11 @@
 package com.example.team16project.controller.reply;
 
-import com.example.team16project.domain.user.User;
-import com.example.team16project.dto.article.response.ArticleDto;
 import com.example.team16project.dto.reply.request.ReplyCreateForm;
 import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
 import com.example.team16project.service.article.ArticleServiceImpl;
 import com.example.team16project.service.reply.ReplyServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
@@ -20,27 +16,11 @@ import java.security.Principal;
 public class ReplyController {
 
     private final ArticleServiceImpl articleService;
-
     private final ReplyServiceImpl replyService;
 
-    @ResponseBody
     @PostMapping("/reply")
     public void createReply(@RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
         replyService.saveReply(form, principal);
-    }
-
-    @GetMapping("/reply")
-    public String moveToEditReplyPage(@RequestParam(value ="articleId") Long articleId, @RequestParam(value = "replyId") Long replyId, Principal principal, Model model) throws AuthenticationException {
-
-        replyService.checkConditionToMoveToEditReplyPage(replyId, principal);
-
-        ArticleDto article = articleService.getArticle(articleId);
-
-        model.addAttribute("article", article);
-        model.addAttribute("replys", article.getReplys());
-
-        return "reply/newDetail";
-
     }
 
     @ResponseBody
@@ -50,7 +30,6 @@ public class ReplyController {
         replyService.updateReply(request, principal);
     }
 
-
     @ResponseBody
     @DeleteMapping("/reply/{replyId}")
     public void deleteReply(@PathVariable("replyId") Long replyId, Principal principal) throws AuthenticationException {
@@ -58,6 +37,5 @@ public class ReplyController {
         replyService.deleteReply(replyId, principal);
 
     }
-
 
 }
