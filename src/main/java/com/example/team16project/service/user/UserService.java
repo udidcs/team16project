@@ -25,8 +25,8 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     @Transactional
-    public void save(AddUserRequest request) throws IllegalArgumentException{
-        User user =  userRepository.save(
+    public void save(AddUserRequest request) throws IllegalArgumentException {
+        User user = userRepository.save(
                 User.builder()
                         .email(request.getEmail())
                         .password(encoder.encode(request.getPassword()))
@@ -34,7 +34,7 @@ public class UserService {
                         .role("JUNIOR")
                         .build()
         );
-        if (user==null) {
+        if (user == null) {
             throw new IllegalArgumentException("다시 시도해 주십시오");
         }
     }
@@ -46,7 +46,7 @@ public class UserService {
         }
     }
 
-    public void checkNicknameDuplicate(String nickname) throws DataIntegrityViolationException{
+    public void checkNicknameDuplicate(String nickname) throws DataIntegrityViolationException {
         Optional<User> optionalUser = userRepository.findByNickname(nickname);
         if (optionalUser.isPresent()) {
             throw new DataIntegrityViolationException("이미 사용중인 닉네임입니다.");
@@ -54,13 +54,13 @@ public class UserService {
     }
 
     public UserInfo findUserInfo(Authentication authentication) {
-        User user = (User)authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         return new UserInfo(user);
     }
 
     @Transactional
     public String updatePassword(UpdateUserPasswordRequest request, Authentication authentication) {
-        User loginUser = (User)authentication.getPrincipal();
+        User loginUser = (User) authentication.getPrincipal();
         User registeredUser = userRepository.findById(loginUser.getUserId()).orElseThrow(() -> new NoSuchElementException("로그인 정보가 유효하지 않습니다. 다시 로그인해주세요."));
         if (!encoder.matches(request.getCurrentPassword(), registeredUser.getPassword())) {
             return "현재 비밀번호가 일치하지 않습니다.";
@@ -71,14 +71,20 @@ public class UserService {
     }
 
     public boolean isDeleted(Authentication authentication) {
-        User loginUser = (User)authentication.getPrincipal();
+        User loginUser = (User) authentication.getPrincipal();
         return userRepository.findByEmail(loginUser.getEmail()).get().getDeletedAt() != null;
     }
 
     @Transactional
     public void recoveryUser(Authentication authentication) {
-        User deletedUser = (User)authentication.getPrincipal();
+        User deletedUser = (User) authentication.getPrincipal();
         User registeredUser = userRepository.findByEmail(deletedUser.getEmail()).get();
         registeredUser.recovery();
     }
+
+    public void updateNickname(String nickname, Authentication authentication) {
+        User CurrentUser = (User) authentication.getPrincipal();
+        User registeredUser = userRepository.findByNickname(CurrentUser.getNickname()).get();
+    }
 }
+

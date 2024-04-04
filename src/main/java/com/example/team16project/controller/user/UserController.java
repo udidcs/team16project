@@ -1,11 +1,16 @@
 package com.example.team16project.controller.user;
 
 
+import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.user.AddUserRequest;
+import com.example.team16project.dto.user.UpdateUserInfoRequest;
 import com.example.team16project.dto.user.UpdateUserPasswordRequest;
 import com.example.team16project.dto.user.UserInfo;
+import com.example.team16project.repository.user.UserRepository;
+import com.example.team16project.service.user.UserInfoService;
 import com.example.team16project.service.user.UserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -15,12 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.UUID;
+import java.security.Principal;
 
 
 @Controller
@@ -72,6 +73,15 @@ public class UserController {
     public void cancleUserDelete(Authentication authentication) {
         userService.recoveryUser(authentication);
     }
+
+//    @PostMapping("/user/myinfo/updatenickname")
+//    public String updateUserInfo(@RequestParam String newNickname, Principal principal) {
+//        String newNickname = principal.getName();
+//        UserInfoService.updateUserInfo(newNickname);
+//        return "redirect:/user/mypage";
+//    }
+
+
 
 //    @ResponseBody
 //    @GetMapping("/images/{filename}")

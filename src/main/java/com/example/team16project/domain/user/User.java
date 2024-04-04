@@ -75,10 +75,6 @@ public class User implements UserDetails {
         return authorities;
     }
 
-    public void update(String nickname){
-        this.nickname = nickname;
-    }
-
     @Override
     public String getUsername() {
         return email;
@@ -115,5 +111,9 @@ public class User implements UserDetails {
 
     public void recovery() {
         this.deletedAt = null;
+    }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
     }
 }
