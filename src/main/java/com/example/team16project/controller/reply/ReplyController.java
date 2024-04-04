@@ -16,10 +16,8 @@ import java.security.Principal;
 public class ReplyController {
 
     private final ArticleServiceImpl articleService;
-
     private final ReplyServiceImpl replyService;
 
-    @ResponseBody
     @PostMapping("/reply")
     public void createReply(@RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
         replyService.saveReply(form, principal);
@@ -32,7 +30,6 @@ public class ReplyController {
         replyService.updateReply(request, principal);
     }
 
-
     @ResponseBody
     @DeleteMapping("/reply/{replyId}")
     public void deleteReply(@PathVariable("replyId") Long replyId, Principal principal) throws AuthenticationException {
@@ -40,6 +37,5 @@ public class ReplyController {
         replyService.deleteReply(replyId, principal);
 
     }
-
 
 }
