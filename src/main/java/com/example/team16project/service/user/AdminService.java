@@ -26,9 +26,8 @@ public class AdminService {
         return new AdminUserResponse(userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id.toString())));
     }
 
-    // ToDo: 예외처리
     @Transactional
-    public void updateUserInfo(Long id, AdminUserRequest request) throws EntityNotFoundException {
+    public void updateUserInfo(Long id, AdminUserRequest request) {
         userRepository.updateNicknameByAdmin(id, request.getNickname());
         userRepository.updateRoleByAdmin(id, request.getRole());
     }
