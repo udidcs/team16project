@@ -49,18 +49,19 @@ function submitReply(button) {
         }),
     }).then((response) => {
         // 유효성 검증 로직
-        if(response.status===200){
+        if(response.status===201){
             alert('등록 완료되었습니다');
             location.href = '/article?id='+articleId
             // '/article?id='+articleId 로 변경해야함
             // window.location.reload();
         }
-        else if(response.status===500){
+        else if(response.status===400){
             alert("댓글 내용을 입력해주세요")
             // 댓글에 내용이 아무것도 안 들어갔을 경우 발생
         }
-        else {
+        else if(response.status === 200) {
             alert("로그인이 필요합니다")
+            location.href = response.url
         }
     });
 }

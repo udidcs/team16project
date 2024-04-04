@@ -56,6 +56,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
+        userService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
@@ -64,6 +65,13 @@ public class UserController {
         UserInfo userInfo = userService.findUserInfo(authentication);
         model.addAttribute("userInfo", userInfo);
         return "user/mypage";
+    }
+
+    @GetMapping("/user/myinfo")
+    public String findUserInMyinfo(Authentication authentication, Model model) {
+        UserInfo userInfo = userService.findUserInfo(authentication);
+        model.addAttribute("user", userInfo);
+        return "user/myinfo";
     }
 
     @PatchMapping("/user/update")

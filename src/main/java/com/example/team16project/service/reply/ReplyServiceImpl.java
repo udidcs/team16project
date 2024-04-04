@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.naming.AuthenticationException;
 import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,8 @@ public class ReplyServiceImpl implements ReplyService{
 
         // principal 검증 로직 추가 -> 로그인이 되었는지
         if(principal == null){
-            throw new AuthenticationException("로그인을 해야 댓글을 작성할 수 있습니다."); // 500 Error
+            System.out.println("TEST!!!!!!!");
+            throw new NoSuchElementException("로그인을 해야 댓글을 작성할 수 있습니다."); // 500 Error
         }
         User user = userRepository.findByEmail(principal.getName())  //principal.getName()을 통해 user의 email을 가져옴
                 .orElseThrow(IllegalArgumentException::new);
