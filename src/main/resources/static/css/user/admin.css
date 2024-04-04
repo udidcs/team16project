@@ -1,0 +1,45 @@
+
+*{
+    text-align: center;
+    margin: auto;
+}
+
+
+h1{
+    margin-top: 50px;
+}
+
+table{
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th{
+    padding: 5px 10px;
+    border-bottom: 3px solid #3977fe;
+}
+
+
+tr:nth-of-type(even){
+    background-color: #e9ecef;
+}
+
+td{
+    padding: 5px 10px;
+    font-size: 17px;
+}
+
+thead{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+button{
+    color: white;
+    background-color: #3977fe;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 13px;
+}
+

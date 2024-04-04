@@ -4,7 +4,6 @@ import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.util.ArrayList;
@@ -42,8 +41,15 @@ public class Reply {
     private Reply reply;
 
     public Reply(Article article, User user, String comments) {
+        if(comments==null||comments.isBlank()){
+            throw new IllegalArgumentException("댓글 내용을 입력해주세요"); //500 Error
+        } // 댓글에 아무것도 작성 안하면 Error 발생
         this.article = article;
         this.user = user;
+        this.comments = comments;
+    }
+
+    public void updateComments(String comments) {
         this.comments = comments;
     }
 }

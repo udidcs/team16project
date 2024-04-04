@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,6 @@ import java.util.List;
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
@@ -41,6 +41,7 @@ public class User implements UserDetails {
 
     @CreatedDate
     @Column(name = "created_at")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "deleted_at")
@@ -74,6 +75,10 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    public void update(String nickname){
+        this.nickname = nickname;
+    }
+
     @Override
     public String getUsername() {
         return email;
@@ -102,5 +107,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void recovery() {
+        this.deletedAt = null;
     }
 }
