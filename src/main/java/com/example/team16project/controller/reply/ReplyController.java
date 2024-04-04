@@ -5,6 +5,8 @@ import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
 import com.example.team16project.service.article.ArticleServiceImpl;
 import com.example.team16project.service.reply.ReplyServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,14 @@ public class ReplyController {
     private final ReplyServiceImpl replyService;
 
     @PostMapping("/reply")
-    public void createReply(@RequestBody ReplyCreateForm form, Principal principal) throws AuthenticationException {
-        replyService.saveReply(form, principal);
+    public ResponseEntity<String> createReply(@RequestBody ReplyCreateForm form, Principal principal)  {
+        try {
+            replyService.saveReply(form, principal);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("등록 완료되었습니다.");
     }
 
     @ResponseBody

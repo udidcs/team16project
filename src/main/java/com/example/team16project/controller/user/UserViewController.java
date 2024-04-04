@@ -24,10 +24,6 @@ public class UserViewController {
         return "user/myprofile";
     }
 
-    @GetMapping("/user/myinfo")
-    public String myInfo() {
-        return "user/myinfo";
-    }
 
     @GetMapping("/user/mypassword")
     public String myPassword(){

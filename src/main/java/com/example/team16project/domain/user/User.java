@@ -21,6 +21,7 @@ import java.util.List;
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")

@@ -6,6 +6,7 @@ import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -33,9 +34,13 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/articles", "/article","/user/login", "/user/signup").permitAll()
+                        .requestMatchers("/user/cancle", "/user/mywithdraw", "/user/mypassword", "/user/myinfo", "/user/check", "/user/mypage", "/user/myprofile", "/user/update", "/article/form", "/article/edit", "/reply/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/article").authenticated()
+                                .requestMatchers(HttpMethod.PUT, "/article").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/article").authenticated()
                                 .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()).exceptionHandling(except ->
+                        .anyRequest().permitAll())
+                .exceptionHandling(except ->
                         except.accessDeniedPage("/error/403"))
             .formLogin(auth -> auth.loginPage("/user/login")
                     .defaultSuccessUrl("/user/check", true)
