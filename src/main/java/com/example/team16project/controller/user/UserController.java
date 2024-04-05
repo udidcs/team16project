@@ -20,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -73,6 +75,22 @@ public class UserController {
         model.addAttribute("user", userInfo);
         return "user/myinfo";
     }
+
+    @PostMapping("/user/myinfo")
+    @ResponseBody
+    public String updateNickname(Authentication authentication, UpdateUserInfoRequest request) {
+        try {
+            userService.checkNicknameDuplicate(request.getNickname());
+            UserInfo userInfo = userService.findUserInfo(authentication);
+            userService.updateNickname(authentication, request.getNickname());
+            userInfo.setNickname(request.getNickname());
+            return "success";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
 
     @PatchMapping("/user/update")
     @ResponseBody
@@ -137,5 +155,4 @@ public class UserController {
         userProfileImageService.saveImageToDB(imageFileName, principal);
         return "redirect:/user/mypage";
     }
-
 }
