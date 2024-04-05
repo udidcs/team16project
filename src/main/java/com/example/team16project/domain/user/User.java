@@ -117,4 +117,8 @@ public class User implements UserDetails {
     public void updateNickname(String nickname){
         this.nickname = nickname;
     }
+
+    public void delete() {
+        this.deletedAt = LocalDateTime.now();
+    }
 }

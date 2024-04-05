@@ -24,15 +24,9 @@ public class UserViewController {
         return "user/myprofile";
     }
 
-
     @GetMapping("/user/mypassword")
     public String myPassword(){
         return "user/mypassword";
-    }
-
-    @GetMapping("/user/mywithdraw")
-    public String myWithdraw(){
-        return "user/mywithdraw";
     }
 
     @GetMapping("/error/403")

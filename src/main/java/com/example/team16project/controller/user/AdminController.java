@@ -31,8 +31,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/{id}")
-    public String updateUserByAdmin(@PathVariable String id,
-                                    @ModelAttribute AdminUserRequest request) {
+    public String updateUserByAdmin(@PathVariable String id, AdminUserRequest request) {
         adminService.updateUserInfo(Long.parseLong(id), request);
         return "redirect:/admin/" + id;
     }
