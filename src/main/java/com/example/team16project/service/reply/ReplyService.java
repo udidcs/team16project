@@ -26,7 +26,6 @@ public interface ReplyService {
     void updateReReply(ReReplyUpdateRequest request, Principal principal);
 
     // 댓글 삭제 로직
-
     void deleteReply(Long replyId, Principal principal);
 
     // 대댓글 삭제 로직

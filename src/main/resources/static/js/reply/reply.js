@@ -192,7 +192,7 @@ function submitReReplyCancel(button){
     location.href = '/article?id='+articleId
 }
 
-// 대댓글 수정 기능 (댓글 디자인 변경)
+// 대댓글 수정 기능 (대댓글 디자인 변경)
 function updateReReply(button){
     button.closest('.re-comment-item-container').querySelector('.re-comment-edit-container').classList.toggle('hidden');
     let content = button.closest('.re-comment-item-container').querySelector('.re-comment-contents').innerHTML;
@@ -201,7 +201,7 @@ function updateReReply(button){
     button.closest('.re-comment-item-container').querySelector('.re-comment-editor-bottom').classList.toggle('hidden');
 }
 
-// 대댓글 수정 기능 (댓글 수정 완료시)
+// 대댓글 수정 기능 (대댓글 수정 완료시)
 function updateReReplyComplete(button){
 
     let comments = button.closest('.re-comment-item-container').querySelector('.re-comment-input').value;
@@ -234,11 +234,13 @@ function updateReReplyComplete(button){
     });
 }
 
+// 대댓글 수정 기능 (대댓글 수정 취소)
 function updateReReplyCancel(button){
     const articleId = document.getElementById('articleId').value;
     location.href = '/article?id='+articleId
 }
 
+// 대댓글 삭제 기능
 function deleteReReply(button){
     const replyId = button.closest('.re-comment-item-container').querySelector('.re-comment-id').value;
     const articleId = document.getElementById('articleId').value;
