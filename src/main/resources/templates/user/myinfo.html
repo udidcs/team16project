@@ -34,7 +34,7 @@
         <!-- Page content-->
         <div class="container-fluid">
             <h1 class="mt-4">내 정보</h1>
-            <form class="mt-4" th:action="@{/user/myinfo/updatenickname}" method="PATCH" th:object="${user}">
+            <form class="mt-4" action="/user/myinfo" method="PATCH" th:object="${user}">
             <label for="nickname">닉네임</label>
             <input type="text" id="nickname" class="mt-4 border-primary form-control w-50" th:value="*{nickname}">
             <button type="submit" class="mt-4 btn btn-primary">변경</button>

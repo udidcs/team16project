@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeleteUserRequest {
+
     private String email;
 
     @NotBlank

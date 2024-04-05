@@ -2,8 +2,9 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
-    <link rel="stylesheet" href="../../static/css/user/adminuser.css" th:href="@{css/user/adminuser.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/css/user/adminuser.css" th:href="@{css/user/adminuser.css}">
 </head>
 <body>
     <h1>회원정보 수정</h1>
@@ -11,7 +12,7 @@
     <form th:action="@{'/admin/' + ${user.userId}}" method="POST" th:object="${user}">
         <div>
             <label>UID</label>
-            <input type="text" name="userId" disabled th:value="*{userId}">
+            <input type="text" name="userId" id="user-id" disabled th:value="*{userId}">
         </div>
         <div>
             <label>이메일</label>
@@ -36,7 +37,7 @@
                 <option value="SENIOR" th:selected="*{role == 'SENIOR'}">SENIOR</option>
             </select>
         </div>
-        <button type="submit" class="btn-update" disabled onclick="update()">변경사항 저장</button>
+        <button type="submit" class="btn-update" disabled>변경사항 저장</button>
         <button type="button" class="btn-close" onclick="closePopup()">닫기</button>
     </form>
 
@@ -47,9 +48,22 @@
         const selectRole = document.querySelector('select')
         const regex = /^\S{1,10}$/;
 
-        function update() {
-            userForm.submit();
-        }
+        userForm.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const userId = document.querySelector('#user-id').value
+            const url = '/admin/' + userId
+            fetch(url, {
+                method: 'PATCH',
+                body: new FormData(userForm)
+            })
+                    .then(response => {
+                            response.text()
+                                    .then(text => {
+                                        alert(text)
+                                    })
+
+                    })
+        })
 
         function closePopup() {
             window.close();
