@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @Table(name = "reply")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 사용하려면 기본 생성자가 필요함
 @DynamicInsert
 public class Reply {
 
@@ -47,6 +47,17 @@ public class Reply {
         this.article = article;
         this.user = user;
         this.comments = comments;
+    }
+
+    // 대댓글 생성자
+    public Reply(User user, Article article, Reply reply, String reComments) {
+        if(reComments==null||reComments.isBlank()){
+            throw new IllegalArgumentException("댓글 내용을 입력해주세요"); //500 Error
+        } // 댓글에 아무것도 작성 안하면 Error 발생
+        this.article = article;
+        this.user = user;
+        this.reply = reply;
+        this.comments = reComments;
     }
 
     public void updateComments(String comments) {
