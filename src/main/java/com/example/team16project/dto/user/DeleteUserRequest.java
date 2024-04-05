@@ -2,7 +2,6 @@ package com.example.team16project.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +11,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminUserRequest {
+public class DeleteUserRequest {
+
+    private String email;
 
     @NotBlank
-    @Size(min = 1, max = 10, message = "닉네임은 1~10글자 사이로 입력해주세요")
-    private String nickname;
-
-    private String role;
+    @Pattern(message = "비밀번호의 형식이 잘못되었습니다.", regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$")
+    private String password;
 }
