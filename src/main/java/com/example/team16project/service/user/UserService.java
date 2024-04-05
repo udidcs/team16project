@@ -2,11 +2,14 @@ package com.example.team16project.service.user;
 
 import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.user.AddUserRequest;
+
+import com.example.team16project.dto.user.DeleteUserRequest;
 import com.example.team16project.dto.user.UpdateUserPasswordRequest;
 import com.example.team16project.dto.user.UserInfo;
 import com.example.team16project.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +29,7 @@ public class UserService {
 
     @Transactional
     public void save(AddUserRequest request){
-        User user =  userRepository.save(
+        userRepository.save(
         User.builder()
                 .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
@@ -67,6 +70,16 @@ public class UserService {
 
         registeredUser.updatePassword(encoder.encode(request.getNewPassword()));
         return "비밀번호 변경이 완료되었습니다.";
+    }
+
+    @Transactional
+    public void deleteUser(DeleteUserRequest request) throws BadCredentialsException {
+        User user = userRepository.findByEmail(request.getEmail()).get();
+        if (!encoder.matches(request.getPassword(), user.getPassword())) {
+            throw new BadCredentialsException("비밀번호가 틀립니다.");
+        } else {
+            user.delete();
+        }
     }
 
     public boolean isDeleted(Authentication authentication) {

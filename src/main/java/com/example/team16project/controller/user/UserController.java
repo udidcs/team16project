@@ -1,24 +1,15 @@
 package com.example.team16project.controller.user;
 
-
-import com.example.team16project.domain.user.User;
-import com.example.team16project.dto.user.AddUserRequest;
-import com.example.team16project.dto.user.UpdateUserInfoRequest;
-import com.example.team16project.dto.user.UpdateUserPasswordRequest;
-import com.example.team16project.dto.user.UserInfo;
-import com.example.team16project.repository.user.UserRepository;
-import com.example.team16project.service.user.UserInfoService;
+import com.example.team16project.dto.user.*;
 import com.example.team16project.service.user.UserProfileImageService;
 import com.example.team16project.service.user.UserService;
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -29,11 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.security.Principal;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -103,6 +90,28 @@ public class UserController {
             return errorMsg.toString();
         }
         return userService.updatePassword(request, authentication);
+    }
+
+    @GetMapping("/user/mywithdraw")
+    public String myWithdraw(Authentication authentication, Model model){
+        UserInfo userInfo = userService.findUserInfo(authentication);
+        model.addAttribute("user", userInfo);
+        return "user/mywithdraw";
+    }
+
+    @DeleteMapping("/user/delete")
+    @ResponseBody
+    public ResponseEntity<String> delete(@Valid DeleteUserRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            String errorMsg = bindingResult.getFieldError().getDefaultMessage().toString();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
+        }
+        try {
+            userService.deleteUser(request);
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.ok("삭제 요청이 처리되었습니다.");
     }
 
     @GetMapping("/user/check")
