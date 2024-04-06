@@ -87,20 +87,34 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ArticleDto> searchArticles(int page, int pageSize, String query) {
-        List<Article> articles = articleRepository.searchBoards(pageSize, (page - 1) * pageSize, query);
+    public List<ArticleDto> searchArticlesByTitle(int page, int pageSize, String query) {
+        List<Article> articles = articleRepository.searchBoardsByTitle(pageSize, (page - 1) * pageSize, query);
         List<ArticleDto> collect = articles.stream()
                 .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
                 .collect(Collectors.toList());
-        System.out.println(collect);
         return collect;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public int getSearchPages(int pageSize, String query) {
-        System.out.println(articleRepository.searchPages(pageSize, query));
-        return articleRepository.searchPages(pageSize, query);
+    public int getSearchPagesByTitle(int pageSize, String query) {
+        return articleRepository.searchPagesByTitle(pageSize, query);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ArticleDto> searchArticlesByContents(int page, int pageSize, String query) {
+        List<Article> articles = articleRepository.searchBoardsByContents(pageSize, (page - 1) * pageSize, query);
+        List<ArticleDto> collect = articles.stream()
+                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
+                .collect(Collectors.toList());
+        return collect;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public int getSearchPagesByContents(int pageSize, String query) {
+        return articleRepository.searchPagesByContents(pageSize, query);
     }
 
 }

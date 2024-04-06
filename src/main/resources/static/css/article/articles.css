@@ -1,5 +1,4 @@
 
-
 a{
     text-decoration: none;
     color:inherit;
@@ -75,42 +74,72 @@ h1{
 .search_form{
     display: flex;
     align-items: center;
-    position: relative;
+    justify-content: center;
+    /*position: relative;*/
     margin-bottom:6vh;
     width: 100%;
-    border: 1px solid #dbdbdb;
-    border-radius: 30px;
     background: white;
+    padding: 15px 0;
+    height: 60px;
 }
 
-.search_image{
-    position: absolute;
-    left: 30px;
+.select{
+    border: none;
+    font-size: 20px;
+    width: 12%;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    border: 1px solid #dbdbdb;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 25px;
+    cursor: pointer;
 }
+
 
 .input {
     color: black;
-    padding:20px;
     font-size: 20px;
-    width:100%;
-    margin-inline: 40px;
-    border: none;
+    width:60%;
     background-color: inherit;
+    border: 1px solid #dbdbdb;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 30px;
 }
 
-.input:focus{
-    outline: none;
+.search_image{
+    background-color: white;
+    width: 8%;
+    cursor: pointer;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    border: 1px solid #dbdbdb;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-.search_form:hover{
-    border:1px solid #363636;
-}
-
-.search_form:focus-within {
+.select:focus-within {
     background-color: white;
     outline: 3px solid #3977fe;
     outline-offset: -3px; /* 아웃라인을 요소 안쪽으로 이동 */
 }
+
+.input:focus-within {
+    background-color: white;
+    outline: 3px solid #3977fe;
+    outline-offset: -3px; /* 아웃라인을 요소 안쪽으로 이동 */
+}
+
+.search_image:hover {
+    background-color: white;
+    outline: 3px solid #3977fe;
+    outline-offset: -3px; /* 아웃라인을 요소 안쪽으로 이동 */
+}
+
+/*.search_form:hover{*/
+/*    border:1px solid #363636;*/
+/*}*/
 
 /*게시판*/
 

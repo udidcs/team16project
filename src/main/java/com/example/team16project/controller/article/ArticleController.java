@@ -175,7 +175,7 @@ public class ArticleController {
 //    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content =
 //    @Content(mediaType = "text/html"))
     @GetMapping("/article/search")
-    public String search(@RequestParam("keyword") String keyword, @RequestParam(defaultValue = "1") int page, Model model) {
+    public String search(@RequestParam String keyword, @RequestParam String option, @RequestParam(defaultValue = "1") int page, Model model) {
         if (page < 1) {
             page = 1;
         }
@@ -192,19 +192,25 @@ public class ArticleController {
         }
 
         String query = attachQuestion.toString();
+        switch (option) {
+            case "title":
+                setPaginationAttributesForSearch(model, page,
+                        articleService.getSearchPagesByTitle(PaginationUtil.PageSize, query), articleService.searchArticlesByTitle(page, PaginationUtil.PageSize, query), keyword, option);
+                break;
 
-        setPaginationAttributesForSearch(model, page,
-                articleService.getSearchPages(PaginationUtil.PageSize, query), articleService.searchArticles(page, PaginationUtil.PageSize, query), keyword);
+            case "contents":
+                setPaginationAttributesForSearch(model, page,
+                        articleService.getSearchPagesByContents(PaginationUtil.PageSize, query), articleService.searchArticlesByContents(page, PaginationUtil.PageSize, query), keyword, option);
+                break;
+        }
 
         return "article/articles";
     }
 
-    private void setPaginationAttributesForSearch(Model model, int page, int totalPages, List<ArticleDto> list, String keyword) {
+    private void setPaginationAttributesForSearch(Model model, int page, int totalPages, List<ArticleDto> list, String keyword, String option) {
 
         int startIdx = PaginationUtil.calculateStartIndex(page);
         int endIdx = PaginationUtil.calculateEndIndex(page, totalPages);
-
-
 
         model.addAttribute("articles", list);
         model.addAttribute("currentPage", page);
@@ -212,5 +218,6 @@ public class ArticleController {
         model.addAttribute("endIdx", endIdx);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("option", option);
     }
 }

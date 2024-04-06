@@ -22,11 +22,18 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Optional<Article> findByArticleId(Long articleId);
 
-    @Query(value = "select ceil(count(*) / :pagesize) as totalPages from article where contents regexp :query", nativeQuery = true)
-    public int searchPages(@Param("pagesize") int pageSize, @Param("query") String query);
+
+    @Query(value = "select ceil(count(*) / :pagesize) as totalPages from article where title regexp :query", nativeQuery = true)
+    public int searchPagesByTitle(@Param("pagesize") int pageSize, @Param("query") String query);
 
     @Query(value = "select article_id, user_id, title, contents, created_at, like_count, view_count, updated_at " +
-            "from article where contents regexp :query or title regexp :query order by article_id desc limit :pagesize offset :offset", nativeQuery = true)
-    public List<Article> searchBoards(@Param("pagesize") int pageSize, @Param("offset") int offset, @Param("query") String query);
+            "from article where title regexp :query order by article_id desc limit :pagesize offset :offset", nativeQuery = true)
+    public List<Article> searchBoardsByTitle(@Param("pagesize") int pageSize, @Param("offset") int offset, @Param("query") String query);
 
+    @Query(value = "select ceil(count(*) / :pagesize) as totalPages from article where contents regexp :query", nativeQuery = true)
+    public int searchPagesByContents(@Param("pagesize") int pageSize, @Param("query") String query);
+
+    @Query(value = "select article_id, user_id, title, contents, created_at, like_count, view_count, updated_at " +
+            "from article where contents regexp :query order by article_id desc limit :pagesize offset :offset", nativeQuery = true)
+    public List<Article> searchBoardsByContents(@Param("pagesize") int pageSize, @Param("offset") int offset, @Param("query") String query);
 }
