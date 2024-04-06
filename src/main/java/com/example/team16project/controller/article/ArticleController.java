@@ -20,8 +20,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
@@ -36,6 +40,7 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserRepository userRepository;
     private final ReplyService replyService;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Operation(summary = "게시글 전체 보기",
             description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
@@ -59,7 +64,11 @@ public class ArticleController {
         int startIdx = PaginationUtil.calculateStartIndex(page);
         int endIdx = PaginationUtil.calculateEndIndex(page, totalPages);
 
-
+        list.forEach(articleDto -> {
+            String s = redisTemplate.opsForValue().get(String.valueOf(articleDto.getArticleId()));
+            if (s != null)
+                articleDto.setViewCount(articleDto.getViewCount() + Integer.valueOf(s));
+        });
 
         model.addAttribute("articles", list);
         model.addAttribute("currentPage", page);
@@ -75,12 +84,16 @@ public class ArticleController {
     @GetMapping("/article")
     public String detail(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model){
 
+        Long increment = redisTemplate.opsForValue().increment(String.valueOf(articleId));
         ArticleDto article = articleService.getArticle(articleId);
+        article.setViewCount((int) (article.getViewCount()+increment));
+
         if (principal != null) {
             User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
             if (article.getUserId().equals(user.getUserId()))
                 model.addAttribute("identified", true);
         }
+
         model.addAttribute("article", article);
         List<ReplyDto> allReplysOnArticle = replyService.getAllReplysOnArticle(articleId);
         model.addAttribute("replys", allReplysOnArticle);
@@ -106,6 +119,7 @@ public class ArticleController {
 
         User user = userRepository.findByEmail(principal.getName()).orElseThrow();
         Article article = articleService.saveArticle(articleForm, user);
+
         return "/article?id=" + article.getArticleId();
     }
 
@@ -168,5 +182,18 @@ public class ArticleController {
         return "/articles";
     }
 
+    @Transactional
+    @Scheduled(fixedRate = 20000)
+    public void saveViewCount() {
+        Set<String> keys = redisTemplate.keys("*");
 
+        List<Article> articles = articleService.getArticles();
+        articles.forEach(article -> {
+            if (keys.contains(String.valueOf(article.getArticleId()))) {
+                article.setViewCount(article.getViewCount() + Integer.valueOf(redisTemplate.opsForValue().get(String.valueOf(article.getArticleId()))));
+            }
+        });
+        redisTemplate.getConnectionFactory().getConnection().flushAll();
+
+    }
 }
