@@ -73,6 +73,11 @@ public class ReplyServiceImpl implements ReplyService{
 
     }
 
+    @Override
+    public long countHowManyReplies(Long articleId) {
+        return replyRepository.countByArticleArticleId(articleId);
+    }
+
     // 댓글 수정 로직
     @Transactional
     @Override
@@ -168,4 +173,7 @@ public class ReplyServiceImpl implements ReplyService{
                         .collect(Collectors.toList()))).collect(Collectors.toList());
         return collect;
     }
+
+
+
 }

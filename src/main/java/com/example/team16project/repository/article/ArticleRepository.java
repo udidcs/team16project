@@ -16,12 +16,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query(value = "select article_id, user_id, title, contents, created_at, like_count, view_count, updated_at " +
             "from article order by article_id desc limit :pagesize offset :offset", nativeQuery = true)
-    public List<Article> selectAllCoteBaords(@Param("pagesize") int pageSize, @Param("offset") int offset);
+    public List<Article> selectAllArticles(@Param("pagesize") int pageSize, @Param("offset") int offset);
 
     Optional<Article> findByTitle(String title);
 
     Optional<Article> findByArticleId(Long articleId);
-
 
     @Query(value = "select ceil(count(*) / :pagesize) as totalPages from article where title like :query", nativeQuery = true)
     public int searchPagesByTitle(@Param("pagesize") int pageSize, @Param("query") String query);

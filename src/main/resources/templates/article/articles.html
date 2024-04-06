@@ -15,8 +15,6 @@
         <h1><a href="/articles">ASK HUB</a></h1>
         <div class="navbar-menu">
             <div class="navbar-left">
-                <div><a href="#" class="move_to_menu">메뉴1</a></div>
-                <div><a href="#" class="move_to_menu">메뉴2</a></div>
                 <div><a href="/admin" class="move_to_menu">관리자 페이지</a></div>
                 <div><a href="/user/mypage" class="move_to_menu">마이페이지</a></div>
                 <div class="log-info">
@@ -69,7 +67,7 @@
                             <i class="fa-regular fa-thumbs-up"></i>
                             <span class="likecount" th:text="${article.likeCount}">좋아요</span>&nbsp;
                             <i class="fa-regular fa-comment-dots"></i>
-                            <span class="replycount">댓글수</span>
+                            <span class="replycount" th:text="${article.replyCount}">댓글수</span>
                         </div>
                     </div>
                 </div>
