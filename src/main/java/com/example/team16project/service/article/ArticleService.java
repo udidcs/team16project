@@ -17,5 +17,8 @@ public interface ArticleService {
     Article saveArticle(ArticleForm articleForm, User user);
     void editArticle(ArticleWithIdForm articleWithIdForm);
     void deleteArticle(Long articleId);
+    List<ArticleDto> searchArticles(int page, int pageSize, String query, String option);
+    int getSearchPages(int pageSize, String query, String option);
+
 }
 

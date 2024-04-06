@@ -30,7 +30,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Tag(name = "Article", description = "게시글 API")
 @RequiredArgsConstructor
@@ -182,6 +181,44 @@ public class ArticleController {
         return "/articles";
     }
 
+
+//    @Operation(summary = "게시글 전체 보기",
+//            description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
+//    @Parameter(name = "page", description = "페이지 번호", example = "2")
+//    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content =
+//    @Content(mediaType = "text/html"))
+    @GetMapping("/article/search")
+    public String search(@RequestParam String keyword, @RequestParam String option, @RequestParam(defaultValue = "1") int page, Model model) {
+        if (page < 1) {
+            page = 1;
+        }
+
+        if (keyword.isBlank() || (!option.equals("title") && !option.equals("contents"))) {
+            return "redirect:/articles";
+        }
+
+        String query = "%" + keyword + "%";
+
+        setPaginationAttributesForSearch(model, page,
+                        articleService.getSearchPages(PaginationUtil.PageSize, query, option), articleService.searchArticles(page, PaginationUtil.PageSize, query, option), keyword, option);
+
+        return "article/articles";
+    }
+
+    private void setPaginationAttributesForSearch(Model model, int page, int totalPages, List<ArticleDto> list, String keyword, String option) {
+
+        int startIdx = PaginationUtil.calculateStartIndex(page);
+        int endIdx = PaginationUtil.calculateEndIndex(page, totalPages);
+
+        model.addAttribute("articles", list);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("startIdx", startIdx);
+        model.addAttribute("endIdx", endIdx);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("option", option);
+    }
+  
     @Transactional
     @Scheduled(fixedRate = 20000)
     public void saveViewCount() {

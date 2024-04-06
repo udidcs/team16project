@@ -54,7 +54,8 @@ public class UserService {
     }
 
     public UserInfo findUserInfo(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+        User loginUser = (User) authentication.getPrincipal();
+        User user = userRepository.findById(loginUser.getUserId()).get();
         return new UserInfo(user);
     }
 
@@ -83,13 +84,13 @@ public class UserService {
 
     public boolean isDeleted(Authentication authentication) {
         User loginUser = (User) authentication.getPrincipal();
-        return userRepository.findByEmail(loginUser.getEmail()).get().getDeletedAt() != null;
+        return userRepository.findById(loginUser.getUserId()).get().getDeletedAt() != null;
     }
 
     @Transactional
     public void recoveryUser(Authentication authentication) {
         User deletedUser = (User) authentication.getPrincipal();
-        User registeredUser = userRepository.findByEmail(deletedUser.getEmail()).get();
+        User registeredUser = userRepository.findById(deletedUser.getUserId()).get();
         registeredUser.recovery();
     }
 
