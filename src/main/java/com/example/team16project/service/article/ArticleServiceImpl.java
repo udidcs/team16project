@@ -85,5 +85,22 @@ public class ArticleServiceImpl implements ArticleService {
 //
 //    }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<ArticleDto> searchArticles(int page, int pageSize, String query) {
+        List<Article> articles = articleRepository.searchBoards(pageSize, (page - 1) * pageSize, query);
+        List<ArticleDto> collect = articles.stream()
+                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
+                .collect(Collectors.toList());
+        System.out.println(collect);
+        return collect;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public int getSearchPages(int pageSize, String query) {
+        System.out.println(articleRepository.searchPages(pageSize, query));
+        return articleRepository.searchPages(pageSize, query);
+    }
 
 }
