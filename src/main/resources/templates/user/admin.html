@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>ASK HUB</title>
     <link rel="stylesheet" href="../../static/css/user/admin.css" th:href="@{css/user/admin.css}">
 </head>
 <body>
+<header class="header">
+    <div class="box-header">
+        <h1><a href="/articles">ASK HUB</a></h1>
+        <div class="navbar-menu">
+            <div class="navbar-left">
+                <div><a href="/admin" class="move_to_menu">관리자 페이지</a></div>
+                <div><a href="/user/mypage" class="move_to_menu">마이페이지</a></div>
+                <div class="log-info">
+                    <th:block sec:authorize="isAnonymous()">
+                        <button class="btn-log" onclick="location.href='/user/login'">로그인</button>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <span class="user-nickname" th:text="${#authentication.getPrincipal().getNickname()} + ' 님'"></span>
+                        <button class="btn-log" onclick="location.href='/logout'">로그아웃</button>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
     <h1>회원관리</h1>
     <table>
         <thead>

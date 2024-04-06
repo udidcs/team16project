@@ -1,3 +1,11 @@
+const content = toastui.Editor.factory({
+    el: document.querySelector(".content-detail"),
+    viewer: true,
+    useScript: true,
+    initialValue: document.querySelector(".content-detail").innerHTML
+});
+
+
 var imageClicked = true;
 let a = 0;
 function changeImageAndCount() {

@@ -112,7 +112,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         List<ArticleDto> collect = articles.stream()
-                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
+                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId()), replyService))
                 .collect(Collectors.toList());
         return collect;
     }

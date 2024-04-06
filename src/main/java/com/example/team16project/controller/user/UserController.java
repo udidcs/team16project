@@ -65,13 +65,13 @@ public class UserController {
 
     @PostMapping("/user/myinfo")
     @ResponseBody
-    public String updateNickname(Authentication authentication, UpdateUserInfoRequest request) {
+    public String updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) {
         try {
             userService.checkNicknameDuplicate(request.getNickname());
             UserInfo userInfo = userService.findUserInfo(authentication);
             userService.updateNickname(authentication, request.getNickname());
             userInfo.setNickname(request.getNickname());
-            return "success";
+            return "닉네임 변경이 완료되었습니다.";
 
         } catch (Exception e) {
             return e.getMessage();
@@ -111,7 +111,7 @@ public class UserController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return ResponseEntity.ok("삭제 요청이 처리되었습니다.");
+        return ResponseEntity.ok("탈퇴 요청이 완료되었습니다.");
     }
 
     @GetMapping("/user/check")

@@ -43,3 +43,35 @@ button{
     font-size: 13px;
 }
 
+.box-header{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-menu{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5vw;
+    width:100%;
+}
+
+.navbar-left,.navbar-right{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.move_to_menu{
+
+}
+
+.move_to_menu:hover{
+    color: #3977fe;
+    font-weight: 700;
+}
+
+body{
+    margin-left:15vw;
+    margin-right:15vw;
+}
