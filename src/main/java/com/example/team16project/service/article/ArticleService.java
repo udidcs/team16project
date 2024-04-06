@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ArticleService {
     ArticleDto getArticle(Long articleId);
+    List<Article> getArticles();
     List<ArticleDto> getArticles(int page, int pageSize);
     int getTotalPages(int pageSize);
     Article saveArticle(ArticleForm articleForm, User user);

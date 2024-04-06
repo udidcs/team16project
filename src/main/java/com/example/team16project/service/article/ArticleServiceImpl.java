@@ -37,6 +37,12 @@ public class ArticleServiceImpl implements ArticleService {
         return ArticleDto.toDto(article, replys);
     }
 
+    @Override
+    public List<Article> getArticles() {
+        List<Article> all = articleRepository.findAll();
+        return all;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<ArticleDto> getArticles(int page, int pageSize) {

@@ -35,9 +35,9 @@ public class WebSecurityConfig {
                         auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/user/cancle", "/user/mywithdraw", "/user/mypassword", "/user/myinfo", "/user/check", "/user/mypage", "/user/myprofile", "/user/update", "/article/form", "/article/edit", "/reply/**", "/reReply/**", "user/delete").authenticated()
-                                .requestMatchers(HttpMethod.POST, "/article").authenticated()
-                                .requestMatchers(HttpMethod.PUT, "/article").authenticated()
-                                .requestMatchers(HttpMethod.DELETE, "/article").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/article/**").authenticated()
+                                .requestMatchers(HttpMethod.PUT, "/article/**").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/article/**").authenticated()
                                 .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .exceptionHandling(except ->

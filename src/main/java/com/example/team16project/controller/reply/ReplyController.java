@@ -8,6 +8,7 @@ import com.example.team16project.service.reply.ReplyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,6 @@ import java.security.Principal;
 public class ReplyController {
 
     private final ReplyServiceImpl replyService;
-
 
     @ResponseBody // ResponseBody는 지워도 괜찮을 거 같습니다.
     @PostMapping("/reply")
@@ -32,7 +32,6 @@ public class ReplyController {
         }
 
         // 로그인 안했을 경우 HTTP 상태코드가 200 나오는 것을 고칠 수 있는지는 알아봐야 할 듯
-
         return ResponseEntity.status(HttpStatus.CREATED).body("등록 완료되었습니다.");
     }
 
@@ -105,5 +104,6 @@ public class ReplyController {
         }
         return ResponseEntity.status(HttpStatus.OK).body("삭제 완료되었습니다");
     }
+
 
 }
