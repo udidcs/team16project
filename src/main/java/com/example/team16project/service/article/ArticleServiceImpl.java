@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -37,6 +38,12 @@ public class ArticleServiceImpl implements ArticleService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + articleId));
         List<Reply> replys = replyRepository.findByArticleArticleIdAndReplyReplyId(articleId, null);
         return ArticleDto.toDto(article, replys, replyService);
+    }
+
+    @Override
+    public List<Article> getArticles() {
+        List<Article> all = articleRepository.findAll();
+        return all;
     }
 
     @Transactional(readOnly = true)
@@ -87,5 +94,43 @@ public class ArticleServiceImpl implements ArticleService {
 //
 //    }
 
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ArticleDto> searchArticles(int page, int pageSize, String query, String option) {
+
+        List<Article> articles = new ArrayList();
+
+        switch (option) {
+            case "title":
+                articles = articleRepository.searchBoardsByTitle(pageSize, (page - 1) * pageSize, query);
+                break;
+
+            case "contents":
+                articles = articleRepository.searchBoardsByContents(pageSize, (page - 1) * pageSize, query);
+                break;
+        }
+
+        List<ArticleDto> collect = articles.stream()
+                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
+                .collect(Collectors.toList());
+        return collect;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public int getSearchPages(int pageSize, String query, String option) {
+        int searchPages = 0;
+        switch (option) {
+            case "title":
+                searchPages =  articleRepository.searchPagesByTitle(pageSize, query);
+                break;
+
+            case "contents":
+                searchPages = articleRepository.searchPagesByContents(pageSize, query);
+                break;
+        }
+        return searchPages;
+    }
 
 }

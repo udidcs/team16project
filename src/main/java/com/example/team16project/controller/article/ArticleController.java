@@ -20,13 +20,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Tag(name = "Article", description = "게시글 API")
 @RequiredArgsConstructor
@@ -36,6 +39,7 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserRepository userRepository;
     private final ReplyService replyService;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Operation(summary = "게시글 전체 보기",
             description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
@@ -59,7 +63,11 @@ public class ArticleController {
         int startIdx = PaginationUtil.calculateStartIndex(page);
         int endIdx = PaginationUtil.calculateEndIndex(page, totalPages);
 
-
+        list.forEach(articleDto -> {
+            String s = redisTemplate.opsForValue().get(String.valueOf(articleDto.getArticleId()));
+            if (s != null)
+                articleDto.setViewCount(articleDto.getViewCount() + Integer.valueOf(s));
+        });
 
         model.addAttribute("articles", list);
         model.addAttribute("currentPage", page);
@@ -75,12 +83,16 @@ public class ArticleController {
     @GetMapping("/article")
     public String detail(@RequestParam(value = "id", required = true) Long articleId, Principal principal, Model model){
 
+        Long increment = redisTemplate.opsForValue().increment(String.valueOf(articleId));
         ArticleDto article = articleService.getArticle(articleId);
+        article.setViewCount((int) (article.getViewCount()+increment));
+
         if (principal != null) {
             User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
             if (article.getUserId().equals(user.getUserId()))
                 model.addAttribute("identified", true);
         }
+
         model.addAttribute("article", article);
         List<ReplyDto> allReplysOnArticle = replyService.getAllReplysOnArticle(articleId);
         model.addAttribute("replys", allReplysOnArticle);
@@ -106,6 +118,7 @@ public class ArticleController {
 
         User user = userRepository.findByEmail(principal.getName()).orElseThrow();
         Article article = articleService.saveArticle(articleForm, user);
+
         return "/article?id=" + article.getArticleId();
     }
 
@@ -169,4 +182,55 @@ public class ArticleController {
     }
 
 
+//    @Operation(summary = "게시글 전체 보기",
+//            description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
+//    @Parameter(name = "page", description = "페이지 번호", example = "2")
+//    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content =
+//    @Content(mediaType = "text/html"))
+    @GetMapping("/article/search")
+    public String search(@RequestParam String keyword, @RequestParam String option, @RequestParam(defaultValue = "1") int page, Model model) {
+        if (page < 1) {
+            page = 1;
+        }
+
+        if (keyword.isBlank() || (!option.equals("title") && !option.equals("contents"))) {
+            return "redirect:/articles";
+        }
+
+        String query = "%" + keyword + "%";
+
+        setPaginationAttributesForSearch(model, page,
+                        articleService.getSearchPages(PaginationUtil.PageSize, query, option), articleService.searchArticles(page, PaginationUtil.PageSize, query, option), keyword, option);
+
+        return "article/articles";
+    }
+
+    private void setPaginationAttributesForSearch(Model model, int page, int totalPages, List<ArticleDto> list, String keyword, String option) {
+
+        int startIdx = PaginationUtil.calculateStartIndex(page);
+        int endIdx = PaginationUtil.calculateEndIndex(page, totalPages);
+
+        model.addAttribute("articles", list);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("startIdx", startIdx);
+        model.addAttribute("endIdx", endIdx);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("option", option);
+    }
+  
+    @Transactional
+    @Scheduled(fixedRate = 20000)
+    public void saveViewCount() {
+        Set<String> keys = redisTemplate.keys("*");
+
+        List<Article> articles = articleService.getArticles();
+        articles.forEach(article -> {
+            if (keys.contains(String.valueOf(article.getArticleId()))) {
+                article.setViewCount(article.getViewCount() + Integer.valueOf(redisTemplate.opsForValue().get(String.valueOf(article.getArticleId()))));
+            }
+        });
+        redisTemplate.getConnectionFactory().getConnection().flushAll();
+
+    }
 }
