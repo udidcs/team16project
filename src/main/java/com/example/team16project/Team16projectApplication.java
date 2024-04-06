@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaAuditing
 @EnableScheduling
 public class Team16projectApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Team16projectApplication.class, args);
 	}
