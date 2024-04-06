@@ -76,7 +76,7 @@
                 <div class="comment-item-bottom">
                     <div class="etc-button-container">
                         <button class="comment-button re-comment-editor-opener"
-                                onclick="clickReCommentEditorOpener(this)">
+                                onclick="showReReplyForm(this)">
                             <img th:src="@{/images/icon_recomment.png}" alt="답글달기 버튼">답글 달기
                         </button>
                     </div>
@@ -87,9 +87,9 @@
                               name="contents"></textarea>
                     <div class="re-comment-editor-bottom">
                         <button class="re-comment-submit-button" type="button"
-                                onclick="clickReCommentSubmitButton(this)">등록
+                                onclick="submitReReply(this)">등록
                         </button>
-                        <button class="re-comment-cancel-button" type="button" onclick="clickReCommentCancelButton(this)">
+                        <button class="re-comment-cancel-button" type="button" onclick="submitReReplyCancel(this)">
                             취소
                         </button>
                     </div>
@@ -104,20 +104,18 @@
 <!--                                   th:text="${#dates.format(reComment.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
                             </div>
                             <div class="re-comment-edit-container">
-                                <button onclick="clickReCommentEditButton(this)">수정</button>
-                                <button onclick="clickReCommentDeleteButton(this)">삭제</button>
+                                <button onclick="updateReReply(this)">수정</button>
+                                <button onclick="deleteReReply(this)">삭제</button>
                             </div>
                         </div>
                         <div class="re-comment-item-body">
-                            <div style="word-break:break-all" class="re-comment-contents" th:text="${rereply.comments}"
-                                      onchange="reCommentEditWordCount(this)"
-                                      oninput="reCommentEditWordCount(this)"></div>
-                            <div class="re-comment-text-edit-count hidden">0/1500</div>
+                            <div style="word-break:break-all" class="re-comment-contents" th:text="${rereply.comments}"></div>
+                                      <div class="re-comment-text-edit-count hidden">0/1500</div>
                             <div class="re-comment-editor-bottom hidden">
                                 <button class="re-comment-submit-button" type="button"
-                                        onclick="clickReCommentEditCompleteButton(this)">수정 완료
+                                        onclick="updateReReplyComplete(this)">수정 완료
                                 </button>
-                                <button class="re-comment-cancel-button" type="button" onclick="clickReCommentEditCancelButton(this)">
+                                <button class="re-comment-cancel-button" type="button" onclick="updateReReplyCancel(this)">
                                     취소
                                 </button>
                             </div>
