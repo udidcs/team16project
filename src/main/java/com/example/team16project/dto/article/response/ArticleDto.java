@@ -2,6 +2,8 @@ package com.example.team16project.dto.article.response;
 
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.reply.Reply;
+import com.example.team16project.service.reply.ReplyService;
+import com.example.team16project.service.reply.ReplyServiceImpl;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,8 +23,9 @@ public class ArticleDto {
     private LocalDateTime createdAt;
     private Integer likeCount;
     private Integer viewCount;
+    private Long replyCount;
 
-    public static ArticleDto toDto(Article article, List<Reply> replys) {
+    public static ArticleDto toDto(Article article, List<Reply> replys, ReplyService replyService) {
         return ArticleDto.builder()
                 .replys(replys)
                 .profileImage(article.getUser().getProfileImage())
@@ -34,6 +37,7 @@ public class ArticleDto {
                 .createdAt(article.getCreatedAt())
                 .likeCount(article.getLikeCount())
                 .viewCount(article.getViewCount())
+                .replyCount(replyService.countHowManyReplies(article.getArticleId()))
                 .build();
     }
 

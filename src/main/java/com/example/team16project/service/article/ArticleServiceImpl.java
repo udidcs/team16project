@@ -8,6 +8,7 @@ import com.example.team16project.dto.article.request.ArticleForm;
 import com.example.team16project.repository.article.ArticleRepository;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.repository.reply.ReplyRepository;
+import com.example.team16project.service.reply.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,6 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
     private final ReplyRepository replyRepository;
+    private final ReplyService replyService;
 
     @Transactional(readOnly = true)
     @Override
@@ -34,15 +36,15 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + articleId));
         List<Reply> replys = replyRepository.findByArticleArticleIdAndReplyReplyId(articleId, null);
-        return ArticleDto.toDto(article, replys);
+        return ArticleDto.toDto(article, replys, replyService);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<ArticleDto> getArticles(int page, int pageSize) {
-        List<Article> articles = articleRepository.selectAllCoteBaords(pageSize, (page - 1) * pageSize);
+        List<Article> articles = articleRepository.selectAllArticles(pageSize, (page - 1) * pageSize);
         List<ArticleDto> collect = articles.stream()
-                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
+                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId()),replyService))
                 .collect(Collectors.toList());
         return collect;
     }

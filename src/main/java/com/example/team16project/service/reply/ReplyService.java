@@ -19,6 +19,8 @@ public interface ReplyService {
     // 대댓글 생성 로직
     void saveReReply(ReReplyCreateForm form, Principal principal);
 
+    long countHowManyReplies(Long articleId);
+
     // 댓글 수정 로직
     void updateReply(ReplyUpdateRequest request, Principal principal);
 

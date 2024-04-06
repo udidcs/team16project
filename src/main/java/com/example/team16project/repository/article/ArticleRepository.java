@@ -15,10 +15,13 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query(value = "select article_id, user_id, title, contents, created_at, like_count, view_count, updated_at " +
             "from article order by article_id desc limit :pagesize offset :offset", nativeQuery = true)
-    public List<Article> selectAllCoteBaords(@Param("pagesize") int pageSize, @Param("offset") int offset);
+    public List<Article> selectAllArticles(@Param("pagesize") int pageSize, @Param("offset") int offset);
 
     Optional<Article> findByTitle(String title);
 
     Optional<Article> findByArticleId(Long articleId);
+
+
+//    long countByReplyId --> 양방향 연관관계 맺어줘야함
 
 }

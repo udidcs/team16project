@@ -13,4 +13,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     Optional<List<Reply>> findByReplyIdOrReplyReplyId(Long replyId, Long replyReplyId);
     List<Reply> findByReplyReplyId(Long replyId);
     List<Reply> findByArticleArticleIdAndReplyReplyId(Long articleArticleId, Long replyReplyId);
+    Long countByArticleArticleId(Long articleArticleId);
+
+
 }
