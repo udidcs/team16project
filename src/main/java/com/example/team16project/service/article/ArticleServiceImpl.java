@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -85,10 +86,23 @@ public class ArticleServiceImpl implements ArticleService {
 //
 //    }
 
+
     @Transactional(readOnly = true)
     @Override
-    public List<ArticleDto> searchArticlesByTitle(int page, int pageSize, String query) {
-        List<Article> articles = articleRepository.searchBoardsByTitle(pageSize, (page - 1) * pageSize, query);
+    public List<ArticleDto> searchArticles(int page, int pageSize, String query, String option) {
+
+        List<Article> articles = new ArrayList();
+
+        switch (option) {
+            case "title":
+                articles = articleRepository.searchBoardsByTitle(pageSize, (page - 1) * pageSize, query);
+                break;
+
+            case "contents":
+                articles = articleRepository.searchBoardsByContents(pageSize, (page - 1) * pageSize, query);
+                break;
+        }
+
         List<ArticleDto> collect = articles.stream()
                 .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
                 .collect(Collectors.toList());
@@ -97,24 +111,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Transactional(readOnly = true)
     @Override
-    public int getSearchPagesByTitle(int pageSize, String query) {
-        return articleRepository.searchPagesByTitle(pageSize, query);
-    }
+    public int getSearchPages(int pageSize, String query, String option) {
+        int searchPages = 0;
+        switch (option) {
+            case "title":
+                searchPages =  articleRepository.searchPagesByTitle(pageSize, query);
+                break;
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<ArticleDto> searchArticlesByContents(int page, int pageSize, String query) {
-        List<Article> articles = articleRepository.searchBoardsByContents(pageSize, (page - 1) * pageSize, query);
-        List<ArticleDto> collect = articles.stream()
-                .map(a -> ArticleDto.toDto(a, replyRepository.findByArticleArticleId(a.getArticleId())))
-                .collect(Collectors.toList());
-        return collect;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public int getSearchPagesByContents(int pageSize, String query) {
-        return articleRepository.searchPagesByContents(pageSize, query);
+            case "contents":
+                searchPages = articleRepository.searchPagesByContents(pageSize, query);
+                break;
+        }
+        return searchPages;
     }
 
 }

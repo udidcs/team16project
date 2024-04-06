@@ -1,7 +1,6 @@
 package com.example.team16project.controller.article;
 
 import com.example.team16project.domain.user.User;
-import com.example.team16project.dto.article.request.ArticleSearchDTO;
 import com.example.team16project.dto.article.request.ArticleWithIdForm;
 import com.example.team16project.dto.article.response.ArticleDto;
 import com.example.team16project.dto.article.request.ArticleForm;
@@ -20,14 +19,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Tag(name = "Article", description = "게시글 API")
 @RequiredArgsConstructor
@@ -180,29 +177,14 @@ public class ArticleController {
             page = 1;
         }
 
-        if (keyword.isBlank() || keyword.isEmpty()) {
+        if (keyword.isBlank() || (!option.equals("title") && !option.equals("contents"))) {
             return "redirect:/articles";
         }
 
-        String[] questions = keyword.split(" ");
-        StringBuilder attachQuestion = new StringBuilder();
-        attachQuestion.append(questions[0]);
-        for (int i = 1; i < questions.length; i++) {
-            attachQuestion.append(questions[i]).append("|");
-        }
+        String query = "%" + keyword + "%";
 
-        String query = attachQuestion.toString();
-        switch (option) {
-            case "title":
-                setPaginationAttributesForSearch(model, page,
-                        articleService.getSearchPagesByTitle(PaginationUtil.PageSize, query), articleService.searchArticlesByTitle(page, PaginationUtil.PageSize, query), keyword, option);
-                break;
-
-            case "contents":
-                setPaginationAttributesForSearch(model, page,
-                        articleService.getSearchPagesByContents(PaginationUtil.PageSize, query), articleService.searchArticlesByContents(page, PaginationUtil.PageSize, query), keyword, option);
-                break;
-        }
+        setPaginationAttributesForSearch(model, page,
+                        articleService.getSearchPages(PaginationUtil.PageSize, query, option), articleService.searchArticles(page, PaginationUtil.PageSize, query, option), keyword, option);
 
         return "article/articles";
     }
