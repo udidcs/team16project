@@ -94,9 +94,20 @@ public class UserService {
         registeredUser.recovery();
     }
 
-    public void updateNickname(String nickname, Authentication authentication) {
-        User CurrentUser = (User) authentication.getPrincipal();
-        User registeredUser = userRepository.findByNickname(CurrentUser.getNickname()).get();
+    @Transactional
+    public void updateNickname(Authentication authentication, String newNickname){
+            User user = (User) authentication.getPrincipal();
+            User userNickname = userRepository.findById(user.getUserId()).get();
+            userNickname.setNickname(newNickname);
+
+//        if(isValidNickname(newNickname)){
+//            User user = userRepository.findByNickname(newNickname)
+//                    .orElseThrow(() -> new IllegalArgumentException("User Not Found"));
+//            user.setNickname(newNickname);
+//            userRepository.save(user);
+//        } else{
+//            throw new IllegalArgumentException("Invalid Nickname");
+//        }
     }
 }
 

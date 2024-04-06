@@ -10,11 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UpdateUserInfoRequest {
-    private Long id;
     private String nickname;
 
-    public UpdateUserInfoRequest(Long id, String nickname) {
-        this.id = id;
+    public UpdateUserInfoRequest(String nickname) {
         this.nickname = nickname;
     }
 }
