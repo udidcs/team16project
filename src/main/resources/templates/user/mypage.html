@@ -38,8 +38,6 @@
                <img class="img-fluid" style="width: 80px; height: 80px;" id="imgId" th:src="@{'/images/'+${userInfo.profileImage}}" alt="profile-header">
             <p class="mt-4" th:text="${userInfo.nickname}">empty!</p>
             <p class="mt-4" th:text="${userInfo.email}">empty!</p>
-<!--            <input type="text" class="mt-4" th:value="${#temporals.format(userInfo.createdAt, 'yyyy-MM-dd HH:mm:ss')}">-->
-<!--            <p class="mt-4" th:text="${userInfo.nickname()}">nickame is empty!</p>-->
             </form>
         </div>
     </div>
