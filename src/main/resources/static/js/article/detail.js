@@ -11,7 +11,6 @@ let a = 0;
 function changeImageAndCount() {
     var img = document.querySelector('.like-thumb');
     if (imageClicked) {
-        console.log('????');
         img.src = '/images/recommend/like-true.jpg';
         fetch('/recommend', {
          method: 'GET'
