@@ -1,6 +1,5 @@
 package com.example.team16project.controller.user;
 
-import com.example.team16project.dto.user.AddUserRequest;
 import com.example.team16project.dto.user.AdminUserRequest;
 import com.example.team16project.dto.user.AdminUserResponse;
 import com.example.team16project.service.user.AdminService;
@@ -64,7 +63,7 @@ public class AdminController {
     @ResponseBody
     public ResponseEntity<String> updateUserByAdmin(@PathVariable String id, @Valid AdminUserRequest request, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
-            String errorMsg = bindingResult.getFieldError().getDefaultMessage().toString();
+            String errorMsg = bindingResult.getFieldError().getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
         }
         try {
