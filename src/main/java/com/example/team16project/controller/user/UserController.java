@@ -3,6 +3,9 @@ package com.example.team16project.controller.user;
 import com.example.team16project.dto.user.*;
 import com.example.team16project.service.user.UserProfileImageService;
 import com.example.team16project.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.Principal;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,6 +57,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
+    @Operation(summary = "마이페이지 이동",  description = "현재 로그인한 유저의 정보 (이메일, 닉네임 불러오기")
     @GetMapping("/user/mypage")
     public String findUser(Authentication authentication, Model model) {
         UserInfo userInfo = userService.findUserInfo(authentication);
@@ -56,6 +65,7 @@ public class UserController {
         return "user/mypage";
     }
 
+    @Operation(summary = "닉네임 불러오기", description = "닉네임 변경 페이지로 이동 후 현재 나의 닉네임 출력")
     @GetMapping("/user/myinfo")
     public String findUserInMyinfo(Authentication authentication, Model model) {
         UserInfo userInfo = userService.findUserInfo(authentication);
@@ -63,19 +73,22 @@ public class UserController {
         return "user/myinfo";
     }
 
+    @Operation(summary = "닉네임 변경", description = "변경할 닉네임을 입력 후 변경버튼을 누를 경우 변경사항 반영")
     @PostMapping("/user/myinfo")
     @ResponseBody
-    public String updateNickname(Authentication authentication, UpdateUserInfoRequest request) {
+    public Map<String, String> updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) throws IOException {
+        Map<String, String> response = new HashMap<>();
         try {
             userService.checkNicknameDuplicate(request.getNickname());
             UserInfo userInfo = userService.findUserInfo(authentication);
             userService.updateNickname(authentication, request.getNickname());
             userInfo.setNickname(request.getNickname());
-            return "Success";
+            response.put("message", "success");
 
         } catch (Exception e) {
-            return e.getMessage();
+            response.put("message", "error");
         }
+        return response;
     }
 
 
