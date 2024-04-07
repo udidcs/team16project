@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -108,6 +109,12 @@ public class UserService {
 //        } else{
 //            throw new IllegalArgumentException("Invalid Nickname");
 //        }
+    }
+
+    // 삭제 대기간이 지난 회원의 정보를 삭제합니다.
+    @Transactional
+    public void deleteOutdatedUsers() {
+        userRepository.deleteOutdatedUsers();
     }
 }
 

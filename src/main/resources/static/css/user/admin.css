@@ -4,8 +4,13 @@
     margin: auto;
 }
 
-
 h1{
+    white-space: nowrap; /*h1 내용이 줄바꿈되지 않도록 설정*/
+    flex-shrink: 0; /*h1 크리가 축소되지 않도록 설정*/
+    margin: auto;
+}
+
+h2{
     margin-top: 50px;
 }
 
@@ -46,14 +51,15 @@ button{
 .box-header{
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: center;
+    /*width: 100%;*/
 }
 
 .navbar-menu{
     display: flex;
     justify-content: space-between;
     margin-left: 5vw;
-    width:100%;
+    /*width:100%;*/
 }
 
 .navbar-left,.navbar-right{
@@ -71,7 +77,12 @@ button{
     font-weight: 700;
 }
 
-body{
-    margin-left:15vw;
-    margin-right:15vw;
+
+a{
+    text-decoration: none;
+    color:inherit;
+}
+
+header{
+    padding: 20px;
 }
