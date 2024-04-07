@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/article/**").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/article/**").authenticated()
                                 .requestMatchers("/user/myprofile").hasRole("SENIOR")
-                                .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .exceptionHandling(except ->
                         except.accessDeniedPage("/error/403"))

@@ -81,7 +81,7 @@ public class UserController {
 
     @PostMapping("/user/myinfo")
     @ResponseBody
-    public String updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) {
+    public String updateNickname(Authentication authentication, UpdateUserInfoRequest request) {
         try {
             userService.checkNicknameDuplicate(request.getNickname());
             UserInfo userInfo = userService.findUserInfo(authentication);
