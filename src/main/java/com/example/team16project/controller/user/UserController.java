@@ -65,13 +65,13 @@ public class UserController {
 
     @PostMapping("/user/myinfo")
     @ResponseBody
-    public String updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) {
+    public String updateNickname(Authentication authentication, UpdateUserInfoRequest request) {
         try {
             userService.checkNicknameDuplicate(request.getNickname());
             UserInfo userInfo = userService.findUserInfo(authentication);
             userService.updateNickname(authentication, request.getNickname());
             userInfo.setNickname(request.getNickname());
-            return "닉네임 변경이 완료되었습니다.";
+            return "Success";
 
         } catch (Exception e) {
             return e.getMessage();
