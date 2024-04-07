@@ -4,6 +4,7 @@ import com.example.team16project.dto.article.response.ArticleImageDto;
 import com.example.team16project.service.article.ArticleImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,10 @@ public class ArticleImageController {
 
     private final ArticleImageService imageService;
 
+    String path = System.getProperty("user.dir");
+
+    @Value("${article-path}")
+    String subPath;
     @ResponseBody
     @PostMapping("/article/image/save")
     public String fileWrite(@RequestBody MultipartFile file) throws IOException {
@@ -30,8 +35,8 @@ public class ArticleImageController {
     @GetMapping("/article/image")
     public byte[] printEditorImage(@RequestParam(name = "filename") String fileName) {
 
-        String path = System.getProperty("user.dir") + "/src/main/resources/static/images/article/image";
-        File uploadedFile = new File(path+'/'+fileName);
+
+        File uploadedFile = new File(path + subPath +'/'+fileName);
 
         if (uploadedFile.exists() == false) {
             throw new RuntimeException();

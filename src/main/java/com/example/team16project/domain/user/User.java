@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @ColumnDefault("'no_image'")
+    @ColumnDefault("'default-profile.png'")
     @Column(name = "profile_image")
     private String profileImage;
 

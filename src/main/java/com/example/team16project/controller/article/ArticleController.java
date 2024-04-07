@@ -221,7 +221,7 @@ public class ArticleController {
     }
   
     @Transactional
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 1000*60*60*24)
     public void saveViewCount() {
         Set<String> keys = redisTemplate.keys("*");
 

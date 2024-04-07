@@ -5,13 +5,11 @@ const content = toastui.Editor.factory({
     initialValue: document.querySelector(".content-detail").innerHTML
 });
 
-
 var imageClicked = true;
 let a = 0;
 function changeImageAndCount() {
     var img = document.querySelector('.like-thumb');
     if (imageClicked) {
-        console.log('????');
         img.src = '/images/recommend/like-true.jpg';
         fetch('/recommend', {
          method: 'GET'

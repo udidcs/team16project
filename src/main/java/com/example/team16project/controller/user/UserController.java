@@ -128,7 +128,7 @@ public class UserController {
         userService.recoveryUser(authentication);
     }
 
-    @GetMapping("/images/{filename}")
+    @GetMapping("/user/images/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
 
         try {
