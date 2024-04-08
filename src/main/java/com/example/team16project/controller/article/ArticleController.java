@@ -211,6 +211,12 @@ public class ArticleController {
         int startIdx = PaginationUtil.calculateStartIndex(page);
         int endIdx = PaginationUtil.calculateEndIndex(page, totalPages);
 
+        list.forEach(articleDto -> {
+            String s = redisTemplate.opsForValue().get(String.valueOf(articleDto.getArticleId()));
+            if (s != null)
+                articleDto.setViewCount(articleDto.getViewCount() + Integer.valueOf(s));
+        });
+
         model.addAttribute("articles", list);
         model.addAttribute("currentPage", page);
         model.addAttribute("startIdx", startIdx);
