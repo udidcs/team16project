@@ -4,6 +4,9 @@ import com.example.team16project.dto.user.*;
 import com.example.team16project.service.user.UserProfileImageService;
 import com.example.team16project.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -74,6 +77,10 @@ public class UserController {
     }
 
     @Operation(summary = "닉네임 변경", description = "변경할 닉네임을 입력 후 변경버튼을 누를 경우 변경사항 반영")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "요청에 성공하였습니다.", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "요청에 실패하였습니다.", content = @Content(mediaType = "application/json"))
+    })
     @PostMapping("/user/myinfo")
     @ResponseBody
     public Map<String, String> updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) throws IOException {
