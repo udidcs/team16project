@@ -3,6 +3,7 @@ package com.example.team16project.controller.user;
 import com.example.team16project.dto.user.*;
 import com.example.team16project.service.user.UserProfileImageService;
 import com.example.team16project.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -63,20 +66,24 @@ public class UserController {
         return "user/myinfo";
     }
 
+    @Operation(summary = "닉네임 변경", description = "변경할 닉네임을 입력 후 변경버튼을 누를 경우 변경사항 반영")
     @PostMapping("/user/myinfo")
     @ResponseBody
-    public String updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) {
+    public Map<String, String> updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) throws IOException {
+        Map<String, String> response = new HashMap<>();
         try {
             userService.checkNicknameDuplicate(request.getNickname());
             UserInfo userInfo = userService.findUserInfo(authentication);
             userService.updateNickname(authentication, request.getNickname());
             userInfo.setNickname(request.getNickname());
-            return "닉네임 변경이 완료되었습니다.";
+            response.put("message", "success");
 
         } catch (Exception e) {
-            return e.getMessage();
+            response.put("message", "error");
         }
+        return response;
     }
+
 
 
     @PatchMapping("/user/update")
