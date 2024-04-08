@@ -10,6 +10,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -24,9 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.Principal;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Tag(name = "User", description = "회원 API")
 @Controller
@@ -63,13 +72,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
+
     @Operation(summary = "마이페이지", description = "마이페이지로 이동합니다. 현재 로그인된 유저 정보를 표시해줍니다.")
-    @GetMapping("/user/mypage")
     public String findUser(Authentication authentication, Model model) {
         UserInfo userInfo = userService.findUserInfo(authentication);
         model.addAttribute("userInfo", userInfo);
         return "user/mypage";
     }
+
 
     @Operation(summary = "닉네임 변경 페이지", description = "닉네임 변경 페이지로 이동합니다. 로그인된 회원의 닉네임을 표시해줍니다.")
     @GetMapping("/user/myinfo")
@@ -79,19 +89,27 @@ public class UserController {
         return "user/myinfo";
     }
 
+    @Operation(summary = "닉네임 변경", description = "변경할 닉네임을 입력 후 변경버튼을 누를 경우 변경사항 반영")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "요청에 성공하였습니다.", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "요청에 실패하였습니다.", content = @Content(mediaType = "application/json"))
+    })
     @PostMapping("/user/myinfo")
     @ResponseBody
-    public String updateNickname(Authentication authentication, UpdateUserInfoRequest request) {
+
+    public Map<String, String> updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) throws IOException {
+        Map<String, String> response = new HashMap<>();
         try {
             userService.checkNicknameDuplicate(request.getNickname());
             UserInfo userInfo = userService.findUserInfo(authentication);
             userService.updateNickname(authentication, request.getNickname());
             userInfo.setNickname(request.getNickname());
-            return "닉네임 변경이 완료되었습니다.";
+            response.put("message", "success");
 
         } catch (Exception e) {
-            return e.getMessage();
+            response.put("message", "error");
         }
+        return response;
     }
 
     @Operation(summary = "비밀번호 변경", description = "로그인된 사용자의 비밀번호를 변경합니다. 변경할 비밀번호는 현재 비밀번호와 달라야 합니다.")
@@ -156,7 +174,7 @@ public class UserController {
         userService.recoveryUser(authentication);
     }
 
-    @GetMapping("/images/{filename}")
+    @GetMapping("/user/images/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
 
         try {

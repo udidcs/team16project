@@ -1,5 +1,6 @@
 package com.example.team16project.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +20,13 @@ public class UserViewController {
         return "user/signup";
     }
 
+    @Operation(summary = "프로필 사진 편집 페이지", description = "프로필 사진 변경 페이지로 이동")
     @GetMapping("/user/myprofile")
     public String myProfile(){
         return "user/myprofile";
     }
 
+    @Operation(summary = "비밀번호 편집 페이지", description = "비밀번호 변경 페이지로 이동")
     @GetMapping("/user/mypassword")
     public String myPassword(){
         return "user/mypassword";

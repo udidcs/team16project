@@ -1,12 +1,12 @@
 function checkLengthTitle(input) {
-    if (input.value.length >= 510) {
+    if (input.value.length >= 51) {
         alert('제목의 길이는 50자 이하입니다');
         input.value = input.value.substr(0, 50);
     }
 }
 
 function checkLengthEditor(contentEditor) {
-    if (contentEditor.getMarkdown().length > 30000) {
+    if (contentEditor.getMarkdown().length > 3000) {
         alert('내용의 길이는 3000자 이하입니다');
         contentEditor.setMarkdown(contentEditor.getMarkdown().substr(0, 3000), false)
     }
