@@ -99,15 +99,6 @@ public class UserService {
             User user = (User) authentication.getPrincipal();
             User userNickname = userRepository.findById(user.getUserId()).get();
             userNickname.setNickname(newNickname);
-
-//        if(isValidNickname(newNickname)){
-//            User user = userRepository.findByNickname(newNickname)
-//                    .orElseThrow(() -> new IllegalArgumentException("User Not Found"));
-//            user.setNickname(newNickname);
-//            userRepository.save(user);
-//        } else{
-//            throw new IllegalArgumentException("Invalid Nickname");
-//        }
     }
 }
 
