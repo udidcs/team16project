@@ -2,7 +2,6 @@ package com.example.team16project.service.user;
 
 import com.example.team16project.domain.user.User;
 import com.example.team16project.dto.user.AddUserRequest;
-
 import com.example.team16project.dto.user.DeleteUserRequest;
 import com.example.team16project.dto.user.UpdateUserPasswordRequest;
 import com.example.team16project.dto.user.UserInfo;
@@ -11,14 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service

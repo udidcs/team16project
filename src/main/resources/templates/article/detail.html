@@ -75,9 +75,7 @@
                 <div class="comment-item-bottom">
                     <div class="etc-button-container">
                         <button class="comment-button re-comment-editor-opener"
-                                onclick="showReReplyForm(this)">
-                            <img th:src="@{/images/icon_recomment.png}" alt="답글달기 버튼">답글 달기
-                        </button>
+                                onclick="showReReplyForm(this)">답글 달기</button>
                     </div>
                 </div>
                 <div class="re-comment-editor hidden">
@@ -99,8 +97,6 @@
                         <div class="re-comment-item-header">
                             <div class="re-comment-info">
                                 <p class="re-comment-writer-name" th:text="${rereply.nickname}"></p>
-<!--                                <p class="re-comment-createdAt"-->
-<!--                                   th:text="${#dates.format(reComment.createdAt,'yyyy-MM-dd HH:mm')}"></p>-->
                             </div>
                             <div class="re-comment-edit-container">
                                 <button onclick="updateReReply(this)">수정</button>

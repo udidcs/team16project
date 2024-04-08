@@ -114,10 +114,6 @@ public class User implements UserDetails {
         this.deletedAt = null;
     }
 
-    public void updateNickname(String nickname){
-        this.nickname = nickname;
-    }
-
     public void delete() {
         this.deletedAt = LocalDateTime.now();
     }

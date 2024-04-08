@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,7 +33,6 @@ public class ArticleImageController {
     @ResponseBody
     @GetMapping("/article/image")
     public byte[] printEditorImage(@RequestParam(name = "filename") String fileName) {
-
 
         File uploadedFile = new File(path + subPath +'/'+fileName);
 

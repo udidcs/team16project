@@ -3,7 +3,6 @@ package com.example.team16project.dto.article.response;
 import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.reply.Reply;
 import com.example.team16project.service.reply.ReplyService;
-import com.example.team16project.service.reply.ReplyServiceImpl;
 import lombok.Builder;
 import lombok.Data;
 

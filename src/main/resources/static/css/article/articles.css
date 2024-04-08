@@ -75,7 +75,6 @@ h1{
     display: flex;
     align-items: center;
     justify-content: center;
-    /*position: relative;*/
     margin-bottom:6vh;
     width: 100%;
     background: white;
@@ -137,9 +136,6 @@ h1{
     outline-offset: -3px; /* 아웃라인을 요소 안쪽으로 이동 */
 }
 
-/*.search_form:hover{*/
-/*    border:1px solid #363636;*/
-/*}*/
 
 /*게시판*/
 
@@ -218,7 +214,6 @@ h1{
 }
 
 
-/**/
 .titlecontent {
     font-size: 20px;
     font: bold;
@@ -238,7 +233,6 @@ h1{
     border-radius: 10px;
     color: #afafaf;
     text-align: center;
-    /*padding:1.0em;*/
     cursor: pointer;
 }
 
@@ -253,7 +247,6 @@ h1{
 
 .page_list a, .page_current a{
     display:block;
-    /*background-color: #04B45F;*/
     padding:1.0em;
     box-sizing: border-box;
     width: auto;

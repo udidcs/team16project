@@ -52,8 +52,4 @@ public class Article {
     @Column(name = "view_count")
     @ColumnDefault(value = "0")
     private Integer viewCount;
-
-    // 댓글수 ?
-    // private long replyCount;
-
 }

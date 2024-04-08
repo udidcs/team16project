@@ -6,14 +6,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
-
 @Builder
 @Entity
 @Getter
 @ToString
 @AllArgsConstructor
 @Table(name = "reply")
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 사용하려면 기본 생성자가 필요함
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
 public class Reply {
 

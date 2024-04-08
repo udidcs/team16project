@@ -21,7 +21,6 @@ document.querySelector('.delete-button').addEventListener('click', ()=>{
             else if(response.status == 400) { // 유효성 미통과
                 response.text().then((res)=>{
                     let list = JSON.parse(res);
-                    console.log(list);
                     let error = '';
                     list['arrayList'].forEach((e)=>{
                         error += e['message'] + '\n';

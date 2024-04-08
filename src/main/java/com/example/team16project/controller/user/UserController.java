@@ -5,16 +5,10 @@ import com.example.team16project.service.user.UserProfileImageService;
 import com.example.team16project.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -29,8 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.security.Principal;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -46,7 +38,7 @@ public class UserController {
     private final UserProfileImageService userProfileImageService;
 
     @Operation(summary = "회원가입", description = "아이디, 비밀번호, 닉네임을 입력해서 회원가입을 합니다.")
-    @RequestBody(description = "입력받은 유저 정보", required = true, content = @Content(schema = @Schema(implementation = AddUserRequest.class)))
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "입력받은 유저 정보", required = true, content = @Content(schema = @Schema(implementation = AddUserRequest.class)))
     @ApiResponses(value ={
             @ApiResponse(responseCode = "201", description = "회원가입에 성공하였습니다.", content = @Content(mediaType = "text/plain")),
             @ApiResponse(responseCode = "400", description = "입력받은 값이 양식과 맞지 않습니다.", content = @Content(mediaType = "text/plain")),
@@ -72,14 +64,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
     }
 
-
     @Operation(summary = "마이페이지", description = "마이페이지로 이동합니다. 현재 로그인된 유저 정보를 표시해줍니다.")
+    @GetMapping("/user/mypage")
     public String findUser(Authentication authentication, Model model) {
         UserInfo userInfo = userService.findUserInfo(authentication);
         model.addAttribute("userInfo", userInfo);
         return "user/mypage";
     }
-
 
     @Operation(summary = "닉네임 변경 페이지", description = "닉네임 변경 페이지로 이동합니다. 로그인된 회원의 닉네임을 표시해줍니다.")
     @GetMapping("/user/myinfo")
@@ -96,7 +87,6 @@ public class UserController {
     })
     @PostMapping("/user/myinfo")
     @ResponseBody
-
     public Map<String, String> updateNickname(Authentication authentication, @RequestBody UpdateUserInfoRequest request) throws IOException {
         Map<String, String> response = new HashMap<>();
         try {
@@ -112,8 +102,8 @@ public class UserController {
         return response;
     }
 
+
     @Operation(summary = "비밀번호 변경", description = "로그인된 사용자의 비밀번호를 변경합니다. 변경할 비밀번호는 현재 비밀번호와 달라야 합니다.")
-    @RequestBody(description = "입력받은 유저 정보", required = true, content = @Content(schema = @Schema(implementation = UpdateUserPasswordRequest.class)))
     @ApiResponse(responseCode = "200", description = "처리 결과를 알려줍니다.", content = @Content(mediaType = "text/plain"))
     @PatchMapping("/user/update")
     @ResponseBody
@@ -137,7 +127,7 @@ public class UserController {
     }
 
     @Operation(summary = "회원탈퇴 요청", description = "로그인된 회원의 비밀번호를 다시 입력하여 회원탈퇴 요청을 합니다.")
-    @RequestBody(description = "입력받은 유저 정보", required = true, content = @Content(schema = @Schema(implementation = AddUserRequest.class)))
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "입력받은 유저 정보", required = true, content = @Content(schema = @Schema(implementation = DeleteUserRequest.class)))
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "회원탈퇴 요청이 완료되었습니다."),
             @ApiResponse(responseCode = "400", description = "입력한 비밀번호가 양식과 맞지 않습니다."),
@@ -210,7 +200,6 @@ public class UserController {
         userProfileImageService.saveImageToDB(imageFileName, principal);
         return "redirect:/user/mypage";
     }
-
 
     // 매일 자정마다 삭제 대기기간이 지난 회원의 정보를 삭제합니다.
     @Scheduled(cron = "0 0 0 * * *")

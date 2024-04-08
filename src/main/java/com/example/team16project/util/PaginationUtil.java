@@ -10,7 +10,6 @@ public class PaginationUtil {
 
             return currentPage - pageCriteria + 1;
         }
-
         return (currentPage/pageCriteria) * pageCriteria + 1;
     }
 
@@ -22,7 +21,6 @@ public class PaginationUtil {
 
             return currentPage;
         }
-
         return (endIdx > totalPages) ? totalPages : endIdx;
     }
 }

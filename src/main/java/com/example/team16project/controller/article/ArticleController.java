@@ -182,12 +182,6 @@ public class ArticleController {
         return "/articles";
     }
 
-
-//    @Operation(summary = "게시글 전체 보기",
-//            description = "페이지 번호와 함께 게시글 전체를 볼 수 있습니다")
-//    @Parameter(name = "page", description = "페이지 번호", example = "2")
-//    @ApiResponse(responseCode = "200", description = "요청에 성공했습니다", content =
-//    @Content(mediaType = "text/html"))
     @GetMapping("/article/search")
     public String search(@RequestParam String keyword, @RequestParam String option, @RequestParam(defaultValue = "1") int page, Model model) {
         if (page < 1) {

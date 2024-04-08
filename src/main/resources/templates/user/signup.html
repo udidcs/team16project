@@ -10,7 +10,6 @@
     <div class="signup">
         <h2>ASK HUB에 오신것을 환영합니다.</h2>
         <form>
-            <!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
             <div class="div-signup">
                 <label>이메일</label>
                 <input type="email" name="email" id="email" required pattern="^([0-9a-zA-Z_-.%+]+)@([0-9a-zA-Z_-.]+)\.([0-9a-zA-Z_-]{2,})$" placeholder="이메일">
@@ -28,7 +27,6 @@
             <p>이미 회원이신가요? <a href="/user/login">로그인</a></p>
         </form>
     </div>
-
     <script>
         const form =  document.querySelector('form');
         form.addEventListener('submit', (event) => {

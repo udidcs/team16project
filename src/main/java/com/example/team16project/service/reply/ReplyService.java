@@ -5,9 +5,6 @@ import com.example.team16project.dto.reply.request.ReReplyUpdateRequest;
 import com.example.team16project.dto.reply.request.ReplyCreateForm;
 import com.example.team16project.dto.reply.request.ReplyUpdateRequest;
 import com.example.team16project.dto.reply.response.ReplyDto;
-import jakarta.transaction.Transactional;
-
-import javax.naming.AuthenticationException;
 import java.security.Principal;
 import java.util.List;
 

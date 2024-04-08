@@ -1,12 +1,7 @@
 package com.example.team16project.dto.reply.response;
 
-import com.example.team16project.domain.article.Article;
 import com.example.team16project.domain.reply.Reply;
-import com.example.team16project.domain.user.User;
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-
 import java.util.List;
 
 

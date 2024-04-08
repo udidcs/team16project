@@ -173,7 +173,4 @@ public class ReplyServiceImpl implements ReplyService{
                         .collect(Collectors.toList()))).collect(Collectors.toList());
         return collect;
     }
-
-
-
 }

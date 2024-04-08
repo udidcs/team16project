@@ -15,10 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 
 @Tag(name = "댓글 CRUD")
@@ -28,17 +26,16 @@ public class ReplyController {
 
     private final ReplyServiceImpl replyService;
 
-    @ResponseBody // ResponseBody는 지워도 괜찮을 거 같습니다.
+    @ResponseBody
     @PostMapping("/reply")
     @Operation(summary = "새로운 댓글 생성", description = "댓글 내용을 입력받아 새로운 댓글을 생성합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "등록 완료되었습니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "200", description = "로그인이 필요합니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "댓글 내용을 입력해주세요", content = @Content(mediaType = "application/json"))
-
     })
     @Parameters({
-            @Parameter(name = "articleId", description = "게시글 Id", example = "1"),
+            @Parameter(name = "articleId", description = "게시글 Id", example = "1", content = @Content()),
             @Parameter(name = "comments", description = "댓글 내용", example = "댓글입니다.")
     })
     public ResponseEntity<String> createReply(@RequestBody ReplyCreateForm form, Principal principal)  {
@@ -50,7 +47,6 @@ public class ReplyController {
             // 400 Error
         }
 
-        // 로그인 안했을 경우 HTTP 상태코드가 200 나오는 것을 고칠 수 있는지는 알아봐야 할 듯
         return ResponseEntity.status(HttpStatus.CREATED).body("등록 완료되었습니다.");
     }
 
@@ -61,7 +57,6 @@ public class ReplyController {
             @ApiResponse(responseCode = "201", description = "등록 완료되었습니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "200", description = "로그인이 필요합니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "댓글 내용을 입력해주세요", content = @Content(mediaType = "application/json"))
-
     })
     @Parameters({
             @Parameter(name = "articleId", description = "게시글 Id", example = "1"),
@@ -77,10 +72,7 @@ public class ReplyController {
             // 400 Error
         }
 
-        // 로그인 안했을 경우 HTTP 상태코드가 200 나오는 것을 고칠 수 있는지는 알아봐야 할 듯
-
         return ResponseEntity.status(HttpStatus.CREATED).body("등록 완료되었습니다.");
-
     }
 
     @ResponseBody
@@ -90,7 +82,6 @@ public class ReplyController {
             @ApiResponse(responseCode = "200", description = "수정 완료되었습니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "405", description = "로그인이 필요합니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "403", description = "댓글을 작성한 작성자만 수정할 수 있습니다.", content = @Content(mediaType = "application/json"))
-
     })
     @Parameters({
             @Parameter(name = "replyId", description = "댓글 Id", example = "1"),
@@ -114,7 +105,6 @@ public class ReplyController {
             @ApiResponse(responseCode = "200", description = "수정 완료되었습니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "405", description = "로그인이 필요합니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "403", description = "댓글을 작성한 작성자만 수정할 수 있습니다.", content = @Content(mediaType = "application/json"))
-
     })
     @Parameters({
             @Parameter(name = "replyId", description = "대댓글 Id", example = "1"),
@@ -138,14 +128,11 @@ public class ReplyController {
             @ApiResponse(responseCode = "200", description = "삭제 완료되었습니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "405", description = "로그인이 필요합니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "403", description = "댓글을 작성한 작성자만 삭제할 수 있습니다.", content = @Content(mediaType = "application/json"))
-
     })
     @Parameters({
             @Parameter(name = "replyId", description = "댓글 Id", example = "1")
-
     })
     public ResponseEntity<String> deleteReply(@PathVariable("replyId") Long replyId, Principal principal) {
-
 
         try {
             replyService.deleteReply(replyId, principal);
@@ -163,11 +150,9 @@ public class ReplyController {
             @ApiResponse(responseCode = "200", description = "삭제 완료되었습니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "405", description = "로그인이 필요합니다", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "403", description = "댓글을 작성한 작성자만 삭제할 수 있습니다.", content = @Content(mediaType = "application/json"))
-
     })
     @Parameters({
             @Parameter(name = "replyId", description = "대댓글 Id", example = "1")
-
     })
     public ResponseEntity<String> deleteReReply(@PathVariable("replyId") Long replyId, Principal principal) {
 
