@@ -25,7 +25,8 @@ public class WebSecurityConfig {
         return web ->
                 web
                 .ignoring()
-                .requestMatchers("/js/**", "/css/**", "/images/**");
+                .requestMatchers("/js/**", "/css/**", "/images/**"
+                ,"/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
     }
 
     @Bean

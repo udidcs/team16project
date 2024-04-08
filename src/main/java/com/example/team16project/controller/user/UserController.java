@@ -99,6 +99,7 @@ public class UserController {
     }
 
 
+
     @PatchMapping("/user/update")
     @ResponseBody
     public String changePassword(@Valid UpdateUserPasswordRequest request, BindingResult bindingResult, Authentication authentication) {
@@ -148,7 +149,7 @@ public class UserController {
         userService.recoveryUser(authentication);
     }
 
-    @GetMapping("/images/{filename}")
+    @GetMapping("/user/images/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
 
         try {
